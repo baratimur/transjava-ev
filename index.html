@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,13 +23,21 @@
           ⚡
         </div>
         <div>
-          <span class="font-extrabold text-white text-base tracking-tight block">SPKLU Trans Jawa</span>
-          <span class="text-[11px] text-slate-400 block -mt-0.5">Live Dataset via stations.json</span>
+          <span data-i18n="title" class="font-extrabold text-white text-base tracking-tight block">SPKLU Trans Jawa</span>
+          <span data-i18n="subtitle" class="text-[11px] text-slate-400 block -mt-0.5">Live Dataset via stations.json</span>
         </div>
       </div>
-      <span id="source-badge" class="text-xs bg-slate-800 text-slate-400 border border-slate-700 px-2.5 py-1 rounded-full font-semibold">
-        Connecting...
-      </span>
+      
+      <div class="flex items-center gap-3">
+        <span id="source-badge" class="hidden sm:inline-block text-xs bg-slate-800 text-slate-400 border border-slate-700 px-2.5 py-1 rounded-full font-semibold">
+          ...
+        </span>
+        <!-- Language Toggle -->
+        <div class="flex items-center bg-slate-800/80 rounded-lg p-1 border border-slate-700">
+          <button onclick="setLang('id')" id="btn-id" class="px-2.5 py-1 text-[11px] font-bold rounded-md transition-colors bg-emerald-500 text-slate-950">ID</button>
+          <button onclick="setLang('en')" id="btn-en" class="px-2.5 py-1 text-[11px] font-bold rounded-md transition-colors text-slate-400 hover:text-white">EN</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -39,7 +47,7 @@
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 md:p-6 shadow-2xl mb-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Departure (Keberangkatan)</label>
+          <label data-i18n="dep_label" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Keberangkatan</label>
           <div class="relative">
             <select id="origin" onchange="runRouting()" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-3 text-white text-sm font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition appearance-none cursor-pointer">
               <option value="jakarta" selected>Jakarta</option>
@@ -57,7 +65,7 @@
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Destination (Tujuan)</label>
+          <label data-i18n="dest_label" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Tujuan</label>
           <div class="relative">
             <select id="destination" onchange="runRouting()" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-3 text-white text-sm font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition appearance-none cursor-pointer">
               <option value="surabaya" selected>Surabaya</option>
@@ -75,44 +83,84 @@
         </div>
       </div>
 
-      <!-- Filters & Active Corridor Indicator -->
+      <!-- Filters -->
       <div class="mt-5 pt-4 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3 text-xs">
         <div id="corridor-summary" class="text-slate-300 font-medium flex items-center gap-2"></div>
 
         <div class="flex items-center gap-2 w-full sm:w-auto">
           <select id="power-filter" onchange="runRouting()" class="bg-slate-950 border border-slate-700/80 rounded-lg px-3 py-1.5 text-slate-300 text-xs focus:outline-none focus:border-emerald-500 cursor-pointer">
-            <option value="all">All Power Ratings</option>
-            <option value="50">≥ 50 kW (Fast)</option>
-            <option value="100">≥ 100 kW (Rapid)</option>
-            <option value="200">200 kW (Ultra Fast)</option>
+            <option data-i18n="pow_all" value="all">Semua Daya</option>
+            <option data-i18n="pow_50" value="50">≥ 50 kW (Fast)</option>
+            <option data-i18n="pow_100" value="100">≥ 100 kW (Rapid)</option>
+            <option data-i18n="pow_200" value="200">200 kW (Ultra Fast)</option>
           </select>
-          <input type="text" id="search-box" oninput="runRouting()" placeholder="Search rest area / KM..." class="bg-slate-950 border border-slate-700/80 rounded-lg px-3 py-1.5 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-emerald-500 flex-grow sm:flex-grow-0 sm:w-44">
+          <input type="text" data-i18n="search_ph" id="search-box" oninput="runRouting()" placeholder="Cari rest area / KM..." class="bg-slate-950 border border-slate-700/80 rounded-lg px-3 py-1.5 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-emerald-500 flex-grow sm:flex-grow-0 sm:w-44">
         </div>
       </div>
     </div>
 
     <!-- Live Stats Bar -->
     <div id="stats-banner" class="flex items-center justify-between px-2 mb-3 text-xs text-slate-400 font-semibold">
-      <span id="match-counter">Loading SPKLU dataset...</span>
-      <span class="text-slate-500">Sorted sequentially by driving direction</span>
+      <span id="match-counter" data-i18n="loading">Memuat data...</span>
+      <span data-i18n="sort_info" class="text-slate-500 hidden sm:block">Diurutkan berurutan sesuai arah jalan</span>
     </div>
 
     <!-- SPKLU Cards Container -->
     <div id="results-list" class="space-y-3">
-      <!-- Loading skeleton -->
-      <div class="p-8 text-center text-slate-500 border border-slate-800 rounded-xl bg-slate-900/50">
-        Loading charging stations from stations.json...
+      <div class="p-8 text-center text-slate-500 border border-slate-800 rounded-xl bg-slate-900/50" data-i18n="loading">
+        Memuat data...
       </div>
     </div>
   </main>
 
-  <footer class="border-t border-slate-800/80 py-4 text-center text-xs text-slate-500">
-    DIY Open Charge Map & PLN Trans-Java Dataset • Powered by stations.json
+  <footer data-i18n="footer" class="border-t border-slate-800/80 py-4 text-center text-xs text-slate-500">
+    Dataset Mandiri PLN Trans-Jawa • Ditenagai oleh stations.json
   </footer>
 
   <script>
+    // --- GLOBAL STATE ---
+    let i18nDictionary = {};
     let SPKLU_NETWORK = [];
+    let currentLang = localStorage.getItem('lang') || 'id'; // Default to ID
 
+    // --- TRANSLATION HELPER ---
+    function t(key) {
+      if (!i18nDictionary[currentLang]) return key;
+      return i18nDictionary[currentLang][key] || key;
+    }
+
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      document.documentElement.lang = lang;
+
+      // Update toggle buttons styling
+      document.getElementById('btn-id').className = `px-2.5 py-1 text-[11px] font-bold rounded-md transition-colors ${lang === 'id' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400 hover:text-white'}`;
+      document.getElementById('btn-en').className = `px-2.5 py-1 text-[11px] font-bold rounded-md transition-colors ${lang === 'en' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400 hover:text-white'}`;
+
+      // Update all static attributes marked with data-i18n
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        // Handle options inside select dropdowns
+        if (el.tagName === 'OPTION') {
+            el.textContent = t(key);
+        } else if (el.tagName === 'INPUT' && el.type === 'text') {
+            el.placeholder = t(key);
+        } else {
+            el.textContent = t(key);
+        }
+      });
+
+      // Update badge if data is loaded
+      if (SPKLU_NETWORK.length > 0) {
+        document.getElementById("source-badge").textContent = `${SPKLU_NETWORK.length} ${t('stations_active')}`;
+      }
+
+      // Re-run routing to re-render cards in the new language
+      runRouting();
+    }
+
+    // --- GRAPH DATA ---
     const HIGHWAY_GRAPH = {
       merak: [{ to: 'jakarta', segment: 'merak-jakarta', side: 'B', order: 'desc' }],
       jakarta: [
@@ -162,8 +210,10 @@
       return null;
     }
 
+    // --- ROUTING ENGINE ---
     function runRouting() {
-      if (SPKLU_NETWORK.length === 0) return;
+      // Prevent running before JSONs are fully loaded
+      if (SPKLU_NETWORK.length === 0 || Object.keys(i18nDictionary).length === 0) return;
 
       const origin = document.getElementById("origin").value;
       const destination = document.getElementById("destination").value;
@@ -175,11 +225,11 @@
       const matchCounter = document.getElementById("match-counter");
 
       if (origin === destination) {
-        corridorSummary.innerHTML = `<span class="text-amber-400">Please choose different departure and destination cities.</span>`;
-        matchCounter.textContent = "0 stations";
+        corridorSummary.innerHTML = "";
+        matchCounter.textContent = `0 ${t('found')}`;
         resultsContainer.innerHTML = `
           <div class="text-center py-12 border border-dashed border-slate-800 rounded-xl">
-            <p class="text-slate-400 text-sm">Departure and destination must be different.</p>
+            <p class="text-slate-400 text-sm">${t('err_same_city')}</p>
           </div>
         `;
         return;
@@ -187,7 +237,7 @@
 
       const legs = findRoute(origin, destination);
       if (!legs) {
-        resultsContainer.innerHTML = `<div class="p-6 text-center text-slate-400">Route not found.</div>`;
+        resultsContainer.innerHTML = `<div class="p-6 text-center text-slate-400">${t('err_no_route')}</div>`;
         return;
       }
 
@@ -219,18 +269,23 @@
       }
 
       const ultraCount = matchedStations.filter(s => s.power >= 200).length;
-      matchCounter.textContent = `${matchedStations.length} SPKLU found (${ultraCount} Ultra Fast 200 kW)`;
+      matchCounter.textContent = `${matchedStations.length} ${t('found')} (${ultraCount} ${t('ultra_fast')} 200 kW)`;
 
       if (matchedStations.length === 0) {
         resultsContainer.innerHTML = `
           <div class="text-center py-12 border border-slate-800 bg-slate-900/50 rounded-xl">
-            <p class="text-slate-400 text-sm">No charging stations matched your filter criteria along this corridor.</p>
+            <p class="text-slate-400 text-sm">${t('err_no_match')}</p>
           </div>
         `;
         return;
       }
 
-      resultsContainer.innerHTML = matchedStations.map(s => `
+      resultsContainer.innerHTML = matchedStations.map(s => {
+        let powerLabel = t('fast_charger');
+        if (s.power >= 200) powerLabel = t('ultra_fast');
+        else if (s.power >= 100) powerLabel = t('rapid');
+
+        return `
         <div class="bg-slate-900/90 border border-slate-800/90 hover:border-slate-700 rounded-xl p-4 sm:p-5 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div class="space-y-1.5 flex-grow">
             <div class="flex flex-wrap items-center gap-2">
@@ -255,55 +310,67 @@
                 ${s.power} <span class="text-xs font-sans font-bold text-slate-400">kW</span>
               </span>
               <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400">
-                ${s.power >= 200 ? 'Ultra Fast' : s.power >= 100 ? 'Rapid' : 'Fast Charger'}
+                ${powerLabel}
               </div>
             </div>
 
             <div class="flex items-center gap-2">
               <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" target="_blank" rel="noopener" 
                  class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-emerald-400 hover:text-emerald-300 font-semibold text-xs rounded-lg border border-slate-700 transition flex items-center gap-1">
-                Maps ↗
+                ${t('btn_maps')}
               </a>
               <a href="https://waze.com/ul?ll=${s.lat},${s.lng}&navigate=yes" target="_blank" rel="noopener" 
                  class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-sky-300 font-semibold text-xs rounded-lg border border-slate-700 transition flex items-center gap-1">
-                Waze ↗
+                ${t('btn_waze')}
               </a>
             </div>
           </div>
         </div>
-      `).join("");
+      `;
+      }).join("");
     }
 
-    // Fetch stations.json on startup
-    async function initDataset() {
+    // --- INITIALIZE APPLICATION ---
+    async function initApp() {
       const badge = document.getElementById("source-badge");
       const list = document.getElementById("results-list");
 
       try {
-        const response = await fetch("stations.json");
-        if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+        // Fetch both JSON files concurrently for speed
+        const [langRes, stationsRes] = await Promise.all([
+          fetch("i18n.json"),
+          fetch("stations.json")
+        ]);
+
+        if (!langRes.ok) throw new Error(`i18n.json HTTP error ${langRes.status}`);
+        if (!stationsRes.ok) throw new Error(`stations.json HTTP error ${stationsRes.status}`);
         
-        SPKLU_NETWORK = await response.json();
+        i18nDictionary = await langRes.json();
+        SPKLU_NETWORK = await stationsRes.json();
         
-        badge.textContent = `${SPKLU_NETWORK.length} Stations Active`;
-        badge.className = "text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-full font-semibold";
+        // Once both datasets are loaded, apply the language and render the UI
+        setLang(currentLang);
         
-        runRouting();
+        badge.className = "hidden sm:inline-block text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-full font-semibold";
+        
       } catch (err) {
-        console.error("Failed to load stations.json:", err);
-        badge.textContent = "Offline / Error";
-        badge.className = "text-xs bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2.5 py-1 rounded-full font-semibold";
+        console.error("Initialization Failed:", err);
+        
+        // Render fallback UI
+        const errorMsg = currentLang === 'en' ? "Offline / Error" : "Luring / Eror";
+        badge.textContent = errorMsg;
+        badge.className = "hidden sm:inline-block text-xs bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2.5 py-1 rounded-full font-semibold";
         
         list.innerHTML = `
           <div class="p-6 text-center text-rose-400 bg-rose-950/20 border border-rose-800/40 rounded-xl text-sm">
-            Failed to load <code class="font-mono bg-rose-950 px-1 py-0.5 rounded">stations.json</code>.<br>
-            Make sure both <code class="font-mono">index.html</code> and <code class="font-mono">stations.json</code> are placed in the same directory.
+            Failed to load resources.<br>
+            Make sure <code class="font-mono bg-rose-950 px-1 py-0.5 rounded">stations.json</code> and <code class="font-mono bg-rose-950 px-1 py-0.5 rounded">i18n.json</code> are placed in the same directory.
           </div>
         `;
       }
     }
 
-    document.addEventListener("DOMContentLoaded", initDataset);
+    document.addEventListener("DOMContentLoaded", initApp);
   </script>
 </body>
 </html>
