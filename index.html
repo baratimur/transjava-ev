@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trans Java EV Rest Area Locator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col justify-between">
+
+  <!-- Navigation / Header -->
+  <div class="border-b border-slate-800 bg-slate-900/70 backdrop-blur sticky top-0 z-30">
+    <div class="max-w-5xl mx-auto px-4 py-3.5 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="h-9 w-9 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-lg">
+          ⚡
+        </div>
+        <div>
+          <span class="font-extrabold text-white text-base tracking-tight block">SPKLU Trans Jawa</span>
+          <span class="text-[11px] text-slate-400 block -mt-0.5">Live Dataset via stations.json</span>
+        </div>
+      </div>
+      <span id="source-badge" class="text-xs bg-slate-800 text-slate-400 border border-slate-700 px-2.5 py-1 rounded-full font-semibold">
+        Connecting...
+      </span>
+    </div>
+  </div>
+
+  <main class="max-w-5xl mx-auto px-4 py-6 w-full flex-grow">
+    
+    <!-- Planner Box -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 md:p-6 shadow-2xl mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Departure (Keberangkatan)</label>
+          <div class="relative">
+            <select id="origin" onchange="runRouting()" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-3 text-white text-sm font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition appearance-none cursor-pointer">
+              <option value="jakarta" selected>Jakarta</option>
+              <option value="merak">Merak</option>
+              <option value="bogor">Bogor</option>
+              <option value="bandung">Bandung</option>
+              <option value="semarang">Semarang</option>
+              <option value="yogyakarta">Yogyakarta</option>
+              <option value="surabaya">Surabaya</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+              <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Destination (Tujuan)</label>
+          <div class="relative">
+            <select id="destination" onchange="runRouting()" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-3 text-white text-sm font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition appearance-none cursor-pointer">
+              <option value="surabaya" selected>Surabaya</option>
+              <option value="semarang">Semarang</option>
+              <option value="yogyakarta">Yogyakarta</option>
+              <option value="bandung">Bandung</option>
+              <option value="bogor">Bogor</option>
+              <option value="jakarta">Jakarta</option>
+              <option value="merak">Merak</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+              <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters & Active Corridor Indicator -->
+      <div class="mt-5 pt-4 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div id="corridor-summary" class="text-slate-300 font-medium flex items-center gap-2"></div>
+
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <select id="power-filter" onchange="runRouting()" class="bg-slate-950 border border-slate-700/80 rounded-lg px-3 py-1.5 text-slate-300 text-xs focus:outline-none focus:border-emerald-500 cursor-pointer">
+            <option value="all">All Power Ratings</option>
+            <option value="50">≥ 50 kW (Fast)</option>
+            <option value="100">≥ 100 kW (Rapid)</option>
+            <option value="200">200 kW (Ultra Fast)</option>
+          </select>
+          <input type="text" id="search-box" oninput="runRouting()" placeholder="Search rest area / KM..." class="bg-slate-950 border border-slate-700/80 rounded-lg px-3 py-1.5 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-emerald-500 flex-grow sm:flex-grow-0 sm:w-44">
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Stats Bar -->
+    <div id="stats-banner" class="flex items-center justify-between px-2 mb-3 text-xs text-slate-400 font-semibold">
+      <span id="match-counter">Loading SPKLU dataset...</span>
+      <span class="text-slate-500">Sorted sequentially by driving direction</span>
+    </div>
+
+    <!-- SPKLU Cards Container -->
+    <div id="results-list" class="space-y-3">
+      <!-- Loading skeleton -->
+      <div class="p-8 text-center text-slate-500 border border-slate-800 rounded-xl bg-slate-900/50">
+        Loading charging stations from stations.json...
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-800/80 py-4 text-center text-xs text-slate-500">
+    DIY Open Charge Map & PLN Trans-Java Dataset • Powered by stations.json
+  </footer>
+
+  <script>
+    let SPKLU_NETWORK = [];
+
+    const HIGHWAY_GRAPH = {
+      merak: [{ to: 'jakarta', segment: 'merak-jakarta', side: 'B', order: 'desc' }],
+      jakarta: [
+        { to: 'merak', segment: 'merak-jakarta', side: 'A', order: 'asc' },
+        { to: 'bogor', segment: 'jakarta-bogor', side: 'A', order: 'asc' },
+        { to: 'cikampek', segment: 'jakarta-cikampek', side: 'A', order: 'asc' }
+      ],
+      bogor: [{ to: 'jakarta', segment: 'jakarta-bogor', side: 'B', order: 'desc' }],
+      cikampek: [
+        { to: 'jakarta', segment: 'jakarta-cikampek', side: 'B', order: 'desc' },
+        { to: 'bandung', segment: 'cikampek-bandung', side: 'A', order: 'asc' },
+        { to: 'semarang', segment: 'cikampek-semarang', side: 'A', order: 'asc' }
+      ],
+      bandung: [{ to: 'cikampek', segment: 'cikampek-bandung', side: 'B', order: 'desc' }],
+      semarang: [
+        { to: 'cikampek', segment: 'cikampek-semarang', side: 'B', order: 'desc' },
+        { to: 'yogyakarta', segment: 'semarang-yogyakarta', side: 'A', order: 'asc' },
+        { to: 'surabaya', segment: 'semarang-surabaya', side: 'A', order: 'asc' }
+      ],
+      yogyakarta: [
+        { to: 'semarang', segment: 'semarang-yogyakarta', side: 'B', order: 'desc' },
+        { to: 'surabaya', segment: 'semarang-surabaya', side: 'A', order: 'asc' }
+      ],
+      surabaya: [
+        { to: 'semarang', segment: 'semarang-surabaya', side: 'B', order: 'desc' },
+        { to: 'yogyakarta', segment: 'semarang-surabaya', side: 'B', order: 'desc' }
+      ]
+    };
+
+    function findRoute(start, end) {
+      if (start === end) return null;
+      let queue = [[start, []]];
+      let visited = new Set([start]);
+
+      while (queue.length > 0) {
+        let [current, path] = queue.shift();
+        if (current === end) return path;
+
+        const neighbors = HIGHWAY_GRAPH[current] || [];
+        for (let edge of neighbors) {
+          if (!visited.has(edge.to)) {
+            visited.add(edge.to);
+            queue.push([edge.to, [...path, edge]]);
+          }
+        }
+      }
+      return null;
+    }
+
+    function runRouting() {
+      if (SPKLU_NETWORK.length === 0) return;
+
+      const origin = document.getElementById("origin").value;
+      const destination = document.getElementById("destination").value;
+      const powerLimit = document.getElementById("power-filter").value;
+      const search = document.getElementById("search-box").value.toLowerCase().trim();
+
+      const resultsContainer = document.getElementById("results-list");
+      const corridorSummary = document.getElementById("corridor-summary");
+      const matchCounter = document.getElementById("match-counter");
+
+      if (origin === destination) {
+        corridorSummary.innerHTML = `<span class="text-amber-400">Please choose different departure and destination cities.</span>`;
+        matchCounter.textContent = "0 stations";
+        resultsContainer.innerHTML = `
+          <div class="text-center py-12 border border-dashed border-slate-800 rounded-xl">
+            <p class="text-slate-400 text-sm">Departure and destination must be different.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const legs = findRoute(origin, destination);
+      if (!legs) {
+        resultsContainer.innerHTML = `<div class="p-6 text-center text-slate-400">Route not found.</div>`;
+        return;
+      }
+
+      corridorSummary.innerHTML = legs.map((leg, idx) => `
+        <span class="inline-flex items-center gap-1.5 bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md text-[11px] font-mono border border-slate-700/60">
+          <span class="text-emerald-400 font-bold">Jalur ${leg.side}</span> ${leg.segment}
+        </span>
+        ${idx < legs.length - 1 ? '<span class="text-slate-600">→</span>' : ''}
+      `).join("");
+
+      let matchedStations = [];
+      legs.forEach(leg => {
+        let stationsOnLeg = SPKLU_NETWORK.filter(s => s.segment === leg.segment && s.side === leg.side);
+        stationsOnLeg.sort((a, b) => leg.order === 'asc' ? a.km - b.km : b.km - a.km);
+        matchedStations.push(...stationsOnLeg);
+      });
+
+      if (powerLimit !== "all") {
+        const minKW = parseInt(powerLimit, 10);
+        matchedStations = matchedStations.filter(s => s.power >= minKW);
+      }
+
+      if (search) {
+        matchedStations = matchedStations.filter(s => 
+          s.name.toLowerCase().includes(search) || 
+          s.brand.toLowerCase().includes(search) ||
+          `km ${s.km}`.includes(search)
+        );
+      }
+
+      const ultraCount = matchedStations.filter(s => s.power >= 200).length;
+      matchCounter.textContent = `${matchedStations.length} SPKLU found (${ultraCount} Ultra Fast 200 kW)`;
+
+      if (matchedStations.length === 0) {
+        resultsContainer.innerHTML = `
+          <div class="text-center py-12 border border-slate-800 bg-slate-900/50 rounded-xl">
+            <p class="text-slate-400 text-sm">No charging stations matched your filter criteria along this corridor.</p>
+          </div>
+        `;
+        return;
+      }
+
+      resultsContainer.innerHTML = matchedStations.map(s => `
+        <div class="bg-slate-900/90 border border-slate-800/90 hover:border-slate-700 rounded-xl p-4 sm:p-5 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="space-y-1.5 flex-grow">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                KM ${s.km}
+              </span>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded ${s.side === 'A' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20'}">
+                Jalur ${s.side}
+              </span>
+              <span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700/60">
+                ${s.brand}
+              </span>
+            </div>
+            
+            <h3 class="font-bold text-white text-base leading-snug">${s.name}</h3>
+            <p class="text-xs text-slate-400">${s.type}</p>
+          </div>
+
+          <div class="flex items-center justify-between sm:flex-col sm:items-end gap-3 pt-3 sm:pt-0 border-t border-slate-800/60 sm:border-t-0">
+            <div class="text-left sm:text-right">
+              <span class="text-xl sm:text-2xl font-black font-mono tracking-tight ${s.power >= 200 ? 'text-amber-400' : s.power >= 100 ? 'text-emerald-400' : 'text-slate-200'}">
+                ${s.power} <span class="text-xs font-sans font-bold text-slate-400">kW</span>
+              </span>
+              <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400">
+                ${s.power >= 200 ? 'Ultra Fast' : s.power >= 100 ? 'Rapid' : 'Fast Charger'}
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" target="_blank" rel="noopener" 
+                 class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-emerald-400 hover:text-emerald-300 font-semibold text-xs rounded-lg border border-slate-700 transition flex items-center gap-1">
+                Maps ↗
+              </a>
+              <a href="https://waze.com/ul?ll=${s.lat},${s.lng}&navigate=yes" target="_blank" rel="noopener" 
+                 class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-sky-300 font-semibold text-xs rounded-lg border border-slate-700 transition flex items-center gap-1">
+                Waze ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    // Fetch stations.json on startup
+    async function initDataset() {
+      const badge = document.getElementById("source-badge");
+      const list = document.getElementById("results-list");
+
+      try {
+        const response = await fetch("stations.json");
+        if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+        
+        SPKLU_NETWORK = await response.json();
+        
+        badge.textContent = `${SPKLU_NETWORK.length} Stations Active`;
+        badge.className = "text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-full font-semibold";
+        
+        runRouting();
+      } catch (err) {
+        console.error("Failed to load stations.json:", err);
+        badge.textContent = "Offline / Error";
+        badge.className = "text-xs bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2.5 py-1 rounded-full font-semibold";
+        
+        list.innerHTML = `
+          <div class="p-6 text-center text-rose-400 bg-rose-950/20 border border-rose-800/40 rounded-xl text-sm">
+            Failed to load <code class="font-mono bg-rose-950 px-1 py-0.5 rounded">stations.json</code>.<br>
+            Make sure both <code class="font-mono">index.html</code> and <code class="font-mono">stations.json</code> are placed in the same directory.
+          </div>
+        `;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", initDataset);
+  </script>
+</body>
+</html>
