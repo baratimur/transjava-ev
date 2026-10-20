@@ -1,0 +1,14 @@
+[
+  { "id": "merak", "name": "Merak" },
+  { "id": "jakarta", "name": "Jakarta" },
+  { "id": "bogor", "name": "Bogor" },
+  { "id": "bandung", "name": "Bandung" },
+  { "id": "dawuan", "name": "Dawuan (Cipali)" },
+  { "id": "semarang", "name": "Semarang" },
+  { "id": "solo", "name": "Solo (Surakarta)" },
+  { "id": "yogyakarta", "name": "Yogyakarta" },
+  { "id": "surabaya", "name": "Surabaya" },
+  { "id": "gempol", "name": "Gempol (Pasuruan)" },
+  { "id": "malang", "name": "Malang" },
+  { "id": "banyuwangi", "name": "Banyuwangi (Probolinggo)" }
+]
