@@ -1,0 +1,50 @@
+{
+  "merak": [{ "to": "jakarta", "segment": "merak-jakarta", "side": "B", "order": "desc" }],
+  "jakarta": [
+    { "to": "merak", "segment": "merak-jakarta", "side": "A", "order": "asc" },
+    { "to": "bogor", "segment": "jakarta-bogor", "side": "A", "order": "asc" },
+    { "to": "cikampek", "segment": "jakarta-cikampek", "side": "A", "order": "asc" }
+  ],
+  "bogor": [{ "to": "jakarta", "segment": "jakarta-bogor", "side": "B", "order": "desc" }],
+  "cikampek": [
+    { "to": "jakarta", "segment": "jakarta-cikampek", "side": "B", "order": "desc" },
+    { "to": "bandung", "segment": "cikampek-bandung", "side": "A", "order": "asc" },
+    { "to": "dawuan", "segment": "cikampek-dawuan", "side": "A", "order": "asc" }
+  ],
+  "bandung": [
+    { "to": "cikampek", "segment": "cikampek-bandung", "side": "B", "order": "desc" },
+    { "to": "dawuan", "segment": "bandung-dawuan", "side": "A", "order": "asc" }
+  ],
+  "dawuan": [
+    { "to": "cikampek", "segment": "cikampek-dawuan", "side": "B", "order": "desc" },
+    { "to": "bandung", "segment": "bandung-dawuan", "side": "B", "order": "desc" },
+    { "to": "semarang", "segment": "dawuan-semarang", "side": "A", "order": "asc" }
+  ],
+  "semarang": [
+    { "to": "dawuan", "segment": "dawuan-semarang", "side": "B", "order": "desc" },
+    { "to": "solo", "segment": "semarang-solo", "side": "A", "order": "asc" }
+  ],
+  "solo": [
+    { "to": "semarang", "segment": "semarang-solo", "side": "B", "order": "desc" },
+    { "to": "yogyakarta", "segment": "solo-yogyakarta", "side": "A", "order": "asc" },
+    { "to": "surabaya", "segment": "solo-surabaya", "side": "A", "order": "asc" }
+  ],
+  "yogyakarta": [
+    { "to": "solo", "segment": "solo-yogyakarta", "side": "B", "order": "desc" }
+  ],
+  "surabaya": [
+    { "to": "solo", "segment": "solo-surabaya", "side": "B", "order": "desc" },
+    { "to": "gempol", "segment": "surabaya-gempol", "side": "A", "order": "asc" }
+  ],
+  "gempol": [
+    { "to": "surabaya", "segment": "surabaya-gempol", "side": "B", "order": "desc" },
+    { "to": "malang", "segment": "gempol-malang", "side": "A", "order": "asc" },
+    { "to": "banyuwangi", "segment": "gempol-banyuwangi", "side": "A", "order": "asc" }
+  ],
+  "malang": [
+    { "to": "gempol", "segment": "gempol-malang", "side": "B", "order": "desc" }
+  ],
+  "banyuwangi": [
+    { "to": "gempol", "segment": "gempol-banyuwangi", "side": "B", "order": "desc" }
+  ]
+}
