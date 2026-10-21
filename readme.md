@@ -142,20 +142,6 @@ npx serve .
 
 Open `http://localhost:8000` in your browser.
 
----
-
-## 🌐 Deploying to GitHub Pages
-
-1. Push this repository to GitHub under your account.
-2. Navigate to **Settings** → **Pages**.
-3. Under **Build and deployment**:
-* **Source**: `Deploy from a branch`
-* **Branch**: `main` (or `master`), Folder: `/(root)`
-
-
-4. Click **Save**. Your site will be live within 60 seconds at `https://<your-username>.github.io/<repo-name>/`.
-
----
 
 ## 📄 License & Disclaimer
 
