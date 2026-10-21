@@ -16,7 +16,7 @@
   <meta name="keywords" content="SPKLU, Trans Jawa, Mobil Listrik, EV Charging, Rest Area, Tol Cipali, Tol Japek, CCS2, Chademo, PLN Mobile, Wuling, Astra Otopower" />
   <meta name="author" content="baratimur" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://spklutransjawa.com/" />
+  <link rel="canonical" href="https://baratimur.github.io/transjava-ev/" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -34,33 +34,37 @@
   <meta name="twitter:description" content="Temukan lokasi SPKLU rest area Tol Trans-Jawa dengan filter CCS2, Chademo, AC, dan sisa daya baterai." />
   <meta name="twitter:image" content="https://baratimur.github.io/transjava-ev/og-image.png" />
 
-  <!-- Structured Data (JSON-LD) -->
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "SPKLU Trans Jawa",
-  "url": "https://spklutransjawa.com/",
-  "description": "Aplikasi panduan pencarian SPKLU rest area Tol Trans-Jawa untuk pengendara mobil listrik.",
-  "applicationCategory": "TravelApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "IDR"
-  }
-}
-</script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class'
-    }
-  </script>
+  <!-- Preconnect untuk Fonts (Mempercepat LCP) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap"></noscript>
+
+  <!-- Pindah Script Tailwind ke atas namun tambahkan DEFER untuk menghindari render blocking -->
+  <script src="https://cdn.tailwindcss.com" defer></script>
+  <script>
+    window.tailwind = window.tailwind || {};
+    window.tailwind.config = { darkMode: 'class' };
+  </script>
+
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SPKLU Trans Jawa",
+    "url": "https://baratimur.github.io/transjava-ev/",
+    "description": "Aplikasi panduan pencarian SPKLU rest area Tol Trans-Jawa untuk pengendara mobil listrik.",
+    "applicationCategory": "TravelApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "IDR"
+    }
+  }
+  </script>
+
   <style>
     :root {
       --ios-ease: cubic-bezier(0.25, 1, 0.5, 1);
@@ -118,41 +122,47 @@
     .swap-active svg {
       transform: rotate(180deg);
     }
+    
+    /* Pre-rendering CLS fix */
+    #results-list {
+      min-height: 50vh; 
+    }
   </style>
 </head>
-<body class="bg-slate-100 dark:bg-[#070b14] text-slate-800 dark:text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-600 selection:text-white transition-colors duration-300">
+<!-- Kontras Latar Belakang Disesuaikan -->
+<body class="bg-slate-50 dark:bg-[#070b14] text-slate-800 dark:text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-600 selection:text-white transition-colors duration-300">
 
   <!-- Header -->
-  <header class="border-b border-slate-200/80 dark:border-slate-800/60 bg-white/80 dark:bg-[#070b14]/85 backdrop-blur-xl sticky top-0 z-30 transition-colors duration-300">
+  <header class="border-b border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-[#070b14]/85 backdrop-blur-xl sticky top-0 z-40 transition-colors duration-300">
     <div class="max-w-4xl mx-auto px-3.5 py-2.5 flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <div class="h-7 w-7 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/20 dark:border-emerald-500/30 flex items-center justify-center text-emerald-700 dark:text-emerald-400 font-bold text-xs shadow-sm">
+        <div class="h-7 w-7 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/30 dark:border-emerald-500/40 flex items-center justify-center text-emerald-800 dark:text-emerald-400 font-bold text-xs shadow-sm">
           ⚡
         </div>
         <h1 data-i18n="title" class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base tracking-tight m-0">SPKLU Trans Jawa</h1>
       </div>
       
       <div class="flex items-center gap-1.5">
-        <!-- Tombol Install PWA -->
-        <button type="button" id="btn-install" class="hidden items-center gap-1 px-2.5 py-1 text-xs font-bold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition-all duration-200 active:scale-95">
-          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L9 10.586V3a1 1 0 011-1zM3 14a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/></svg>
+        <!-- Tombol Install PWA: Padding diperbesar untuk target sentuh -->
+        <button type="button" id="btn-install" class="hidden items-center gap-1 px-3 py-1.5 min-h-[36px] text-xs font-bold rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white shadow-sm transition-all duration-200 active:scale-95">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L9 10.586V3a1 1 0 011-1zM3 14a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/></svg>
           <span>Install</span>
         </button>
 
-        <!-- Theme Toggle -->
-        <button type="button" onclick="toggleTheme()" id="theme-btn" aria-label="Ganti mode gelap/terang" class="h-7 w-7 rounded-lg flex items-center justify-center border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white shadow-sm transition-all active:scale-90">
-          <svg id="theme-icon-dark" class="w-3.5 h-3.5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <!-- Theme Toggle: Min-height 36px untuk aksesibilitas -->
+        <button type="button" onclick="toggleTheme()" id="theme-btn" aria-label="Ganti mode gelap/terang" class="h-9 w-9 min-h-[36px] min-w-[36px] rounded-lg flex items-center justify-center border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white shadow-sm transition-all active:scale-90">
+          <svg id="theme-icon-dark" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
-          <svg id="theme-icon-light" class="w-3.5 h-3.5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg id="theme-icon-light" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
           </svg>
         </button>
 
-        <!-- Language Toggle -->
-        <div class="flex items-center bg-slate-200/70 dark:bg-slate-900/90 rounded-lg p-0.5 border border-slate-200/80 dark:border-slate-800 text-[11px]">
-          <button onclick="setLang('id')" id="btn-id" class="px-2 py-0.5 font-bold rounded transition-all bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm">ID</button>
-          <button onclick="setLang('en')" id="btn-en" class="px-2 py-0.5 font-bold rounded transition-all text-slate-500 dark:text-slate-400">EN</button>
+        <!-- Language Toggle: Teks Kontras Tinggi -->
+        <div class="flex items-center bg-slate-200 dark:bg-slate-800 rounded-lg p-0.5 border border-slate-300 dark:border-slate-700 min-h-[36px]">
+          <button onclick="setLang('id')" id="btn-id" class="px-2.5 py-1 min-h-[32px] text-xs font-bold rounded transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm">ID</button>
+          <button onclick="setLang('en')" id="btn-en" class="px-2.5 py-1 min-h-[32px] text-xs font-bold rounded transition-all text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">EN</button>
         </div>
       </div>
     </div>
@@ -161,106 +171,132 @@
   <main class="max-w-4xl mx-auto px-3 py-3 w-full flex-grow">
     
     <!-- Planner Box -->
-    <section aria-label="Filter dan Rute" class="bg-white/95 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-3 shadow-sm dark:shadow-xl backdrop-blur-xl mb-3 transition-all">
+    <section aria-label="Filter dan Rute" class="relative z-30 bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-3 shadow-sm dark:shadow-xl backdrop-blur-xl mb-3 transition-all">
       
-      <!-- Unified Route Box with Modern Floating Dropdowns -->
-      <div class="relative flex items-center bg-slate-50 dark:bg-slate-950/70 border border-slate-200/90 dark:border-slate-800/90 rounded-xl p-2 sm:p-2.5">
+      <!-- Unified Route Box -->
+      <div class="relative z-30 flex items-center bg-slate-50 dark:bg-slate-950/70 border border-slate-200/90 dark:border-slate-800/90 rounded-xl p-2 sm:p-2.5">
         
         <!-- Indikator Jalur -->
         <div class="flex flex-col items-center justify-between self-stretch py-1.5 px-1 shrink-0">
-          <span class="w-2.5 h-2.5 rounded-full border-2 border-emerald-600 dark:border-emerald-500 bg-emerald-100 dark:bg-emerald-950"></span>
+          <span class="w-2.5 h-2.5 rounded-full border-2 border-emerald-700 dark:border-emerald-500 bg-emerald-100 dark:bg-emerald-950"></span>
           <span class="w-0.5 flex-1 my-0.5 bg-slate-300 dark:bg-slate-700"></span>
-          <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-600 dark:bg-rose-500"></span>
         </div>
 
         <!-- Kontainer Dropdown Asal & Tujuan -->
         <div class="flex-1 min-w-0 flex flex-col gap-1 pr-2">
           
-          <!-- Origin Dropdown -->
+          <!-- Origin Dropdown Searchable -->
           <div class="relative" id="dropdown-origin-wrapper">
-            <button type="button" id="origin-trigger" onclick="toggleDropdown('origin')" class="w-full flex items-center justify-between text-left py-1 text-slate-900 dark:text-white text-xs sm:text-sm font-bold focus:outline-none group">
+            <!-- padding diperbesar min-h 44px -->
+            <button type="button" id="origin-trigger" onclick="toggleDropdown('origin')" aria-haspopup="listbox" class="w-full flex items-center justify-between text-left py-2 min-h-[44px] text-slate-900 dark:text-white text-sm font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded-md px-1 group">
               <span id="origin-label" class="truncate">Jakarta</span>
-              <svg class="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-500 transition-transform duration-200" id="origin-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg class="h-4 w-4 text-slate-500 group-hover:text-emerald-600 transition-transform duration-200" id="origin-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
-            <div id="origin-menu" class="hidden absolute left-0 top-full mt-2 w-56 sm:w-64 max-h-60 overflow-y-auto no-scrollbar z-50 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl backdrop-blur-xl p-1.5 animate-ios-card">
+            <div id="origin-menu" class="hidden absolute left-0 top-full mt-2 w-64 sm:w-72 max-h-64 overflow-y-auto no-scrollbar z-50 bg-white/95 dark:bg-slate-900/95 border border-slate-300 dark:border-slate-700 rounded-2xl shadow-2xl backdrop-blur-xl p-2 animate-ios-card" role="listbox">
+              <div class="sticky top-0 bg-white/95 dark:bg-slate-900/95 pb-1.5 mb-1 border-b border-slate-200 dark:border-slate-800 z-10">
+                <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-2.5 py-2 min-h-[40px] focus-within:ring-2 focus-within:ring-emerald-500">
+                  <svg class="w-4 h-4 text-slate-500 mr-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <input type="text" id="origin-search" oninput="filterCities('origin')" aria-label="Cari kota asal" placeholder="Cari kota asal..." autocomplete="off" class="w-full bg-transparent text-slate-900 dark:text-white text-sm focus:outline-none placeholder-slate-500">
+                </div>
+              </div>
+              <div id="origin-list" class="space-y-0.5"></div>
             </div>
             <input type="hidden" id="origin" value="jakarta">
           </div>
 
-          <div class="h-px bg-slate-200 dark:bg-slate-800 w-full"></div>
+          <div class="h-px bg-slate-200 dark:bg-slate-700 w-full"></div>
 
-          <!-- Destination Dropdown -->
+          <!-- Destination Dropdown Searchable -->
           <div class="relative" id="dropdown-destination-wrapper">
-            <button type="button" id="destination-trigger" onclick="toggleDropdown('destination')" class="w-full flex items-center justify-between text-left py-1 text-slate-900 dark:text-white text-xs sm:text-sm font-bold focus:outline-none group">
+            <!-- padding diperbesar min-h 44px -->
+            <button type="button" id="destination-trigger" onclick="toggleDropdown('destination')" aria-haspopup="listbox" class="w-full flex items-center justify-between text-left py-2 min-h-[44px] text-slate-900 dark:text-white text-sm font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded-md px-1 group">
               <span id="destination-label" class="truncate">Surabaya</span>
-              <svg class="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-500 transition-transform duration-200" id="destination-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg class="h-4 w-4 text-slate-500 group-hover:text-emerald-600 transition-transform duration-200" id="destination-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
-            <div id="destination-menu" class="hidden absolute left-0 top-full mt-2 w-56 sm:w-64 max-h-60 overflow-y-auto no-scrollbar z-50 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl backdrop-blur-xl p-1.5 animate-ios-card">
+            <div id="destination-menu" class="hidden absolute left-0 top-full mt-2 w-64 sm:w-72 max-h-64 overflow-y-auto no-scrollbar z-50 bg-white/95 dark:bg-slate-900/95 border border-slate-300 dark:border-slate-700 rounded-2xl shadow-2xl backdrop-blur-xl p-2 animate-ios-card" role="listbox">
+              <div class="sticky top-0 bg-white/95 dark:bg-slate-900/95 pb-1.5 mb-1 border-b border-slate-200 dark:border-slate-800 z-10">
+                <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-2.5 py-2 min-h-[40px] focus-within:ring-2 focus-within:ring-emerald-500">
+                  <svg class="w-4 h-4 text-slate-500 mr-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <input type="text" id="destination-search" oninput="filterCities('destination')" aria-label="Cari kota tujuan" placeholder="Cari kota tujuan..." autocomplete="off" class="w-full bg-transparent text-slate-900 dark:text-white text-sm focus:outline-none placeholder-slate-500">
+                </div>
+              </div>
+              <div id="destination-list" class="space-y-0.5"></div>
             </div>
             <input type="hidden" id="destination" value="surabaya">
           </div>
         </div>
 
-        <!-- Tombol Tukar Arah Rute -->
+        <!-- Tombol Tukar Arah Rute: Diperbesar -->
         <div class="shrink-0 pl-1">
-          <button type="button" id="btn-swap" onclick="swapLocations()" data-i18n="swap_tooltip" title="Tukar arah rute" class="h-9 w-9 rounded-xl bg-white hover:bg-emerald-600 hover:text-white dark:bg-slate-800 dark:hover:bg-emerald-500 dark:hover:text-slate-950 text-slate-700 dark:text-emerald-400 border border-slate-200 dark:border-slate-700/80 transition-all duration-300 flex items-center justify-center shadow-sm active:scale-90">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <button type="button" id="btn-swap" onclick="swapLocations()" aria-label="Tukar rute awal dan tujuan" data-i18n="swap_tooltip" title="Tukar arah rute" class="h-11 w-11 min-h-[44px] min-w-[44px] rounded-xl bg-white hover:bg-emerald-700 hover:text-white dark:bg-slate-800 dark:hover:bg-emerald-600 dark:hover:text-white text-slate-700 dark:text-emerald-400 border border-slate-300 dark:border-slate-600 transition-all duration-300 flex items-center justify-center shadow-sm active:scale-90">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
             </svg>
           </button>
         </div>
       </div>
 
-      <!-- Ruas Tol: Horizontal Scroll + Drag di Desktop -->
-      <div class="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800/60">
-        <div id="corridor-summary" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 -mx-1 px-1 drag-scroll">
+      <!-- Ruas Tol: Padding dan gap ditambah untuk klik -->
+      <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/80">
+        <div id="corridor-summary" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 -mx-1 px-1 drag-scroll">
         </div>
       </div>
 
-      <!-- Filter Controls -->
-      <div class="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800/60 space-y-2">
+      <!-- Filter Controls: Kontras ditingkatkan, ukuran input diperbesar minimal 44px tinggi -->
+      <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/80 space-y-3">
         
         <!-- Baris Filter 1: Colokan & Kecepatan -->
-        <div class="flex items-center justify-between gap-1.5 overflow-x-auto no-scrollbar">
+        <div class="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar pb-1">
           <!-- Colokan Multi-Select -->
-          <div class="flex items-center gap-0.5 bg-slate-200/60 dark:bg-slate-950/80 p-0.5 border border-slate-200 dark:border-slate-800 rounded-lg shrink-0">
-            <button type="button" onclick="toggleConnector('CCS2')" id="btn-conn-ccs2" class="px-2 py-1 rounded-md text-[11px] font-bold transition-all bg-emerald-600 text-white shadow-sm dark:bg-emerald-500 dark:text-slate-950 active:scale-95">CCS2</button>
-            <button type="button" onclick="toggleConnector('Chademo')" id="btn-conn-chademo" class="px-2 py-1 rounded-md text-[11px] font-bold transition-all bg-emerald-600 text-white shadow-sm dark:bg-emerald-500 dark:text-slate-950 active:scale-95">Chademo</button>
-            <button type="button" onclick="toggleConnector('AC')" id="btn-conn-ac" class="px-2 py-1 rounded-md text-[11px] font-bold transition-all bg-emerald-600 text-white shadow-sm dark:bg-emerald-500 dark:text-slate-950 active:scale-95">AC</button>
+          <div class="flex items-center gap-1 bg-slate-200/80 dark:bg-slate-900 p-1 border border-slate-300 dark:border-slate-700 rounded-lg shrink-0">
+            <!-- Warna tombol tidak tersentuh kini kontras (text-slate-700), latar tersentuh emerald-700 -->
+            <button type="button" onclick="toggleConnector('CCS2')" id="btn-conn-ccs2" aria-pressed="true" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-emerald-700 text-white shadow-sm dark:bg-emerald-600 dark:text-white active:scale-95">CCS2</button>
+            <button type="button" onclick="toggleConnector('Chademo')" id="btn-conn-chademo" aria-pressed="true" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-emerald-700 text-white shadow-sm dark:bg-emerald-600 dark:text-white active:scale-95">Chademo</button>
+            <button type="button" onclick="toggleConnector('AC')" id="btn-conn-ac" aria-pressed="true" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-emerald-700 text-white shadow-sm dark:bg-emerald-600 dark:text-white active:scale-95">AC</button>
           </div>
 
           <!-- Kecepatan -->
-          <div class="flex items-center gap-0.5 bg-slate-200/60 dark:bg-slate-950/80 p-0.5 border border-slate-200 dark:border-slate-800 rounded-lg shrink-0">
-            <button type="button" onclick="setSpeedFilter('all')" id="btn-speed-all" class="px-2 py-1 rounded-md text-[11px] font-semibold transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm" data-i18n="speed_all">Semua</button>
-            <button type="button" onclick="setSpeedFilter('50')" id="btn-speed-50" class="px-2 py-1 rounded-md text-[11px] font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">≥50k</button>
-            <button type="button" onclick="setSpeedFilter('100')" id="btn-speed-100" class="px-2 py-1 rounded-md text-[11px] font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">≥100k</button>
-            <button type="button" onclick="setSpeedFilter('200')" id="btn-speed-200" class="px-2 py-1 rounded-md text-[11px] font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">200k</button>
+          <div class="flex items-center gap-1 bg-slate-200/80 dark:bg-slate-900 p-1 border border-slate-300 dark:border-slate-700 rounded-lg shrink-0">
+            <button type="button" onclick="setSpeedFilter('all')" id="btn-speed-all" aria-pressed="true" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm" data-i18n="speed_all">Semua</button>
+            <button type="button" onclick="setSpeedFilter('50')" id="btn-speed-50" aria-pressed="false" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">≥50k</button>
+            <button type="button" onclick="setSpeedFilter('100')" id="btn-speed-100" aria-pressed="false" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">≥100k</button>
+            <button type="button" onclick="setSpeedFilter('200')" id="btn-speed-200" aria-pressed="false" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">200k</button>
           </div>
         </div>
 
         <!-- Baris Filter 2: KM, Sisa Baterai, Checkbox Jangkauan -->
-        <div class="flex items-center gap-1.5 text-xs">
+        <div class="flex items-center gap-2 text-xs">
           <!-- KM Sekarang -->
-          <div class="flex-1 flex items-center bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-lg px-2 py-1.5 focus-within:border-emerald-600 dark:focus-within:border-emerald-500 transition-all">
-            <span class="text-[10px] font-bold font-mono text-emerald-700 dark:text-emerald-400 mr-1 shrink-0">KM</span>
-            <input type="number" id="current-km" oninput="animatedRouting(false)" placeholder="Cth. 57" class="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-400 text-xs focus:outline-none font-mono">
-            <button type="button" onclick="clearKm()" class="text-slate-400 hover:text-slate-600 text-[11px] ml-0.5">✕</button>
+          <div class="flex-1 flex items-center bg-white dark:bg-slate-950/80 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-2 min-h-[44px] focus-within:border-emerald-600 dark:focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all">
+            <label for="current-km" class="sr-only">KM Sekarang</label>
+            <span class="text-[11px] font-bold font-mono text-emerald-800 dark:text-emerald-400 mr-1.5 shrink-0">KM</span>
+            <input type="number" id="current-km" oninput="animatedRouting(false)" placeholder="Cth. 57" class="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-500 text-sm focus:outline-none font-mono">
+            <!-- Ukuran tombol close diperbesar -->
+            <button type="button" onclick="clearKm()" aria-label="Hapus KM" class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white min-h-[32px] min-w-[32px] flex items-center justify-center -mr-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
           </div>
 
           <!-- Sisa Baterai -->
-          <div class="flex-1 flex items-center bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-lg px-2 py-1.5 focus-within:border-emerald-600 dark:focus-within:border-emerald-500 transition-all">
-            <span class="text-xs mr-1 shrink-0">🔋</span>
-            <input type="number" id="battery-range" oninput="animatedRouting(false)" placeholder="Cth. 150" class="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-400 text-xs focus:outline-none font-mono">
-            <span class="text-[10px] text-slate-400 font-mono shrink-0">km</span>
+          <div class="flex-1 flex items-center bg-white dark:bg-slate-950/80 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-2 min-h-[44px] focus-within:border-emerald-600 dark:focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all">
+            <label for="battery-range" class="sr-only">Jangkauan Baterai (km)</label>
+            <span class="text-sm mr-1.5 shrink-0" aria-hidden="true">🔋</span>
+            <input type="number" id="battery-range" oninput="animatedRouting(false)" placeholder="Cth. 150" class="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-500 text-sm focus:outline-none font-mono">
+            <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400 font-mono shrink-0 ml-1">km</span>
           </div>
 
           <!-- Toggle Range -->
-          <label class="shrink-0 flex items-center gap-1 cursor-pointer select-none bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 rounded-lg px-2 py-1.5 text-[11px] text-slate-600 dark:text-slate-300 font-medium">
-            <input type="checkbox" id="filter-within-range" onchange="animatedRouting(false)" class="rounded border-slate-300 dark:border-slate-700 text-emerald-600 focus:ring-0 cursor-pointer w-3.5 h-3.5">
+          <label class="shrink-0 flex items-center gap-1.5 cursor-pointer select-none bg-white dark:bg-slate-950/80 border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 rounded-lg px-3 py-2 min-h-[44px] text-xs text-slate-800 dark:text-slate-200 font-bold shadow-sm transition-colors">
+            <input type="checkbox" id="filter-within-range" onchange="animatedRouting(false)" class="rounded border-slate-400 dark:border-slate-600 text-emerald-600 focus:ring-emerald-500 cursor-pointer w-4 h-4">
             <span class="hidden sm:inline" data-i18n="within_range_only">Dalam jangkauan</span>
             <span class="sm:hidden">Aman</span>
           </label>
@@ -269,81 +305,69 @@
     </section>
 
     <!-- Status Bar -->
-    <div id="stats-banner" class="flex items-center justify-between px-1 mb-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
+    <div id="stats-banner" class="flex items-center justify-between px-1 mb-3 text-xs text-slate-600 dark:text-slate-400 font-semibold" aria-live="polite">
       <span id="match-counter" data-i18n="loading">Mengecek tempat cas di sepanjang jalurmu...</span>
-      <span data-i18n="sort_info" class="text-slate-400 dark:text-slate-500 text-[11px] hidden sm:block">Urut sesuai arah jalanmu</span>
+      <span data-i18n="sort_info" class="text-slate-500 dark:text-slate-500 text-[11px] hidden sm:block">Urut sesuai arah jalanmu</span>
     </div>
 
     <!-- SPKLU Cards Container -->
-    <section aria-label="Daftar SPKLU" id="results-list" class="space-y-2">
-      <div class="p-6 text-center text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-800/60 rounded-2xl bg-white dark:bg-slate-900/20" data-i18n="loading">
+    <section aria-label="Daftar SPKLU" id="results-list" class="relative z-0 space-y-3">
+      <div class="p-6 text-center text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-800/60 rounded-2xl bg-white dark:bg-slate-900/20 shadow-sm" data-i18n="loading">
         Mengecek tempat cas di sepanjang jalurmu...
       </div>
     </section>
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-200/80 dark:border-slate-800/60 py-3.5 text-center text-xs text-slate-500 dark:text-slate-400 space-y-1.5 transition-colors">
-    <p data-i18n="footer">Panduan Nyaman SPKLU Tol Trans-Jawa • Dibuat untuk sesama pengendara EV</p>
-    <div class="flex items-center justify-center gap-2 text-[11px] flex-wrap">
-      <a href="https://trakteer.id/bara.timur/tip" target="_blank" rel="noopener" 
-         class="inline-flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors group">
+  <footer class="border-t border-slate-300 dark:border-slate-800/80 bg-white/50 dark:bg-transparent py-4 text-center text-xs text-slate-600 dark:text-slate-400 space-y-2 mt-4">
+    <p data-i18n="footer" class="font-medium">Panduan Nyaman SPKLU Tol Trans-Jawa • Dibuat untuk sesama pengendara EV</p>
+    <div class="flex items-center justify-center gap-2 text-xs flex-wrap font-medium">
+      <a href="https://trakteer.id/bara.timur/tip" target="_blank" rel="noopener" aria-label="Dukung proyek ini lewat Trakteer" 
+         class="inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 p-1.5 transition-colors group">
         <span>☕</span>
         <span class="underline underline-offset-2">Traktir Kopi</span>
       </a>
-      <span class="text-slate-300 dark:text-slate-700">•</span>
-      <a href="https://github.com/baratimur/transjava-ev" target="_blank" rel="noopener" 
-         class="inline-flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors group">
-        <svg class="w-3.5 h-3.5 fill-current text-slate-500 group-hover:text-emerald-600 transition-colors" viewBox="0 0 24 24">
+      <span class="text-slate-400 dark:text-slate-700" aria-hidden="true">•</span>
+      <a href="https://github.com/baratimur/transjava-ev" target="_blank" rel="noopener" aria-label="Lihat repositori GitHub"
+         class="inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 p-1.5 transition-colors group">
+        <svg class="w-4 h-4 fill-current text-slate-600 dark:text-slate-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
         </svg>
-        <span class="underline underline-offset-2">baratimur/transjava-ev</span>
+        <span class="underline underline-offset-2">GitHub</span>
       </a>
-      <span class="text-slate-300 dark:text-slate-700">•</span>
-      <span data-i18n="contrib_hint" class="text-slate-500">Terbuka untuk kontribusi data & PR</span>
+      <span class="text-slate-400 dark:text-slate-700" aria-hidden="true">•</span>
+      <span data-i18n="contrib_hint" class="text-slate-600 dark:text-slate-400">Terbuka untuk kontribusi data & PR</span>
     </div>
   </footer>
+
   <script>
-    // --- LOGIKA PWA INSTALL PROMPT ---
-    let deferredPrompt;
-    const installBtn = document.getElementById('btn-install');
-    
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.classList.remove('hidden');
-      installBtn.classList.add('inline-flex');
-    });
-    
-    installBtn.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-          installBtn.classList.add('hidden');
-        }
-        deferredPrompt = null;
-      } else if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-        alert('Untuk memasang di iPhone/iPad: Tekan ikon "Share" di bilah bawah Safari, lalu pilih "Add to Home Screen" (Tambahkan ke Layar Utama).');
-      }
-    });
-    
-    if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !window.navigator.standalone) {
-      installBtn.classList.remove('hidden');
-      installBtn.classList.add('inline-flex');
-    }
-    
-    window.addEventListener('appinstalled', () => {
-      installBtn.classList.add('hidden');
-    });
-    
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(err => {
-          console.warn('Gagal mendaftarkan service worker:', err);
-        });
+    // PWA Prompt Logging Removed/Deferred from critical path
+    window.addEventListener('load', () => {
+      let deferredPrompt;
+      const installBtn = document.getElementById('btn-install');
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBtn.classList.remove('hidden');
+        installBtn.classList.add('inline-flex');
       });
-    }
+      installBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          if (outcome === 'accepted') installBtn.classList.add('hidden');
+          deferredPrompt = null;
+        } else if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+          alert('Untuk memasang di iPhone/iPad: Tekan ikon "Share" di Safari, lalu "Add to Home Screen".');
+        }
+      });
+      if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !window.navigator.standalone) {
+        installBtn.classList.remove('hidden');
+        installBtn.classList.add('inline-flex');
+      }
+      window.addEventListener('appinstalled', () => installBtn.classList.add('hidden'));
+      if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(console.warn);
+    });
 
     let i18nDictionary = {};
     let SPKLU_NETWORK = [];
@@ -405,12 +429,12 @@
       localStorage.setItem('lang', lang);
       document.documentElement.lang = lang;
 
-      document.title = t('seo_title');
+      document.title = t('seo_title') || 'SPKLU Trans Jawa • Peta Cas Mobil Listrik Rest Area Tol';
       const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) metaDesc.setAttribute('content', t('seo_desc'));
+      if (metaDesc && t('seo_desc') !== 'seo_desc') metaDesc.setAttribute('content', t('seo_desc'));
 
-      document.getElementById('btn-id').className = `px-2 py-0.5 font-bold rounded transition-all ${lang === 'id' ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-400'}`;
-      document.getElementById('btn-en').className = `px-2 py-0.5 font-bold rounded transition-all ${lang === 'en' ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-400'}`;
+      document.getElementById('btn-id').className = `px-2.5 py-1 min-h-[32px] text-xs font-bold rounded transition-all ${lang === 'id' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'}`;
+      document.getElementById('btn-en').className = `px-2.5 py-1 min-h-[32px] text-xs font-bold rounded transition-all ${lang === 'en' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'}`;
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -433,30 +457,45 @@
       animatedRouting(false);
     }
 
-    // --- LOGIKA CUSTOM DROPDOWN ---
     function populateDropdowns(cities) {
       renderDropdownItems('origin', cities, 'jakarta');
       renderDropdownItems('destination', cities, 'surabaya');
     }
 
     function renderDropdownItems(type, cities, defaultVal) {
-      const menu = document.getElementById(`${type}-menu`);
+      const listContainer = document.getElementById(`${type}-list`);
       const label = document.getElementById(`${type}-label`);
       const input = document.getElementById(type);
 
-      input.value = defaultVal;
-      const initialCity = cities.find(c => c.id === defaultVal);
-      if (initialCity) label.textContent = initialCity.name;
+      if (defaultVal) {
+        input.value = defaultVal;
+        const initialCity = CITIES.find(c => c.id === defaultVal);
+        if (initialCity) label.textContent = initialCity.name;
+      }
 
-      menu.innerHTML = cities.map(city => {
-        const isSelected = city.id === defaultVal;
+      const currentSelected = input.value;
+
+      if (!cities || cities.length === 0) {
+        listContainer.innerHTML = `<div class="px-3 py-4 text-center text-sm text-slate-500 font-medium">Kota tidak ditemukan</div>`;
+        return;
+      }
+
+      listContainer.innerHTML = cities.map(city => {
+        const isSelected = city.id === currentSelected;
         return `
-          <button type="button" onclick="selectCity('${type}', '${city.id}', '${city.name}')" class="w-full flex items-center justify-between px-3 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-150 ${isSelected ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80'}">
+          <button type="button" aria-selected="${isSelected}" onclick="selectCity('${type}', '${city.id}', '${city.name}')" class="w-full flex items-center justify-between px-3 py-3 min-h-[44px] text-sm font-bold rounded-xl transition-all duration-150 ${isSelected ? 'bg-emerald-50 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-400' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}">
             <span>${city.name}</span>
-            ${isSelected ? '<span class="text-emerald-600 dark:text-emerald-400 text-xs font-bold">✓</span>' : ''}
+            ${isSelected ? '<span class="text-emerald-700 dark:text-emerald-400 text-sm">✓</span>' : ''}
           </button>
         `;
       }).join("");
+    }
+
+    function filterCities(type) {
+      const searchInput = document.getElementById(`${type}-search`);
+      const query = (searchInput.value || "").toLowerCase().trim();
+      const filtered = CITIES.filter(c => c.name.toLowerCase().includes(query) || c.id.toLowerCase().includes(query));
+      renderDropdownItems(type, filtered);
     }
 
     function toggleDropdown(type) {
@@ -467,9 +506,18 @@
       closeAllDropdowns();
 
       if (!isCurrentlyOpen) {
+        const searchInput = document.getElementById(`${type}-search`);
+        if (searchInput) {
+          searchInput.value = '';
+          renderDropdownItems(type, CITIES);
+        }
         menu.classList.remove('hidden');
         if (chevron) chevron.classList.add('rotate-180');
         openDropdownId = type;
+
+        setTimeout(() => {
+          if (searchInput) searchInput.focus();
+        }, 50);
       }
     }
 
@@ -525,7 +573,11 @@
     });
 
     function clearKm() {
-      document.getElementById("current-km").value = "";
+      const input = document.getElementById("current-km");
+      if(input) {
+        input.value = "";
+        input.focus();
+      }
       animatedRouting(false);
     }
 
@@ -536,16 +588,17 @@
 
     function setSpeedFilter(minPower) {
       selectedSpeedFilter = minPower;
-
       ['all', '50', '100', '200'].forEach(val => {
         const btn = document.getElementById(`btn-speed-${val}`);
-        if (val === minPower) {
-          btn.className = "px-2 py-1 rounded-md text-[11px] font-semibold transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm";
-        } else {
-          btn.className = "px-2 py-1 rounded-md text-[11px] font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
+        if(btn) {
+           btn.setAttribute('aria-pressed', val === minPower ? "true" : "false");
+           if (val === minPower) {
+             btn.className = "px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm";
+           } else {
+             btn.className = "px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white";
+           }
         }
       });
-
       animatedRouting(false);
     }
 
@@ -560,10 +613,14 @@
 
       ['CCS2', 'Chademo', 'AC'].forEach(tp => {
         const btn = document.getElementById(`btn-conn-${tp.toLowerCase()}`);
-        if (selectedConnectors.has(tp)) {
-          btn.className = "px-2 py-1 rounded-md text-[11px] font-bold transition-all bg-emerald-600 text-white shadow-sm dark:bg-emerald-500 dark:text-slate-950 active:scale-95";
-        } else {
-          btn.className = "px-2 py-1 rounded-md text-[11px] font-bold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white active:scale-95";
+        if(btn) {
+          const isActive = selectedConnectors.has(tp);
+          btn.setAttribute('aria-pressed', isActive ? "true" : "false");
+          if (isActive) {
+            btn.className = "px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-emerald-700 text-white shadow-sm dark:bg-emerald-600 dark:text-white active:scale-95";
+          } else {
+            btn.className = "px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white active:scale-95";
+          }
         }
       });
 
@@ -600,10 +657,10 @@
 
     function getBrandDot(brand) {
       const b = (brand || '').toUpperCase();
-      if (b.includes('WULING')) return 'bg-red-500';
-      if (b.includes('ASTRA')) return 'bg-blue-500';
+      if (b.includes('WULING')) return 'bg-rose-500';
+      if (b.includes('ASTRA')) return 'bg-sky-600';
       if (b.includes('IGREEN')) return 'bg-teal-500';
-      return 'bg-emerald-600 dark:bg-emerald-400';
+      return 'bg-emerald-600 dark:bg-emerald-500';
     }
 
     function runRouting() {
@@ -628,8 +685,8 @@
         corridorSummary.innerHTML = "";
         matchCounter.textContent = `0 ${t('spots_ahead')}`;
         resultsContainer.innerHTML = `
-          <div class="text-center py-8 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl bg-white/60 dark:bg-slate-900/10 animate-ios-card">
-            <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-medium">${t('err_same_city')}</p>
+          <div class="text-center py-10 border border-dashed border-slate-300 dark:border-slate-700 rounded-2xl bg-white/80 dark:bg-slate-900/40 animate-ios-card">
+            <p class="text-slate-600 dark:text-slate-400 text-sm font-bold">${t('err_same_city')}</p>
           </div>
         `;
         return;
@@ -638,16 +695,16 @@
       const legs = findRoute(origin, destination);
       if (!legs) {
         resultsContainer.innerHTML = `
-          <div class="p-5 text-center text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-800 rounded-2xl bg-white/60 dark:bg-slate-900/20 animate-ios-card text-xs sm:text-sm">
+          <div class="p-6 text-center text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-700 rounded-2xl bg-white/80 dark:bg-slate-900/40 animate-ios-card text-sm font-bold">
             ${t('err_no_route')}
           </div>
         `;
         return;
       }
 
-      // Tombol Ruas Tol
+      // Tombol Ruas Tol - Lebih Kontras
       let chipsMarkup = `
-        <button type="button" onclick="selectedSegmentFilter = null; animatedRouting(false)" class="whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all duration-200 ${selectedSegmentFilter === null ? 'bg-slate-900 text-white dark:bg-slate-700 shadow-sm' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 dark:bg-slate-950/70 dark:text-slate-400 dark:border-slate-800'} active:scale-95">
+        <button type="button" aria-pressed="${selectedSegmentFilter === null}" onclick="selectedSegmentFilter = null; animatedRouting(false)" class="whitespace-nowrap shrink-0 px-3 py-1.5 min-h-[36px] rounded-lg text-xs font-bold transition-all duration-200 ${selectedSegmentFilter === null ? 'bg-slate-800 text-white dark:bg-slate-700 shadow-sm' : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-700'} active:scale-95">
           ${t('all_segments')}
         </button>
       `;
@@ -655,9 +712,9 @@
       chipsMarkup += legs.map(leg => {
         const isSelected = selectedSegmentFilter === leg.segment;
         return `
-          <button type="button" onclick="toggleSegmentFilter('${leg.segment}')" class="whitespace-nowrap shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all duration-200 ${isSelected ? 'bg-emerald-600 text-white dark:bg-emerald-500 dark:text-slate-950 font-bold shadow-sm' : 'bg-white text-slate-700 border border-slate-200/90 hover:bg-slate-50 dark:bg-slate-950/70 dark:border-slate-800 dark:text-slate-300'} active:scale-95">
-            <span class="w-4 h-4 rounded text-[10px] font-black flex items-center justify-center ${isSelected ? 'bg-white/20 text-white dark:bg-slate-950/20 dark:text-slate-950' : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400'}">${leg.side}</span>
-            <span>${formatSegment(leg.segment, leg.side)}</span>
+          <button type="button" aria-pressed="${isSelected}" onclick="toggleSegmentFilter('${leg.segment}')" class="whitespace-nowrap shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[36px] rounded-lg text-xs font-mono transition-all duration-200 ${isSelected ? 'bg-emerald-700 text-white dark:bg-emerald-600 dark:text-white font-bold shadow-sm' : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-300'} active:scale-95">
+            <span class="w-4 h-4 rounded text-[10px] font-black flex items-center justify-center ${isSelected ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400'}">${leg.side}</span>
+            <span class="font-bold">${formatSegment(leg.segment, leg.side)}</span>
           </button>
         `;
       }).join("");
@@ -728,14 +785,14 @@
       const ultraCount = matchedStations.filter(s => s.highest_power >= 200).length;
       let counterText = `${matchedStations.length} ${t('spots_ahead')} (${ultraCount} ${t('speed_ultra')} 200 kW)`;
       if (passedCount > 0) {
-        counterText += ` • <span class="text-amber-600 dark:text-amber-400 font-normal">${passedCount} ${t('past_hidden')}</span>`;
+        counterText += ` • <span class="text-amber-700 dark:text-amber-400 font-bold">${passedCount} ${t('past_hidden')}</span>`;
       }
       matchCounter.innerHTML = counterText;
 
       if (matchedStations.length === 0) {
         resultsContainer.innerHTML = `
-          <div class="text-center py-8 border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/30 rounded-2xl animate-ios-card">
-            <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-medium">${t('err_no_match')}</p>
+          <div class="text-center py-10 border border-slate-300 dark:border-slate-800 bg-white/80 dark:bg-slate-900/40 rounded-2xl animate-ios-card shadow-sm">
+            <p class="text-slate-600 dark:text-slate-400 text-sm font-bold">${t('err_no_match')}</p>
           </div>
         `;
         return;
@@ -746,33 +803,29 @@
         if (s.highest_power >= 200) powerLabel = t('speed_ultra');
         else if (s.highest_power >= 100) powerLabel = t('speed_rapid');
 
-        // Hitung total fisik mesin charger dan total colokan/port
         const totalMachines = (s.chargers || []).length;
         const totalPorts = (s.chargers || []).reduce((acc, c) => acc + (c.total_ports || (c.ports ? c.ports.length : 1)), 0);
 
         const unitLabel = t('label_unit') || 'Mesin';
         const portLabel = t('label_port') || 'Port';
 
-        // SKEMA BARU KATEGORISASI KAPASITAS
+        // SKEMA KATEGORISASI KAPASITAS
         let capacityBadge = '';
         if (totalMachines > 4 && totalPorts > 10) {
-          // Hub Besar (⚡⚡): > 4 mesin dan > 10 port
           capacityBadge = `
-            <span class="inline-flex items-center gap-1 font-mono text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
+            <span class="inline-flex items-center gap-1 font-mono text-[11px] font-extrabold px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/30">
               ⚡⚡ ${totalMachines} ${unitLabel} (${totalPorts} ${portLabel})
             </span>
           `;
         } else if (totalMachines <= 1) {
-          // Kecil: 1 mesin saja (tanpa ikon)
           capacityBadge = `
-            <span class="inline-flex items-center font-mono text-[10px] sm:text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700/60">
+            <span class="inline-flex items-center font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-slate-200 text-slate-700 border border-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700">
               ${totalMachines} ${unitLabel} (${totalPorts} ${portLabel})
             </span>
           `;
         } else {
-          // Sedang (⚡): 2-4 mesin, atau mesin > 4 namun port <= 10
           capacityBadge = `
-            <span class="inline-flex items-center gap-1 font-mono text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-md bg-sky-50 text-sky-800 border border-sky-200 dark:bg-sky-500/10 dark:text-sky-400 dark:border-sky-500/20">
+            <span class="inline-flex items-center gap-1 font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-sky-100 text-sky-800 border border-sky-300 dark:bg-sky-500/20 dark:text-sky-400 dark:border-sky-500/30">
               ⚡ ${totalMachines} ${unitLabel} (${totalPorts} ${portLabel})
             </span>
           `;
@@ -782,24 +835,23 @@
         let distanceBadge = '';
         if (hasCurrentKm && s.distAhead !== null) {
           distanceBadge = `
-            <span class="inline-flex items-center font-mono font-bold text-xs px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
+            <span class="inline-flex items-center font-mono font-extrabold text-[11px] px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30">
               📍 ${s.distAhead} ${t('km_ahead')}
             </span>
           `;
         } else {
           distanceBadge = idx === 0 
-            ? `<span class="inline-flex items-center font-mono text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200/80 dark:border-slate-700/60">${t('first_stop')}</span>`
-            : `<span class="inline-flex items-center font-mono text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700/60">🚗 +${s.distFromPrev} ${t('from_prev_stop')}</span>`;
+            ? `<span class="inline-flex items-center font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-700">${t('first_stop')}</span>`
+            : `<span class="inline-flex items-center font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700">🚗 +${s.distFromPrev} ${t('from_prev_stop')}</span>`;
         }
 
         let batteryBadge = '';
         if (hasBatteryRange && hasCurrentKm) {
           batteryBadge = s.isWithinBattery
-            ? `<span class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">✓ ${t('within_battery')}</span>`
-            : `<span class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/20">⚠️ ${t('outside_battery')}</span>`;
+            ? `<span class="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30">✓ ${t('within_battery')}</span>`
+            : `<span class="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-rose-50 text-rose-800 border border-rose-300 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/30">⚠️ ${t('outside_battery')}</span>`;
         }
 
-        // Pengelompokan Mesin Sejenis (misal: 2× PLN | 2× CCS2 180 kW)
         const dispenserGroupMap = {};
         (s.chargers || []).forEach(c => {
           const portCountMap = {};
@@ -824,13 +876,13 @@
         });
 
         const dispenserList = Object.values(dispenserGroupMap).map(item => {
-          const machineCountPrefix = item.count > 1 ? `<span class="font-extrabold text-emerald-700 dark:text-emerald-400 mr-0.5">${item.count}×</span>` : '';
+          const machineCountPrefix = item.count > 1 ? `<span class="font-extrabold text-emerald-800 dark:text-emerald-400 mr-0.5">${item.count}×</span>` : '';
           return `
-            <div class="inline-flex items-center gap-1.5 bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800/80 rounded-lg px-2.5 py-1 text-xs">
-              <span class="w-1.5 h-1.5 rounded-full ${getBrandDot(item.brand)} shrink-0"></span>
-              <span class="font-semibold text-slate-700 dark:text-slate-300 text-[11px]">${machineCountPrefix}${item.brand}</span>
-              <span class="text-slate-300 dark:text-slate-700 text-[10px]">|</span>
-              <span class="font-mono text-slate-800 dark:text-slate-200 text-[11px] font-medium">${item.portSummaries}</span>
+            <div class="inline-flex items-center gap-1.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1 text-xs">
+              <span class="w-2 h-2 rounded-full ${getBrandDot(item.brand)} shrink-0"></span>
+              <span class="font-bold text-slate-800 dark:text-slate-200 text-[11px]">${machineCountPrefix}${item.brand}</span>
+              <span class="text-slate-300 dark:text-slate-600 text-[10px]" aria-hidden="true">|</span>
+              <span class="font-mono text-slate-800 dark:text-slate-200 text-[11px] font-bold">${item.portSummaries}</span>
             </div>
           `;
         }).join("");
@@ -838,15 +890,15 @@
         const staggerDelay = Math.min(idx * 28, 250);
 
         return `
-        <article style="animation-delay: ${staggerDelay}ms" class="animate-ios-card group bg-white dark:bg-slate-900/40 hover:bg-slate-50/70 dark:hover:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700 rounded-2xl p-3 sm:p-3.5 transition-all duration-200 shadow-sm hover:shadow-md">
+        <article style="animation-delay: ${staggerDelay}ms" class="animate-ios-card group bg-white dark:bg-slate-900/60 hover:bg-slate-50/80 dark:hover:bg-slate-900/90 border border-slate-300 dark:border-slate-700/80 hover:border-slate-400 dark:hover:border-slate-600 rounded-2xl p-3.5 sm:p-4 transition-all duration-200 shadow-sm hover:shadow-md">
           
           <!-- Baris 1: Info KM, Jalur, Kapasitas Mesin, Jarak & Daya -->
-          <div class="flex items-center justify-between gap-1.5 pb-2 border-b border-slate-100 dark:border-slate-800/60">
+          <div class="flex items-center justify-between gap-1.5 pb-2.5 border-b border-slate-200 dark:border-slate-800">
             <div class="flex items-center gap-1.5 flex-wrap">
-              <span class="font-mono text-xs font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
+              <span class="font-mono text-xs font-extrabold px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-900 border border-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/30">
                 KM ${s.km}
               </span>
-              <span class="text-[11px] font-bold px-1.5 py-0.5 rounded-md ${s.side === 'A' ? 'bg-sky-50 text-sky-700 border border-sky-200 dark:bg-sky-500/10 dark:text-sky-400 dark:border-sky-500/20' : 'bg-purple-50 text-purple-700 border border-purple-200 dark:bg-purple-500/10 dark:text-purple-400 dark:border-purple-500/20'}">
+              <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-md ${s.side === 'A' ? 'bg-sky-100 text-sky-900 border border-sky-300 dark:bg-sky-500/20 dark:text-sky-400 dark:border-sky-500/30' : 'bg-purple-100 text-purple-900 border border-purple-300 dark:bg-purple-500/20 dark:text-purple-400 dark:border-purple-500/30'}">
                 ${s.side}
               </span>
               ${capacityBadge}
@@ -856,40 +908,40 @@
 
             <!-- Daya Terbesar -->
             <div class="text-right shrink-0">
-              <span class="font-mono font-bold text-sm sm:text-base text-slate-900 dark:text-white">
-                ${s.lowest_power !== s.highest_power ? `${s.lowest_power}~${s.highest_power}` : s.highest_power}<span class="text-xs font-sans font-semibold text-slate-400 ml-0.5">kW</span>
+              <span class="font-mono font-extrabold text-base text-slate-900 dark:text-white">
+                ${s.lowest_power !== s.highest_power ? `${s.lowest_power}~${s.highest_power}` : s.highest_power}<span class="text-xs font-sans font-bold text-slate-500 ml-0.5">kW</span>
               </span>
-              <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 ml-1 hidden sm:inline">${powerLabel}</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 ml-1 hidden sm:inline">${powerLabel}</span>
             </div>
           </div>
 
           <!-- Baris 2: Nama Rest Area & Tombol Navigasi Kontras -->
-          <div class="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div class="mt-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h2 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base leading-tight group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors">
+              <h2 class="font-extrabold text-slate-900 dark:text-white text-base leading-tight group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
                 ${s.name}
               </h2>
-              <span class="text-[11px] text-slate-400 dark:text-slate-500 font-medium">
+              <span class="text-[11px] text-slate-500 dark:text-slate-400 font-bold">
                 ${formatSegment(s.segment, s.side)}
               </span>
             </div>
 
-            <div class="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
-              <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" target="_blank" rel="noopener" 
-                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-sm shadow-emerald-600/20 active:scale-95 transition-all">
-                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                <span>${t('btn_maps')}</span>
+            <div class="flex items-center gap-2 shrink-0 self-end sm:self-center">
+              <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" aria-label="Buka di Google Maps" target="_blank" rel="noopener" 
+                 class="inline-flex items-center gap-1.5 px-3.5 py-2 min-h-[36px] rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs shadow-sm active:scale-95 transition-all">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <span>Maps</span>
               </a>
-              <a href="https://waze.com/ul?ll=${s.lat},${s.lng}&navigate=yes" target="_blank" rel="noopener" 
-                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-semibold text-xs shadow-sm shadow-sky-600/20 active:scale-95 transition-all">
-                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M20.5 12c0-4.69-3.81-8.5-8.5-8.5S3.5 7.31 3.5 12c0 2.21.84 4.22 2.22 5.73l-1.16 3.48c-.14.42.24.83.67.72l3.65-.91c1.37.63 2.91.98 4.54.98 4.69 0 8.5-3.81 8.5-8.5zm-11 1.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-                <span>${t('btn_waze')}</span>
+              <a href="https://waze.com/ul?ll=${s.lat},${s.lng}&navigate=yes" aria-label="Buka di Waze" target="_blank" rel="noopener" 
+                 class="inline-flex items-center gap-1.5 px-3.5 py-2 min-h-[36px] rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-sm active:scale-95 transition-all">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20.5 12c0-4.69-3.81-8.5-8.5-8.5S3.5 7.31 3.5 12c0 2.21.84 4.22 2.22 5.73l-1.16 3.48c-.14.42.24.83.67.72l3.65-.91c1.37.63 2.91.98 4.54.98 4.69 0 8.5-3.81 8.5-8.5zm-11 1.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                <span>Waze</span>
               </a>
             </div>
           </div>
 
           <!-- Baris 3: Daftar Mesin Terkelompok Rapi -->
-          <div class="mt-2 flex flex-wrap gap-1.5">
+          <div class="mt-2.5 flex flex-wrap gap-1.5">
             ${dispenserList}
           </div>
         </article>
@@ -960,8 +1012,8 @@
       } catch (err) {
         console.error("Initialization Failed:", err);
         list.innerHTML = `
-          <div class="p-6 text-center text-rose-500 border border-rose-200 dark:border-rose-800/40 rounded-2xl text-sm animate-ios-card">
-            Gagal memuat data SPKLU. Pastikan semua file JSON berada di folder yang sama ya.
+          <div class="p-6 text-center text-rose-700 bg-rose-50 border border-rose-300 dark:text-rose-400 dark:bg-rose-900/20 dark:border-rose-800/60 rounded-2xl text-sm font-bold animate-ios-card">
+            Gagal memuat data SPKLU. Pastikan koneksi internet aktif.
           </div>
         `;
       }
