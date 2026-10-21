@@ -117,34 +117,34 @@
 <body class="bg-slate-100 dark:bg-[#070b14] text-slate-800 dark:text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-white transition-colors duration-300">
 
   <!-- Header -->
-  <header class="border-b border-slate-200/80 dark:border-slate-800/60 bg-white/80 dark:bg-[#070b14]/85 backdrop-blur-xl sticky top-0 z-30 transition-colors duration-300">
-    <div class="max-w-4xl mx-auto px-3.5 py-2.5 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <div class="h-7 w-7 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/20 dark:border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold text-xs shadow-sm">
-          ⚡
-        </div>
-        <h1 data-i18n="title" class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base tracking-tight m-0">SPKLU Trans Jawa</h1>
+ <header class="border-b border-slate-200/80 dark:border-slate-800/60 bg-white/80 dark:bg-[#070b14]/85 backdrop-blur-xl sticky top-0 z-30 transition-colors duration-300">
+  <div class="max-w-4xl mx-auto px-3.5 py-2.5 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="h-7 w-7 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/20 dark:border-emerald-500/30 flex items-center justify-center text-emerald-700 dark:text-emerald-400 font-bold text-xs shadow-sm">
+        ⚡
       </div>
-      
-      <div class="flex items-center gap-1.5">
-        <!-- Theme Toggle -->
-        <button type="button" onclick="toggleTheme()" id="theme-btn" aria-label="Ganti mode gelap/terang" class="h-7 w-7 rounded-lg flex items-center justify-center border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white shadow-sm transition-all active:scale-90">
-          <svg id="theme-icon-dark" class="w-3.5 h-3.5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-          <svg id="theme-icon-light" class="w-3.5 h-3.5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-          </svg>
-        </button>
+      <h1 data-i18n="title" class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base tracking-tight m-0">SPKLU Trans Jawa</h1>
+    </div>
+    
+    <div class="flex items-center gap-1.5">
+      <!-- Tombol Install PWA -->
+      <button type="button" id="btn-install" class="hidden items-center gap-1 px-2.5 py-1 text-xs font-bold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition-all duration-200 active:scale-95">
+        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L9 10.586V3a1 1 0 011-1zM3 14a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/></svg>
+        <span>Install</span>
+      </button>
 
-        <!-- Language Toggle -->
-        <div class="flex items-center bg-slate-200/70 dark:bg-slate-900/90 rounded-lg p-0.5 border border-slate-200/80 dark:border-slate-800 text-[11px]">
-          <button onclick="setLang('id')" id="btn-id" class="px-2 py-0.5 font-bold rounded transition-all bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm">ID</button>
-          <button onclick="setLang('en')" id="btn-en" class="px-2 py-0.5 font-bold rounded transition-all text-slate-500 dark:text-slate-400">EN</button>
-        </div>
+      <!-- Theme Toggle -->
+      <button type="button" onclick="toggleTheme()" id="theme-btn" ...>
+        ...
+      </button>
+
+      <!-- Language Toggle -->
+      <div class="flex items-center ...">
+        ...
       </div>
     </div>
-  </header>
+  </div>
+</header>
 
   <main class="max-w-4xl mx-auto px-3 py-3 w-full flex-grow">
     
@@ -282,6 +282,51 @@
   </footer>
 
   <script>
+    // --- LOGIKA PWA INSTALL PROMPT ---
+    let deferredPrompt;
+    const installBtn = document.getElementById('btn-install');
+    
+    // Browser Chrome / Android / Desktop Chromium
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.classList.remove('hidden');
+      installBtn.classList.add('inline-flex');
+    });
+    
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          installBtn.classList.add('hidden');
+        }
+        deferredPrompt = null;
+      } else if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+        // Edukasi khusus pengguna Safari iOS
+        alert('Untuk memasang di iPhone/iPad: Tekan ikon "Share" di bilah bawah Safari, lalu pilih "Add to Home Screen" (Tambahkan ke Layar Utama).');
+      }
+    });
+    
+    // Tampilkan tombol bagi pengguna iOS jika belum diinstal
+    if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !window.navigator.standalone) {
+      installBtn.classList.remove('hidden');
+      installBtn.classList.add('inline-flex');
+    }
+    
+    // Sembunyikan tombol jika sudah berjalan sebagai aplikasi terpasang
+    window.addEventListener('appinstalled', () => {
+      installBtn.classList.add('hidden');
+    });
+    
+    // Registrasi Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(err => {
+          console.warn('Gagal mendaftarkan service worker:', err);
+        });
+      });
+    }
     let i18nDictionary = {};
     let SPKLU_NETWORK = [];
     let HIGHWAY_GRAPH = {};
