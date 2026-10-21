@@ -32,7 +32,12 @@
     "from_prev_stop": "km from previous stop",
     "first_stop": "First stop",
     "within_battery": "Reachable",
-    "outside_battery": "Beyond range"
+    "outside_battery": "Beyond range",
+    "hub_large": "Large Hub",
+    "hub_medium": "Medium",
+    "hub_small": "1 Charger (High Queue Risk)",
+    "label_chargers": "Chargers",
+    "label_plugs": "Plugs"
   },
   "id": {
     "title": "SPKLU Trans Jawa",
@@ -67,6 +72,11 @@
     "from_prev_stop": "km dari stop sebelumnya",
     "first_stop": "Stop awal",
     "within_battery": "Bisa dijangkau",
-    "outside_battery": "Di luar baterai"
+    "outside_battery": "Di luar baterai",
+    "hub_large": "Hub Besar",
+    "hub_medium": "Sedang",
+    "hub_small": "1 Charger (Rentan Antre)",
+    "label_chargers": "Charger",
+    "label_plugs": "Colokan"
   }
 }
