@@ -9,7 +9,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   
-  <!-- Primary Meta Tags (SEO) -->
   <title>SPKLU Trans Jawa • Peta Cas Mobil Listrik Rest Area Tol</title>
   <meta name="title" content="SPKLU Trans Jawa • Peta Cas Mobil Listrik Rest Area Tol" />
   <meta name="description" content="Temukan lokasi SPKLU rest area Tol Trans-Jawa dari Merak hingga Surabaya & Banyuwangi. Filter lengkap colokan CCS2, Chademo, AC, daya Ultra Fast 200 kW, dan estimasi jarak baterai EV." />
@@ -18,7 +17,7 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://baratimur.github.io/transjava-ev/" />
 
-  <!-- Open Graph / Facebook -->
+  <!-- Open Graph & Twitter Meta -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://baratimur.github.io/transjava-ev/" />
   <meta property="og:title" content="SPKLU Trans Jawa • Peta Cas Mobil Listrik Rest Area Tol" />
@@ -26,322 +25,316 @@
   <meta property="og:image" content="https://baratimur.github.io/transjava-ev/og-image.png" />
   <meta property="og:locale" content="id_ID" />
   <meta property="og:locale:alternate" content="en_US" />
-
-  <!-- Twitter Meta -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://baratimur.github.io/transjava-ev/" />
   <meta name="twitter:title" content="SPKLU Trans Jawa • Peta Cas Mobil Listrik Rest Area Tol" />
   <meta name="twitter:description" content="Temukan lokasi SPKLU rest area Tol Trans-Jawa dengan filter CCS2, Chademo, AC, dan sisa daya baterai." />
   <meta name="twitter:image" content="https://baratimur.github.io/transjava-ev/og-image.png" />
 
-  <!-- Preconnect untuk Fonts (Mempercepat LCP) -->
+  <!-- Preconnect & Preload (Untuk Kecepatan FCP & LCP) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap"></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  
+  <link rel="preload" href="i18n.json" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="stations.json" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="highway.json" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="cities.json" as="fetch" crossorigin="anonymous">
 
-  <!-- Pindah Script Tailwind ke atas namun tambahkan DEFER untuk menghindari render blocking -->
-  <script src="https://cdn.tailwindcss.com" defer></script>
+  <!-- Inline CSS Kritis (App Shell Skeleton) untuk skor FCP Instan -->
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Plus Jakarta Sans', sans-serif;
+      background-color: #070b14; /* Default gelap */
+      color: #f1f5f9;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    /* Overlay Halaman Loading Asli yang Cepat Dimuat */
+    #initial-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background-color: #070b14;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    /* Versi Light Mode Skeleton */
+    html:not(.dark) body { background-color: #f8fafc; color: #0f172a; }
+    html:not(.dark) #initial-loader { background-color: #f8fafc; }
+    html:not(.dark) .spinner { border-color: #cbd5e1; border-top-color: #059669; }
+    html:not(.dark) .loader-text { color: #475569; }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #1e293b;
+      border-top: 4px solid #10b981;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 16px;
+    }
+
+    .loader-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
+    }
+
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    
+    /* Menyembunyikan konten utama hingga siap */
+    #app-content { opacity: 0; transition: opacity 0.5s ease; }
+    
+    .font-mono { font-family: 'SF Mono', 'JetBrains Mono', Menlo, monospace; }
+    @media (max-width: 640px) { select, input { font-size: 16px !important; } }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .drag-scroll { cursor: grab; user-select: none; }
+    .drag-scroll:active { cursor: grabbing; }
+
+    @keyframes iosCardIn { 0% { opacity: 0; transform: translateY(6px) scale(0.99); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+    .animate-ios-card { animation: iosCardIn 0.25s cubic-bezier(0.32, 0.72, 0, 1) both; }
+    .swap-active svg { transform: rotate(180deg); }
+    #results-list { min-height: 50vh; }
+  </style>
+
+  <!-- Script Deteksi Tema Kilat (Mencegah Flashing) -->
+  <script>
+    const savedTheme = localStorage.getItem('theme');
+    const isDark = savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (!isDark) document.documentElement.classList.remove('dark');
+  </script>
+
+</head>
+<body class="selection:bg-emerald-600 selection:text-white transition-colors duration-300">
+
+  <!-- Halaman Loading Skeleton Cepat (FCP & LCP Instan) -->
+  <div id="initial-loader">
+    <div class="spinner"></div>
+    <div class="loader-text">Memuat Data SPKLU...</div>
+  </div>
+
+  <!-- Wrapper Aplikasi Utama -->
+  <div id="app-content" class="min-h-screen flex flex-col justify-between">
+    
+    <!-- Header -->
+    <header class="border-b border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-[#070b14]/85 backdrop-blur-xl sticky top-0 z-40 transition-colors duration-300">
+      <div class="max-w-4xl mx-auto px-3.5 py-2.5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="h-7 w-7 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/30 dark:border-emerald-500/40 flex items-center justify-center text-emerald-800 dark:text-emerald-400 font-bold text-xs shadow-sm">
+            ⚡
+          </div>
+          <h1 data-i18n="title" class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base tracking-tight m-0">SPKLU Trans Jawa</h1>
+        </div>
+        
+        <div class="flex items-center gap-1.5">
+          <!-- Tombol Install PWA -->
+          <button type="button" id="btn-install" class="hidden items-center gap-1 px-3 py-1.5 min-h-[36px] text-xs font-bold rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white shadow-sm transition-all duration-200 active:scale-95">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L9 10.586V3a1 1 0 011-1zM3 14a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/></svg>
+            <span>Install</span>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button type="button" onclick="toggleTheme()" id="theme-btn" aria-label="Ganti mode gelap/terang" class="h-9 w-9 min-h-[36px] min-w-[36px] rounded-lg flex items-center justify-center border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white shadow-sm transition-all active:scale-90">
+            <svg id="theme-icon-dark" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <svg id="theme-icon-light" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+
+          <!-- Language Toggle -->
+          <div class="flex items-center bg-slate-200 dark:bg-slate-800 rounded-lg p-0.5 border border-slate-300 dark:border-slate-700 min-h-[36px]">
+            <button onclick="setLang('id')" id="btn-id" class="px-2.5 py-1 min-h-[32px] text-xs font-bold rounded transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm">ID</button>
+            <button onclick="setLang('en')" id="btn-en" class="px-2.5 py-1 min-h-[32px] text-xs font-bold rounded transition-all text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">EN</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-3 py-3 w-full flex-grow">
+      
+      <!-- Planner Box -->
+      <section aria-label="Filter dan Rute" class="relative z-30 bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-3 shadow-sm dark:shadow-xl backdrop-blur-xl mb-3 transition-all">
+        
+        <!-- Unified Route Box -->
+        <div class="relative z-30 flex items-center bg-slate-50 dark:bg-slate-950/70 border border-slate-200/90 dark:border-slate-800/90 rounded-xl p-2 sm:p-2.5">
+          
+          <!-- Indikator Jalur -->
+          <div class="flex flex-col items-center justify-between self-stretch py-1.5 px-1 shrink-0">
+            <span class="w-2.5 h-2.5 rounded-full border-2 border-emerald-700 dark:border-emerald-500 bg-emerald-100 dark:bg-emerald-950"></span>
+            <span class="w-0.5 flex-1 my-0.5 bg-slate-300 dark:bg-slate-700"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-600 dark:bg-rose-500"></span>
+          </div>
+
+          <!-- Kontainer Dropdown Asal & Tujuan -->
+          <div class="flex-1 min-w-0 flex flex-col gap-1 pr-2">
+            
+            <!-- Origin Dropdown Searchable -->
+            <div class="relative" id="dropdown-origin-wrapper">
+              <button type="button" id="origin-trigger" onclick="toggleDropdown('origin')" aria-haspopup="listbox" class="w-full flex items-center justify-between text-left py-2 min-h-[44px] text-slate-900 dark:text-white text-sm font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded-md px-1 group">
+                <span id="origin-label" class="truncate">Jakarta</span>
+                <svg class="h-4 w-4 text-slate-500 group-hover:text-emerald-600 transition-transform duration-200" id="origin-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div id="origin-menu" class="hidden absolute left-0 top-full mt-2 w-64 sm:w-72 max-h-64 overflow-y-auto no-scrollbar z-50 bg-white/95 dark:bg-slate-900/95 border border-slate-300 dark:border-slate-700 rounded-2xl shadow-2xl backdrop-blur-xl p-2 animate-ios-card" role="listbox">
+                <div class="sticky top-0 bg-white/95 dark:bg-slate-900/95 pb-1.5 mb-1 border-b border-slate-200 dark:border-slate-800 z-10">
+                  <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-2.5 py-2 min-h-[40px] focus-within:ring-2 focus-within:ring-emerald-500">
+                    <svg class="w-4 h-4 text-slate-500 mr-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input type="text" id="origin-search" oninput="filterCities('origin')" aria-label="Cari kota asal" placeholder="Cari kota asal..." autocomplete="off" class="w-full bg-transparent text-slate-900 dark:text-white text-sm focus:outline-none placeholder-slate-500">
+                  </div>
+                </div>
+                <div id="origin-list" class="space-y-0.5"></div>
+              </div>
+              <input type="hidden" id="origin" value="jakarta">
+            </div>
+
+            <div class="h-px bg-slate-200 dark:bg-slate-700 w-full"></div>
+
+            <!-- Destination Dropdown Searchable -->
+            <div class="relative" id="dropdown-destination-wrapper">
+              <button type="button" id="destination-trigger" onclick="toggleDropdown('destination')" aria-haspopup="listbox" class="w-full flex items-center justify-between text-left py-2 min-h-[44px] text-slate-900 dark:text-white text-sm font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded-md px-1 group">
+                <span id="destination-label" class="truncate">Surabaya</span>
+                <svg class="h-4 w-4 text-slate-500 group-hover:text-emerald-600 transition-transform duration-200" id="destination-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div id="destination-menu" class="hidden absolute left-0 top-full mt-2 w-64 sm:w-72 max-h-64 overflow-y-auto no-scrollbar z-50 bg-white/95 dark:bg-slate-900/95 border border-slate-300 dark:border-slate-700 rounded-2xl shadow-2xl backdrop-blur-xl p-2 animate-ios-card" role="listbox">
+                <div class="sticky top-0 bg-white/95 dark:bg-slate-900/95 pb-1.5 mb-1 border-b border-slate-200 dark:border-slate-800 z-10">
+                  <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-2.5 py-2 min-h-[40px] focus-within:ring-2 focus-within:ring-emerald-500">
+                    <svg class="w-4 h-4 text-slate-500 mr-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input type="text" id="destination-search" oninput="filterCities('destination')" aria-label="Cari kota tujuan" placeholder="Cari kota tujuan..." autocomplete="off" class="w-full bg-transparent text-slate-900 dark:text-white text-sm focus:outline-none placeholder-slate-500">
+                  </div>
+                </div>
+                <div id="destination-list" class="space-y-0.5"></div>
+              </div>
+              <input type="hidden" id="destination" value="surabaya">
+            </div>
+          </div>
+
+          <!-- Tombol Tukar Arah Rute -->
+          <div class="shrink-0 pl-1">
+            <button type="button" id="btn-swap" onclick="swapLocations()" aria-label="Tukar rute awal dan tujuan" data-i18n="swap_tooltip" title="Tukar arah rute" class="h-11 w-11 min-h-[44px] min-w-[44px] rounded-xl bg-white hover:bg-emerald-700 hover:text-white dark:bg-slate-800 dark:hover:bg-emerald-600 dark:hover:text-white text-slate-700 dark:text-emerald-400 border border-slate-300 dark:border-slate-600 transition-all duration-300 flex items-center justify-center shadow-sm active:scale-90">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Ruas Tol -->
+        <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/80">
+          <div id="corridor-summary" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 -mx-1 px-1 drag-scroll">
+          </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/80 space-y-3">
+          
+          <!-- Baris Filter 1: Colokan & Kecepatan -->
+          <div class="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar pb-1">
+            <!-- Colokan -->
+            <div class="flex items-center gap-1 bg-slate-200/80 dark:bg-slate-900 p-1 border border-slate-300 dark:border-slate-700 rounded-lg shrink-0">
+              <button type="button" onclick="toggleConnector('CCS2')" id="btn-conn-ccs2" aria-pressed="true" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-emerald-700 text-white shadow-sm dark:bg-emerald-600 dark:text-white active:scale-95">CCS2</button>
+              <button type="button" onclick="toggleConnector('Chademo')" id="btn-conn-chademo" aria-pressed="true" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-emerald-700 text-white shadow-sm dark:bg-emerald-600 dark:text-white active:scale-95">Chademo</button>
+              <button type="button" onclick="toggleConnector('AC')" id="btn-conn-ac" aria-pressed="true" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-emerald-700 text-white shadow-sm dark:bg-emerald-600 dark:text-white active:scale-95">AC</button>
+            </div>
+
+            <!-- Kecepatan -->
+            <div class="flex items-center gap-1 bg-slate-200/80 dark:bg-slate-900 p-1 border border-slate-300 dark:border-slate-700 rounded-lg shrink-0">
+              <button type="button" onclick="setSpeedFilter('all')" id="btn-speed-all" aria-pressed="true" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm" data-i18n="speed_all">Semua</button>
+              <button type="button" onclick="setSpeedFilter('50')" id="btn-speed-50" aria-pressed="false" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">≥50k</button>
+              <button type="button" onclick="setSpeedFilter('100')" id="btn-speed-100" aria-pressed="false" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">≥100k</button>
+              <button type="button" onclick="setSpeedFilter('200')" id="btn-speed-200" aria-pressed="false" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">200k</button>
+            </div>
+          </div>
+
+          <!-- Baris Filter 2: KM, Sisa Baterai -->
+          <div class="flex items-center gap-2 text-xs">
+            <div class="flex-1 flex items-center bg-white dark:bg-slate-950/80 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-2 min-h-[44px] focus-within:border-emerald-600 dark:focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all">
+              <label for="current-km" class="sr-only">KM Sekarang</label>
+              <span class="text-[11px] font-bold font-mono text-emerald-800 dark:text-emerald-400 mr-1.5 shrink-0">KM</span>
+              <input type="number" id="current-km" oninput="animatedRouting(false)" placeholder="Cth. 57" class="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-500 text-sm focus:outline-none font-mono">
+              <button type="button" onclick="clearKm()" aria-label="Hapus KM" class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white min-h-[32px] min-w-[32px] flex items-center justify-center -mr-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+
+            <div class="flex-1 flex items-center bg-white dark:bg-slate-950/80 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-2 min-h-[44px] focus-within:border-emerald-600 dark:focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all">
+              <label for="battery-range" class="sr-only">Jangkauan Baterai (km)</label>
+              <span class="text-sm mr-1.5 shrink-0" aria-hidden="true">🔋</span>
+              <input type="number" id="battery-range" oninput="animatedRouting(false)" placeholder="Cth. 150" class="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-500 text-sm focus:outline-none font-mono">
+              <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400 font-mono shrink-0 ml-1">km</span>
+            </div>
+
+            <label class="shrink-0 flex items-center gap-1.5 cursor-pointer select-none bg-white dark:bg-slate-950/80 border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 rounded-lg px-3 py-2 min-h-[44px] text-xs text-slate-800 dark:text-slate-200 font-bold shadow-sm transition-colors">
+              <input type="checkbox" id="filter-within-range" onchange="animatedRouting(false)" class="rounded border-slate-400 dark:border-slate-600 text-emerald-600 focus:ring-emerald-500 cursor-pointer w-4 h-4">
+              <span class="hidden sm:inline" data-i18n="within_range_only">Dalam jangkauan</span>
+              <span class="sm:hidden">Aman</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Status Bar -->
+      <div id="stats-banner" class="flex items-center justify-between px-1 mb-3 text-xs text-slate-600 dark:text-slate-400 font-semibold" aria-live="polite">
+        <span id="match-counter" data-i18n="loading">Mengecek tempat cas di sepanjang jalurmu...</span>
+        <span data-i18n="sort_info" class="text-slate-500 dark:text-slate-500 text-[11px] hidden sm:block">Urut sesuai arah jalanmu</span>
+      </div>
+
+      <!-- SPKLU Cards Container -->
+      <section aria-label="Daftar SPKLU" id="results-list" class="relative z-0 space-y-3">
+        <div class="p-6 text-center text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-800/60 rounded-2xl bg-white dark:bg-slate-900/20 shadow-sm" data-i18n="loading">
+          Mengecek tempat cas di sepanjang jalurmu...
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-300 dark:border-slate-800/80 bg-white/50 dark:bg-transparent py-4 text-center text-xs text-slate-600 dark:text-slate-400 space-y-2 mt-4">
+      <p data-i18n="footer" class="font-medium">Panduan Nyaman SPKLU Tol Trans-Jawa • Dibuat untuk sesama pengendara EV</p>
+      <div class="flex items-center justify-center gap-2 text-xs flex-wrap font-medium">
+        <a href="https://trakteer.id/bara.timur/tip" target="_blank" rel="noopener" aria-label="Dukung proyek ini lewat Trakteer" 
+           class="inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 p-1.5 transition-colors group">
+          <span>☕</span>
+          <span class="underline underline-offset-2">Traktir Kopi</span>
+        </a>
+        <span class="text-slate-400 dark:text-slate-700" aria-hidden="true">•</span>
+        <a href="https://github.com/baratimur/transjava-ev" target="_blank" rel="noopener" aria-label="Lihat repositori GitHub"
+           class="inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 p-1.5 transition-colors group">
+          <svg class="w-4 h-4 fill-current text-slate-600 dark:text-slate-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span class="underline underline-offset-2">GitHub</span>
+        </a>
+        <span class="text-slate-400 dark:text-slate-700" aria-hidden="true">•</span>
+        <span data-i18n="contrib_hint" class="text-slate-600 dark:text-slate-400">Terbuka untuk kontribusi data & PR</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Memindah Tailwind ke bawah agar tidak mengeblok halaman Loading CSS murni -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
     window.tailwind = window.tailwind || {};
     window.tailwind.config = { darkMode: 'class' };
   </script>
 
-  <!-- Structured Data JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "SPKLU Trans Jawa",
-    "url": "https://baratimur.github.io/transjava-ev/",
-    "description": "Aplikasi panduan pencarian SPKLU rest area Tol Trans-Jawa untuk pengendara mobil listrik.",
-    "applicationCategory": "TravelApplication",
-    "operatingSystem": "All",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "IDR"
-    }
-  }
-  </script>
-
-  <style>
-    :root {
-      --ios-ease: cubic-bezier(0.25, 1, 0.5, 1);
-      --ios-spring: cubic-bezier(0.32, 0.72, 0, 1);
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Plus Jakarta Sans', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .font-mono {
-      font-family: 'SF Mono', 'JetBrains Mono', Menlo, monospace;
-    }
-
-    @media (max-width: 640px) {
-      select, input {
-        font-size: 16px !important;
-      }
-    }
-
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    .drag-scroll {
-      cursor: grab;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-    .drag-scroll:active {
-      cursor: grabbing;
-    }
-
-    @keyframes iosCardIn {
-      0% {
-        opacity: 0;
-        transform: translateY(6px) scale(0.99);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    .animate-ios-card {
-      animation: iosCardIn 0.25s var(--ios-spring) both;
-    }
-
-    .swap-active svg {
-      transform: rotate(180deg);
-    }
-    
-    /* Pre-rendering CLS fix */
-    #results-list {
-      min-height: 50vh; 
-    }
-  </style>
-</head>
-<!-- Kontras Latar Belakang Disesuaikan -->
-<body class="bg-slate-50 dark:bg-[#070b14] text-slate-800 dark:text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-600 selection:text-white transition-colors duration-300">
-
-  <!-- Header -->
-  <header class="border-b border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-[#070b14]/85 backdrop-blur-xl sticky top-0 z-40 transition-colors duration-300">
-    <div class="max-w-4xl mx-auto px-3.5 py-2.5 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <div class="h-7 w-7 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/30 dark:border-emerald-500/40 flex items-center justify-center text-emerald-800 dark:text-emerald-400 font-bold text-xs shadow-sm">
-          ⚡
-        </div>
-        <h1 data-i18n="title" class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base tracking-tight m-0">SPKLU Trans Jawa</h1>
-      </div>
-      
-      <div class="flex items-center gap-1.5">
-        <!-- Tombol Install PWA: Padding diperbesar untuk target sentuh -->
-        <button type="button" id="btn-install" class="hidden items-center gap-1 px-3 py-1.5 min-h-[36px] text-xs font-bold rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white shadow-sm transition-all duration-200 active:scale-95">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L9 10.586V3a1 1 0 011-1zM3 14a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/></svg>
-          <span>Install</span>
-        </button>
-
-        <!-- Theme Toggle: Min-height 36px untuk aksesibilitas -->
-        <button type="button" onclick="toggleTheme()" id="theme-btn" aria-label="Ganti mode gelap/terang" class="h-9 w-9 min-h-[36px] min-w-[36px] rounded-lg flex items-center justify-center border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white shadow-sm transition-all active:scale-90">
-          <svg id="theme-icon-dark" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-          <svg id="theme-icon-light" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-          </svg>
-        </button>
-
-        <!-- Language Toggle: Teks Kontras Tinggi -->
-        <div class="flex items-center bg-slate-200 dark:bg-slate-800 rounded-lg p-0.5 border border-slate-300 dark:border-slate-700 min-h-[36px]">
-          <button onclick="setLang('id')" id="btn-id" class="px-2.5 py-1 min-h-[32px] text-xs font-bold rounded transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm">ID</button>
-          <button onclick="setLang('en')" id="btn-en" class="px-2.5 py-1 min-h-[32px] text-xs font-bold rounded transition-all text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">EN</button>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="max-w-4xl mx-auto px-3 py-3 w-full flex-grow">
-    
-    <!-- Planner Box -->
-    <section aria-label="Filter dan Rute" class="relative z-30 bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-3 shadow-sm dark:shadow-xl backdrop-blur-xl mb-3 transition-all">
-      
-      <!-- Unified Route Box -->
-      <div class="relative z-30 flex items-center bg-slate-50 dark:bg-slate-950/70 border border-slate-200/90 dark:border-slate-800/90 rounded-xl p-2 sm:p-2.5">
-        
-        <!-- Indikator Jalur -->
-        <div class="flex flex-col items-center justify-between self-stretch py-1.5 px-1 shrink-0">
-          <span class="w-2.5 h-2.5 rounded-full border-2 border-emerald-700 dark:border-emerald-500 bg-emerald-100 dark:bg-emerald-950"></span>
-          <span class="w-0.5 flex-1 my-0.5 bg-slate-300 dark:bg-slate-700"></span>
-          <span class="w-2.5 h-2.5 rounded-full bg-rose-600 dark:bg-rose-500"></span>
-        </div>
-
-        <!-- Kontainer Dropdown Asal & Tujuan -->
-        <div class="flex-1 min-w-0 flex flex-col gap-1 pr-2">
-          
-          <!-- Origin Dropdown Searchable -->
-          <div class="relative" id="dropdown-origin-wrapper">
-            <!-- padding diperbesar min-h 44px -->
-            <button type="button" id="origin-trigger" onclick="toggleDropdown('origin')" aria-haspopup="listbox" class="w-full flex items-center justify-between text-left py-2 min-h-[44px] text-slate-900 dark:text-white text-sm font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded-md px-1 group">
-              <span id="origin-label" class="truncate">Jakarta</span>
-              <svg class="h-4 w-4 text-slate-500 group-hover:text-emerald-600 transition-transform duration-200" id="origin-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            <div id="origin-menu" class="hidden absolute left-0 top-full mt-2 w-64 sm:w-72 max-h-64 overflow-y-auto no-scrollbar z-50 bg-white/95 dark:bg-slate-900/95 border border-slate-300 dark:border-slate-700 rounded-2xl shadow-2xl backdrop-blur-xl p-2 animate-ios-card" role="listbox">
-              <div class="sticky top-0 bg-white/95 dark:bg-slate-900/95 pb-1.5 mb-1 border-b border-slate-200 dark:border-slate-800 z-10">
-                <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-2.5 py-2 min-h-[40px] focus-within:ring-2 focus-within:ring-emerald-500">
-                  <svg class="w-4 h-4 text-slate-500 mr-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                  <input type="text" id="origin-search" oninput="filterCities('origin')" aria-label="Cari kota asal" placeholder="Cari kota asal..." autocomplete="off" class="w-full bg-transparent text-slate-900 dark:text-white text-sm focus:outline-none placeholder-slate-500">
-                </div>
-              </div>
-              <div id="origin-list" class="space-y-0.5"></div>
-            </div>
-            <input type="hidden" id="origin" value="jakarta">
-          </div>
-
-          <div class="h-px bg-slate-200 dark:bg-slate-700 w-full"></div>
-
-          <!-- Destination Dropdown Searchable -->
-          <div class="relative" id="dropdown-destination-wrapper">
-            <!-- padding diperbesar min-h 44px -->
-            <button type="button" id="destination-trigger" onclick="toggleDropdown('destination')" aria-haspopup="listbox" class="w-full flex items-center justify-between text-left py-2 min-h-[44px] text-slate-900 dark:text-white text-sm font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded-md px-1 group">
-              <span id="destination-label" class="truncate">Surabaya</span>
-              <svg class="h-4 w-4 text-slate-500 group-hover:text-emerald-600 transition-transform duration-200" id="destination-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            <div id="destination-menu" class="hidden absolute left-0 top-full mt-2 w-64 sm:w-72 max-h-64 overflow-y-auto no-scrollbar z-50 bg-white/95 dark:bg-slate-900/95 border border-slate-300 dark:border-slate-700 rounded-2xl shadow-2xl backdrop-blur-xl p-2 animate-ios-card" role="listbox">
-              <div class="sticky top-0 bg-white/95 dark:bg-slate-900/95 pb-1.5 mb-1 border-b border-slate-200 dark:border-slate-800 z-10">
-                <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-2.5 py-2 min-h-[40px] focus-within:ring-2 focus-within:ring-emerald-500">
-                  <svg class="w-4 h-4 text-slate-500 mr-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                  <input type="text" id="destination-search" oninput="filterCities('destination')" aria-label="Cari kota tujuan" placeholder="Cari kota tujuan..." autocomplete="off" class="w-full bg-transparent text-slate-900 dark:text-white text-sm focus:outline-none placeholder-slate-500">
-                </div>
-              </div>
-              <div id="destination-list" class="space-y-0.5"></div>
-            </div>
-            <input type="hidden" id="destination" value="surabaya">
-          </div>
-        </div>
-
-        <!-- Tombol Tukar Arah Rute: Diperbesar -->
-        <div class="shrink-0 pl-1">
-          <button type="button" id="btn-swap" onclick="swapLocations()" aria-label="Tukar rute awal dan tujuan" data-i18n="swap_tooltip" title="Tukar arah rute" class="h-11 w-11 min-h-[44px] min-w-[44px] rounded-xl bg-white hover:bg-emerald-700 hover:text-white dark:bg-slate-800 dark:hover:bg-emerald-600 dark:hover:text-white text-slate-700 dark:text-emerald-400 border border-slate-300 dark:border-slate-600 transition-all duration-300 flex items-center justify-center shadow-sm active:scale-90">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Ruas Tol: Padding dan gap ditambah untuk klik -->
-      <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/80">
-        <div id="corridor-summary" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 -mx-1 px-1 drag-scroll">
-        </div>
-      </div>
-
-      <!-- Filter Controls: Kontras ditingkatkan, ukuran input diperbesar minimal 44px tinggi -->
-      <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/80 space-y-3">
-        
-        <!-- Baris Filter 1: Colokan & Kecepatan -->
-        <div class="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar pb-1">
-          <!-- Colokan Multi-Select -->
-          <div class="flex items-center gap-1 bg-slate-200/80 dark:bg-slate-900 p-1 border border-slate-300 dark:border-slate-700 rounded-lg shrink-0">
-            <!-- Warna tombol tidak tersentuh kini kontras (text-slate-700), latar tersentuh emerald-700 -->
-            <button type="button" onclick="toggleConnector('CCS2')" id="btn-conn-ccs2" aria-pressed="true" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-emerald-700 text-white shadow-sm dark:bg-emerald-600 dark:text-white active:scale-95">CCS2</button>
-            <button type="button" onclick="toggleConnector('Chademo')" id="btn-conn-chademo" aria-pressed="true" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-emerald-700 text-white shadow-sm dark:bg-emerald-600 dark:text-white active:scale-95">Chademo</button>
-            <button type="button" onclick="toggleConnector('AC')" id="btn-conn-ac" aria-pressed="true" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-emerald-700 text-white shadow-sm dark:bg-emerald-600 dark:text-white active:scale-95">AC</button>
-          </div>
-
-          <!-- Kecepatan -->
-          <div class="flex items-center gap-1 bg-slate-200/80 dark:bg-slate-900 p-1 border border-slate-300 dark:border-slate-700 rounded-lg shrink-0">
-            <button type="button" onclick="setSpeedFilter('all')" id="btn-speed-all" aria-pressed="true" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm" data-i18n="speed_all">Semua</button>
-            <button type="button" onclick="setSpeedFilter('50')" id="btn-speed-50" aria-pressed="false" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">≥50k</button>
-            <button type="button" onclick="setSpeedFilter('100')" id="btn-speed-100" aria-pressed="false" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">≥100k</button>
-            <button type="button" onclick="setSpeedFilter('200')" id="btn-speed-200" aria-pressed="false" class="px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">200k</button>
-          </div>
-        </div>
-
-        <!-- Baris Filter 2: KM, Sisa Baterai, Checkbox Jangkauan -->
-        <div class="flex items-center gap-2 text-xs">
-          <!-- KM Sekarang -->
-          <div class="flex-1 flex items-center bg-white dark:bg-slate-950/80 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-2 min-h-[44px] focus-within:border-emerald-600 dark:focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all">
-            <label for="current-km" class="sr-only">KM Sekarang</label>
-            <span class="text-[11px] font-bold font-mono text-emerald-800 dark:text-emerald-400 mr-1.5 shrink-0">KM</span>
-            <input type="number" id="current-km" oninput="animatedRouting(false)" placeholder="Cth. 57" class="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-500 text-sm focus:outline-none font-mono">
-            <!-- Ukuran tombol close diperbesar -->
-            <button type="button" onclick="clearKm()" aria-label="Hapus KM" class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white min-h-[32px] min-w-[32px] flex items-center justify-center -mr-1">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-            </button>
-          </div>
-
-          <!-- Sisa Baterai -->
-          <div class="flex-1 flex items-center bg-white dark:bg-slate-950/80 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-2 min-h-[44px] focus-within:border-emerald-600 dark:focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all">
-            <label for="battery-range" class="sr-only">Jangkauan Baterai (km)</label>
-            <span class="text-sm mr-1.5 shrink-0" aria-hidden="true">🔋</span>
-            <input type="number" id="battery-range" oninput="animatedRouting(false)" placeholder="Cth. 150" class="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-500 text-sm focus:outline-none font-mono">
-            <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400 font-mono shrink-0 ml-1">km</span>
-          </div>
-
-          <!-- Toggle Range -->
-          <label class="shrink-0 flex items-center gap-1.5 cursor-pointer select-none bg-white dark:bg-slate-950/80 border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 rounded-lg px-3 py-2 min-h-[44px] text-xs text-slate-800 dark:text-slate-200 font-bold shadow-sm transition-colors">
-            <input type="checkbox" id="filter-within-range" onchange="animatedRouting(false)" class="rounded border-slate-400 dark:border-slate-600 text-emerald-600 focus:ring-emerald-500 cursor-pointer w-4 h-4">
-            <span class="hidden sm:inline" data-i18n="within_range_only">Dalam jangkauan</span>
-            <span class="sm:hidden">Aman</span>
-          </label>
-        </div>
-      </div>
-    </section>
-
-    <!-- Status Bar -->
-    <div id="stats-banner" class="flex items-center justify-between px-1 mb-3 text-xs text-slate-600 dark:text-slate-400 font-semibold" aria-live="polite">
-      <span id="match-counter" data-i18n="loading">Mengecek tempat cas di sepanjang jalurmu...</span>
-      <span data-i18n="sort_info" class="text-slate-500 dark:text-slate-500 text-[11px] hidden sm:block">Urut sesuai arah jalanmu</span>
-    </div>
-
-    <!-- SPKLU Cards Container -->
-    <section aria-label="Daftar SPKLU" id="results-list" class="relative z-0 space-y-3">
-      <div class="p-6 text-center text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-800/60 rounded-2xl bg-white dark:bg-slate-900/20 shadow-sm" data-i18n="loading">
-        Mengecek tempat cas di sepanjang jalurmu...
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="border-t border-slate-300 dark:border-slate-800/80 bg-white/50 dark:bg-transparent py-4 text-center text-xs text-slate-600 dark:text-slate-400 space-y-2 mt-4">
-    <p data-i18n="footer" class="font-medium">Panduan Nyaman SPKLU Tol Trans-Jawa • Dibuat untuk sesama pengendara EV</p>
-    <div class="flex items-center justify-center gap-2 text-xs flex-wrap font-medium">
-      <a href="https://trakteer.id/bara.timur/tip" target="_blank" rel="noopener" aria-label="Dukung proyek ini lewat Trakteer" 
-         class="inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 p-1.5 transition-colors group">
-        <span>☕</span>
-        <span class="underline underline-offset-2">Traktir Kopi</span>
-      </a>
-      <span class="text-slate-400 dark:text-slate-700" aria-hidden="true">•</span>
-      <a href="https://github.com/baratimur/transjava-ev" target="_blank" rel="noopener" aria-label="Lihat repositori GitHub"
-         class="inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 p-1.5 transition-colors group">
-        <svg class="w-4 h-4 fill-current text-slate-600 dark:text-slate-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-        </svg>
-        <span class="underline underline-offset-2">GitHub</span>
-      </a>
-      <span class="text-slate-400 dark:text-slate-700" aria-hidden="true">•</span>
-      <span data-i18n="contrib_hint" class="text-slate-600 dark:text-slate-400">Terbuka untuk kontribusi data & PR</span>
-    </div>
-  </footer>
-
   <script>
-    // PWA Prompt Logging Removed/Deferred from critical path
+    // PWA Prompt Logging Deferred
     window.addEventListener('load', () => {
       let deferredPrompt;
       const installBtn = document.getElementById('btn-install');
@@ -433,20 +426,17 @@
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc && t('seo_desc') !== 'seo_desc') metaDesc.setAttribute('content', t('seo_desc'));
 
-      document.getElementById('btn-id').className = `px-2.5 py-1 min-h-[32px] text-xs font-bold rounded transition-all ${lang === 'id' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'}`;
-      document.getElementById('btn-en').className = `px-2.5 py-1 min-h-[32px] text-xs font-bold rounded transition-all ${lang === 'en' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'}`;
+      const btnId = document.getElementById('btn-id');
+      const btnEn = document.getElementById('btn-en');
+      if(btnId) btnId.className = `px-2.5 py-1 min-h-[32px] text-xs font-bold rounded transition-all ${lang === 'id' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'}`;
+      if(btnEn) btnEn.className = `px-2.5 py-1 min-h-[32px] text-xs font-bold rounded transition-all ${lang === 'en' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'}`;
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (el.tagName === 'OPTION') {
-          el.textContent = t(key);
-        } else if (el.tagName === 'INPUT' && el.type === 'text') {
-          el.placeholder = t(key);
-        } else if (el.hasAttribute('title')) {
-          el.title = t(key);
-        } else {
-          el.textContent = t(key);
-        }
+        if (el.tagName === 'OPTION') el.textContent = t(key);
+        else if (el.tagName === 'INPUT' && el.type === 'text') el.placeholder = t(key);
+        else if (el.hasAttribute('title')) el.title = t(key);
+        else el.textContent = t(key);
       });
 
       const kmInput = document.getElementById("current-km");
@@ -702,7 +692,6 @@
         return;
       }
 
-      // Tombol Ruas Tol - Lebih Kontras
       let chipsMarkup = `
         <button type="button" aria-pressed="${selectedSegmentFilter === null}" onclick="selectedSegmentFilter = null; animatedRouting(false)" class="whitespace-nowrap shrink-0 px-3 py-1.5 min-h-[36px] rounded-lg text-xs font-bold transition-all duration-200 ${selectedSegmentFilter === null ? 'bg-slate-800 text-white dark:bg-slate-700 shadow-sm' : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-700'} active:scale-95">
           ${t('all_segments')}
@@ -809,7 +798,6 @@
         const unitLabel = t('label_unit') || 'Mesin';
         const portLabel = t('label_port') || 'Port';
 
-        // SKEMA KATEGORISASI KAPASITAS
         let capacityBadge = '';
         if (totalMachines > 4 && totalPorts > 10) {
           capacityBadge = `
@@ -831,7 +819,6 @@
           `;
         }
 
-        // Distance Badge
         let distanceBadge = '';
         if (hasCurrentKm && s.distAhead !== null) {
           distanceBadge = `
@@ -892,7 +879,6 @@
         return `
         <article style="animation-delay: ${staggerDelay}ms" class="animate-ios-card group bg-white dark:bg-slate-900/60 hover:bg-slate-50/80 dark:hover:bg-slate-900/90 border border-slate-300 dark:border-slate-700/80 hover:border-slate-400 dark:hover:border-slate-600 rounded-2xl p-3.5 sm:p-4 transition-all duration-200 shadow-sm hover:shadow-md">
           
-          <!-- Baris 1: Info KM, Jalur, Kapasitas Mesin, Jarak & Daya -->
           <div class="flex items-center justify-between gap-1.5 pb-2.5 border-b border-slate-200 dark:border-slate-800">
             <div class="flex items-center gap-1.5 flex-wrap">
               <span class="font-mono text-xs font-extrabold px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-900 border border-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/30">
@@ -906,7 +892,6 @@
               ${batteryBadge}
             </div>
 
-            <!-- Daya Terbesar -->
             <div class="text-right shrink-0">
               <span class="font-mono font-extrabold text-base text-slate-900 dark:text-white">
                 ${s.lowest_power !== s.highest_power ? `${s.lowest_power}~${s.highest_power}` : s.highest_power}<span class="text-xs font-sans font-bold text-slate-500 ml-0.5">kW</span>
@@ -915,7 +900,6 @@
             </div>
           </div>
 
-          <!-- Baris 2: Nama Rest Area & Tombol Navigasi Kontras -->
           <div class="mt-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h2 class="font-extrabold text-slate-900 dark:text-white text-base leading-tight group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
@@ -940,7 +924,6 @@
             </div>
           </div>
 
-          <!-- Baris 3: Daftar Mesin Terkelompok Rapi -->
           <div class="mt-2.5 flex flex-wrap gap-1.5">
             ${dispenserList}
           </div>
@@ -982,8 +965,11 @@
       });
     }
 
+    // Eksekusi Logika Inisiasi dan Hilangkan Loader
     async function initApp() {
       const list = document.getElementById("results-list");
+      const loader = document.getElementById("initial-loader");
+      const appContent = document.getElementById("app-content");
 
       initTheme();
       setupCorridorDesktopScroll();
@@ -1009,8 +995,19 @@
         populateDropdowns(CITIES);
         setLang(currentLang);
         
+        // Data siap, hilangkan loader dan tampilkan aplikasi
+        setTimeout(() => {
+          loader.style.opacity = '0';
+          loader.style.visibility = 'hidden';
+          appContent.style.opacity = '1';
+        }, 150); // Delay halus agar animasi transisi terlihat profesional
+        
       } catch (err) {
         console.error("Initialization Failed:", err);
+        loader.style.opacity = '0';
+        loader.style.visibility = 'hidden';
+        appContent.style.opacity = '1';
+
         list.innerHTML = `
           <div class="p-6 text-center text-rose-700 bg-rose-50 border border-rose-300 dark:text-rose-400 dark:bg-rose-900/20 dark:border-rose-800/60 rounded-2xl text-sm font-bold animate-ios-card">
             Gagal memuat data SPKLU. Pastikan koneksi internet aktif.
