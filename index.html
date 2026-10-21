@@ -12,35 +12,30 @@
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
 
-    /* Fluid entrance animations */
-    @keyframes slideFadeUp {
+    /* Fluid card entrance animation */
+    @keyframes cardFadeUp {
       from {
         opacity: 0;
-        transform: translateY(12px) scale(0.99);
+        transform: translateY(8px);
       }
       to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0);
       }
     }
 
     .animate-card {
-      animation: slideFadeUp 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-
-    /* Smooth swap transition */
-    .swap-active svg {
-      transform: rotate(180deg);
+      animation: cardFadeUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
   </style>
 </head>
 <body class="bg-[#090d16] text-slate-100 min-h-screen antialiased flex flex-col justify-between selection:bg-emerald-500 selection:text-black">
 
   <!-- Header -->
-  <header class="border-b border-slate-800/60 bg-[#090d16]/85 backdrop-blur-md sticky top-0 z-30 transition-colors">
-    <div class="max-w-4xl mx-auto px-4 py-3.5 flex items-center justify-between">
+  <header class="border-b border-slate-800/60 bg-[#090d16]/85 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-2.5">
-        <div class="h-8 w-8 rounded-lg bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 font-bold text-sm shadow-[0_0_15px_rgba(16,185,129,0.15)] transition-transform hover:scale-105">
+        <div class="h-8 w-8 rounded-lg bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 font-bold text-sm shadow-[0_0_15px_rgba(16,185,129,0.15)]">
           ⚡
         </div>
         <span data-i18n="title" class="font-extrabold text-white text-base tracking-tight">SPKLU Trans Jawa</span>
@@ -54,29 +49,29 @@
     </div>
   </header>
 
-  <main class="max-w-4xl mx-auto px-4 py-6 w-full flex-grow">
+  <main class="max-w-4xl mx-auto px-4 py-5 w-full flex-grow">
     
     <!-- Planner Box -->
-    <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-5 shadow-xl backdrop-blur-sm mb-6 transition-all duration-200 hover:border-slate-700/80">
+    <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-4 sm:p-5 shadow-xl backdrop-blur-sm mb-5 transition-all">
       
       <!-- Route Pickers with Swap Action Button -->
-      <div class="flex flex-col sm:flex-row items-center gap-3">
+      <div class="flex flex-col sm:flex-row items-center gap-2.5">
         
         <!-- Origin -->
         <div class="w-full flex-1">
-          <label data-i18n="dep_label" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Mulai dari</label>
+          <label data-i18n="dep_label" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Mulai dari</label>
           <div class="relative">
-            <select id="origin" onchange="runRouting()" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-sm font-semibold focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all appearance-none cursor-pointer">
+            <select id="origin" onchange="resetSegmentFilter(); runRouting()" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-sm font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all appearance-none cursor-pointer">
               <!-- Dynamically populated from cities.json -->
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-slate-500">
-              <svg class="h-4 w-4 fill-current transition-transform" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+              <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
             </div>
           </div>
         </div>
 
         <!-- Swap Button -->
-        <div class="flex items-center justify-center -my-1 sm:my-0 sm:pt-5">
+        <div class="flex items-center justify-center -my-1 sm:my-0 sm:pt-4">
           <button type="button" id="btn-swap" onclick="swapLocations()" data-i18n="swap_tooltip" title="Tukar arah rute" class="h-10 w-10 rounded-xl bg-slate-800/70 hover:bg-emerald-500 hover:text-slate-950 text-emerald-400 border border-slate-700/60 transition-all duration-300 flex items-center justify-center shadow-sm active:scale-90 group">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
@@ -86,59 +81,75 @@
 
         <!-- Destination -->
         <div class="w-full flex-1">
-          <label data-i18n="dest_label" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Mau ke mana?</label>
+          <label data-i18n="dest_label" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Mau ke mana?</label>
           <div class="relative">
-            <select id="destination" onchange="runRouting()" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-sm font-semibold focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all appearance-none cursor-pointer">
+            <select id="destination" onchange="resetSegmentFilter(); runRouting()" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-sm font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all appearance-none cursor-pointer">
               <!-- Dynamically populated from cities.json -->
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-slate-500">
-              <svg class="h-4 w-4 fill-current transition-transform" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+              <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Filters & Active Corridor Indicator -->
-      <div class="mt-4 pt-3.5 border-t border-slate-800/60 flex flex-wrap items-center justify-between gap-3 text-xs">
-        <div id="corridor-summary" class="text-slate-300 font-medium flex items-center gap-1.5 flex-wrap transition-opacity duration-300"></div>
+      <!-- Clickable Corridor Segment Chips -->
+      <div class="mt-3.5 pt-3 border-t border-slate-800/60">
+        <div id="corridor-summary" class="flex items-center gap-1.5 flex-wrap"></div>
+      </div>
 
-        <div class="flex items-center gap-2 w-full sm:w-auto">
+      <!-- Fitted Inputs & Speed Buttons -->
+      <div class="mt-3.5 pt-3 border-t border-slate-800/60 flex flex-wrap items-center justify-between gap-3 text-xs">
+        
+        <!-- Speed Buttons Filter -->
+        <div class="flex items-center gap-1 bg-slate-950/80 p-1 border border-slate-800 rounded-xl">
+          <button type="button" onclick="setSpeedFilter('all')" id="btn-speed-all" class="px-2.5 py-1 rounded-lg font-semibold transition-all duration-150 bg-emerald-500 text-slate-950 shadow-sm" data-i18n="speed_all">Semua</button>
+          <button type="button" onclick="setSpeedFilter('50')" id="btn-speed-50" class="px-2.5 py-1 rounded-lg font-semibold transition-all duration-150 text-slate-400 hover:text-white">≥ 50 kW</button>
+          <button type="button" onclick="setSpeedFilter('100')" id="btn-speed-100" class="px-2.5 py-1 rounded-lg font-semibold transition-all duration-150 text-slate-400 hover:text-white">≥ 100 kW</button>
+          <button type="button" onclick="setSpeedFilter('200')" id="btn-speed-200" class="px-2.5 py-1 rounded-lg font-semibold transition-all duration-150 text-slate-400 hover:text-white">200 kW</button>
+        </div>
+
+        <!-- Position & Battery Inputs -->
+        <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+          
           <!-- Current KM Position Input -->
-          <div class="flex items-center bg-slate-950/80 border border-slate-800 rounded-lg px-2.5 py-1.5 focus-within:border-emerald-500/80 focus-within:ring-2 focus-within:ring-emerald-500/10 transition-all">
-            <span class="text-[10px] font-bold font-mono text-emerald-400 pr-1.5">KM</span>
-            <input type="number" id="current-km" oninput="runRouting()" placeholder="KM..." class="w-16 bg-transparent text-white placeholder-slate-600 text-xs focus:outline-none font-mono">
-            <button type="button" onclick="clearKm()" class="text-slate-500 hover:text-slate-300 text-xs transition-colors" title="Clear">✕</button>
+          <div class="flex items-center bg-slate-950/80 border border-slate-800 rounded-xl px-2.5 py-1.5 focus-within:border-emerald-500 transition-all flex-1 sm:flex-initial">
+            <span class="text-[10px] font-bold font-mono text-emerald-400 mr-1.5">KM</span>
+            <input type="number" id="current-km" oninput="runRouting()" placeholder="KM sekarang (cth. 57)" class="w-full sm:w-36 bg-transparent text-white placeholder-slate-500 text-xs focus:outline-none font-mono">
+            <button type="button" onclick="clearKm()" class="text-slate-500 hover:text-slate-300 text-xs ml-1" title="Clear">✕</button>
           </div>
 
-          <!-- Power Filter -->
-          <select id="power-filter" onchange="runRouting()" class="bg-slate-950/80 border border-slate-800 rounded-lg px-2.5 py-1.5 text-slate-300 text-xs focus:outline-none focus:border-emerald-500/80 transition-all cursor-pointer">
-            <option data-i18n="pow_all" value="all">Semua kecepatan</option>
-            <option data-i18n="pow_50" value="50">Cepat (≥ 50 kW)</option>
-            <option data-i18n="pow_100" value="100">Sangat cepat (≥ 100 kW)</option>
-            <option data-i18n="pow_200" value="200">Ultra cepat (200 kW)</option>
-          </select>
+          <!-- Battery Range Input -->
+          <div class="flex items-center bg-slate-950/80 border border-slate-800 rounded-xl px-2.5 py-1.5 focus-within:border-emerald-500 transition-all flex-1 sm:flex-initial">
+            <span class="text-xs mr-1.5">🔋</span>
+            <input type="number" id="battery-range" oninput="runRouting()" placeholder="Sisa baterai (km)" class="w-full sm:w-32 bg-transparent text-white placeholder-slate-500 text-xs focus:outline-none font-mono">
+            <span class="text-[10px] text-slate-500 font-mono ml-1">km</span>
+          </div>
 
-          <!-- Text Search Filter -->
-          <input type="text" data-i18n="search_ph" id="search-box" oninput="runRouting()" placeholder="Cari nama atau KM..." class="bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-1.5 text-white placeholder-slate-600 text-xs focus:outline-none focus:border-emerald-500/80 focus:ring-2 focus:ring-emerald-500/10 transition-all flex-grow sm:flex-grow-0 sm:w-44">
+          <!-- Toggle Within Battery Range Only -->
+          <label class="flex items-center gap-1.5 cursor-pointer select-none bg-slate-950/80 border border-slate-800 hover:border-slate-700 rounded-xl px-2.5 py-1.5 transition-all text-[11px] text-slate-300 font-medium">
+            <input type="checkbox" id="filter-within-range" onchange="runRouting()" class="rounded border-slate-700 text-emerald-500 focus:ring-0 cursor-pointer">
+            <span data-i18n="within_range_only" class="whitespace-nowrap">Hanya dalam jangkauan</span>
+          </label>
         </div>
       </div>
     </div>
 
     <!-- Live Stats Bar -->
-    <div id="stats-banner" class="flex items-center justify-between px-1 mb-3.5 text-xs text-slate-400 font-semibold transition-opacity duration-200">
+    <div id="stats-banner" class="flex items-center justify-between px-1 mb-3 text-xs text-slate-400 font-semibold">
       <span id="match-counter" data-i18n="loading">Mengecek tempat cas di sepanjang jalurmu...</span>
       <span data-i18n="sort_info" class="text-slate-500 text-[11px] hidden sm:block">Urut sesuai arah jalanmu</span>
     </div>
 
-    <!-- SPKLU Cards Container -->
-    <div id="results-list" class="space-y-3 transition-all duration-300">
+    <!-- SPKLU Compact Cards Container -->
+    <div id="results-list" class="space-y-2.5">
       <div class="p-8 text-center text-slate-500 border border-slate-800/60 rounded-2xl bg-slate-900/20" data-i18n="loading">
         Mengecek tempat cas di sepanjang jalurmu...
       </div>
     </div>
   </main>
 
-  <footer data-i18n="footer" class="border-t border-slate-800/60 py-4 text-center text-xs text-slate-500 transition-colors">
+  <footer data-i18n="footer" class="border-t border-slate-800/60 py-3.5 text-center text-xs text-slate-500">
     Panduan Nyaman SPKLU Tol Trans-Jawa • Dibuat untuk sesama pengendara EV
   </footer>
 
@@ -148,6 +159,9 @@
     let HIGHWAY_GRAPH = {};
     let CITIES = [];
     let currentLang = localStorage.getItem('lang') || 'id';
+
+    let selectedSegmentFilter = null; // null = all segments
+    let selectedSpeedFilter = 'all';  // 'all', '50', '100', '200'
 
     function t(key) {
       if (!i18nDictionary[currentLang]) return key;
@@ -177,6 +191,8 @@
 
       const kmInput = document.getElementById("current-km");
       if (kmInput) kmInput.placeholder = t('km_ph');
+      const batteryInput = document.getElementById("battery-range");
+      if (batteryInput) batteryInput.placeholder = t('battery_ph');
 
       runRouting();
     }
@@ -192,20 +208,45 @@
     }
 
     function swapLocations() {
-      const swapBtn = document.getElementById("btn-swap");
-      swapBtn.classList.toggle("swap-active");
-
+      resetSegmentFilter();
       const originEl = document.getElementById("origin");
       const destEl = document.getElementById("destination");
       const temp = originEl.value;
       originEl.value = destEl.value;
       destEl.value = temp;
-
       runRouting();
     }
 
     function clearKm() {
       document.getElementById("current-km").value = "";
+      runRouting();
+    }
+
+    function resetSegmentFilter() {
+      selectedSegmentFilter = null;
+    }
+
+    function toggleSegmentFilter(segKey) {
+      if (selectedSegmentFilter === segKey) {
+        selectedSegmentFilter = null; // Toggle off if already selected
+      } else {
+        selectedSegmentFilter = segKey;
+      }
+      runRouting();
+    }
+
+    function setSpeedFilter(minPower) {
+      selectedSpeedFilter = minPower;
+
+      ['all', '50', '100', '200'].forEach(val => {
+        const btn = document.getElementById(`btn-speed-${val}`);
+        if (val === minPower) {
+          btn.className = "px-2.5 py-1 rounded-lg font-semibold transition-all duration-150 bg-emerald-500 text-slate-950 shadow-sm";
+        } else {
+          btn.className = "px-2.5 py-1 rounded-lg font-semibold transition-all duration-150 text-slate-400 hover:text-white";
+        }
+      });
+
       runRouting();
     }
 
@@ -258,11 +299,14 @@
 
       const origin = document.getElementById("origin").value;
       const destination = document.getElementById("destination").value;
-      const powerLimit = document.getElementById("power-filter").value;
-      const search = document.getElementById("search-box").value.toLowerCase().trim();
       const currentKmVal = document.getElementById("current-km").value.trim();
       const hasCurrentKm = currentKmVal !== "" && !isNaN(parseFloat(currentKmVal));
       const curKm = hasCurrentKm ? parseFloat(currentKmVal) : null;
+
+      const batteryRangeVal = document.getElementById("battery-range").value.trim();
+      const hasBatteryRange = batteryRangeVal !== "" && !isNaN(parseFloat(batteryRangeVal));
+      const batteryRange = hasBatteryRange ? parseFloat(batteryRangeVal) : null;
+      const filterWithinRange = document.getElementById("filter-within-range").checked;
 
       const resultsContainer = document.getElementById("results-list");
       const corridorSummary = document.getElementById("corridor-summary");
@@ -272,7 +316,7 @@
         corridorSummary.innerHTML = "";
         matchCounter.textContent = `0 ${t('spots_ahead')}`;
         resultsContainer.innerHTML = `
-          <div class="text-center py-12 border border-dashed border-slate-800/80 rounded-2xl bg-slate-900/10 animate-card">
+          <div class="text-center py-10 border border-dashed border-slate-800/80 rounded-2xl bg-slate-900/10 animate-card">
             <p class="text-slate-400 text-sm">${t('err_same_city')}</p>
           </div>
         `;
@@ -289,13 +333,26 @@
         return;
       }
 
-      corridorSummary.innerHTML = legs.map((leg, idx) => `
-        <span class="inline-flex items-center gap-1.5 bg-slate-900/90 border border-slate-800/90 px-2.5 py-1 rounded-md text-[11px] font-mono text-slate-300 shadow-sm transition-all hover:border-slate-700">
-          <span class="text-emerald-400 font-bold">Jalur ${leg.side}</span> ${formatSegment(leg.segment, leg.side)}
-        </span>
-        ${idx < legs.length - 1 ? '<span class="text-slate-600 font-bold">→</span>' : ''}
-      `).join("");
+      // Render Clickable Corridor Chips
+      let chipsMarkup = `
+        <button type="button" onclick="resetSegmentFilter(); runRouting()" class="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all duration-150 ${selectedSegmentFilter === null ? 'bg-slate-700 text-white shadow-sm' : 'bg-slate-950/70 text-slate-400 hover:text-white border border-slate-800'}">
+          ${t('all_segments')}
+        </button>
+      `;
 
+      chipsMarkup += legs.map(leg => {
+        const isSelected = selectedSegmentFilter === leg.segment;
+        return `
+          <button type="button" onclick="toggleSegmentFilter('${leg.segment}')" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all duration-150 ${isSelected ? 'bg-emerald-500 text-slate-950 font-bold shadow-md' : 'bg-slate-950/70 border border-slate-800 text-slate-300 hover:border-slate-700'}">
+            <span class="${isSelected ? 'text-slate-950' : 'text-emerald-400'} font-bold">Jalur ${leg.side}</span>
+            <span>${formatSegment(leg.segment, leg.side)}</span>
+          </button>
+        `;
+      }).join("");
+
+      corridorSummary.innerHTML = chipsMarkup;
+
+      // Collect all stations along the driving sequence
       let matchedStations = [];
       legs.forEach(leg => {
         let stationsOnLeg = SPKLU_NETWORK.filter(s => s.segment === leg.segment && s.side === leg.side);
@@ -305,6 +362,12 @@
         });
       });
 
+      // Filter by Clicked Segment (if user clicked a segment chip)
+      if (selectedSegmentFilter) {
+        matchedStations = matchedStations.filter(s => s.segment === selectedSegmentFilter);
+      }
+
+      // Filter passed rest areas based on Current KM
       let passedCount = 0;
       if (hasCurrentKm) {
         const totalBefore = matchedStations.length;
@@ -318,18 +381,44 @@
         passedCount = totalBefore - matchedStations.length;
       }
 
-      if (powerLimit !== "all") {
-        const minKW = parseInt(powerLimit, 10);
+      // Speed filter buttons
+      if (selectedSpeedFilter !== 'all') {
+        const minKW = parseInt(selectedSpeedFilter, 10);
         matchedStations = matchedStations.filter(s => s.highest_power >= minKW);
       }
 
-      if (search) {
-        matchedStations = matchedStations.filter(s => 
-          s.name.toLowerCase().includes(search) || 
-          `km ${s.km}`.includes(search)
-        );
+      // Compute distances & filter within battery range
+      matchedStations = matchedStations.map((s, idx, arr) => {
+        let distAhead = null;
+        let distFromPrev = null;
+
+        if (hasCurrentKm) {
+          distAhead = s.legOrder === 'asc' ? (s.km - curKm) : (curKm - s.km);
+          if (distAhead < 0) distAhead = 0;
+        }
+
+        if (idx === 0) {
+          distFromPrev = 0;
+        } else {
+          distFromPrev = Math.abs(s.km - arr[idx - 1].km);
+        }
+
+        const isWithinBattery = hasBatteryRange && distAhead !== null ? (distAhead <= batteryRange) : null;
+
+        return {
+          ...s,
+          distAhead,
+          distFromPrev,
+          isWithinBattery
+        };
+      });
+
+      // If user enabled "Hanya dalam jangkauan baterai"
+      if (filterWithinRange && hasBatteryRange && hasCurrentKm) {
+        matchedStations = matchedStations.filter(s => s.isWithinBattery);
       }
 
+      // Update Counter Banner
       const ultraCount = matchedStations.filter(s => s.highest_power >= 200).length;
       let counterText = `${matchedStations.length} ${t('spots_ahead')} (${ultraCount} ${t('speed_ultra')} 200 kW)`;
       if (passedCount > 0) {
@@ -339,19 +428,44 @@
 
       if (matchedStations.length === 0) {
         resultsContainer.innerHTML = `
-          <div class="text-center py-12 border border-slate-800/80 bg-slate-900/30 rounded-2xl animate-card">
+          <div class="text-center py-10 border border-slate-800/80 bg-slate-900/30 rounded-2xl animate-card">
             <p class="text-slate-400 text-sm">${t('err_no_match')}</p>
           </div>
         `;
         return;
       }
 
+      // Compact Cards Renderer
       resultsContainer.innerHTML = matchedStations.map((s, idx) => {
         let powerLabel = t('speed_fast');
         if (s.highest_power >= 200) powerLabel = t('speed_ultra');
         else if (s.highest_power >= 100) powerLabel = t('speed_rapid');
 
-        // Dispenser modular grid
+        // Distance Tag Builder
+        let distanceBadge = '';
+        if (hasCurrentKm && s.distAhead !== null) {
+          distanceBadge = `
+            <span class="inline-flex items-center gap-1 font-mono font-bold text-xs px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+              📍 ${s.distAhead} ${t('km_ahead')}
+            </span>
+          `;
+        } else {
+          distanceBadge = idx === 0 
+            ? `<span class="inline-flex items-center font-mono text-[11px] px-2 py-0.5 rounded-md bg-slate-800/70 text-slate-400 border border-slate-700/60">${t('first_stop')}</span>`
+            : `<span class="inline-flex items-center font-mono text-[11px] px-2 py-0.5 rounded-md bg-slate-800/70 text-slate-300 border border-slate-700/60">🚗 +${s.distFromPrev} ${t('from_prev_stop')}</span>`;
+        }
+
+        // Battery Range indicator badge
+        let batteryBadge = '';
+        if (hasBatteryRange && hasCurrentKm) {
+          if (s.isWithinBattery) {
+            batteryBadge = `<span class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">✓ ${t('within_battery')}</span>`;
+          } else {
+            batteryBadge = `<span class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-400 border border-rose-500/20">⚠️ ${t('outside_battery')}</span>`;
+          }
+        }
+
+        // Compact Dispenser row
         const dispenserChips = (s.chargers || []).map(c => {
           const portsSummary = (c.ports || []).map(p => `
             <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono font-medium ${getConnectorStyle(p.type)} border">
@@ -364,81 +478,70 @@
           const sharingWord = c.shared ? t('shared_power') : t('dedicated_power');
 
           return `
-            <div class="bg-slate-950/70 border border-slate-800/80 rounded-xl px-3 py-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 transition-colors hover:border-slate-700/80">
-              <div class="flex items-center gap-2">
-                <span class="w-1.5 h-1.5 rounded-full ${getBrandDot(c.brand)}"></span>
-                <span class="text-xs font-semibold text-slate-300">${c.brand}</span>
-                <span class="text-[10px] text-slate-500 font-mono">(${c.total_ports} ${plugWord} • ${sharingWord})</span>
-              </div>
-              <div class="flex items-center gap-1.5 flex-wrap">
+            <div class="inline-flex items-center gap-2 bg-slate-950/70 border border-slate-800/80 rounded-lg px-2.5 py-1.5 flex-wrap">
+              <span class="w-1.5 h-1.5 rounded-full ${getBrandDot(c.brand)}"></span>
+              <span class="text-[11px] font-semibold text-slate-300">${c.brand}</span>
+              <span class="text-[10px] text-slate-500 font-mono">(${c.total_ports} ${plugWord} • ${sharingWord})</span>
+              <div class="flex items-center gap-1 flex-wrap">
                 ${portsSummary}
               </div>
             </div>
           `;
         }).join("");
 
-        const staggerDelay = Math.min(idx * 35, 300);
-
         return `
-        <div style="animation-delay: ${staggerDelay}ms" class="animate-card group bg-slate-900/40 hover:bg-slate-900/75 border border-slate-800/80 hover:border-slate-700/80 rounded-2xl p-4 sm:p-5 transition-all duration-300 shadow-sm hover:shadow-lg">
+        <div class="animate-card group bg-slate-900/40 hover:bg-slate-900/75 border border-slate-800/80 hover:border-slate-700/80 rounded-xl p-3.5 transition-all duration-150">
           
-          <!-- Station Title & Power Peak -->
-          <div class="flex items-start justify-between gap-4">
-            <div class="space-y-1.5">
-              <div class="flex items-center gap-2 flex-wrap">
-                <span class="font-mono text-xs font-bold px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  KM ${s.km}
-                </span>
-                <span class="text-[11px] font-bold px-2 py-0.5 rounded-md ${s.side === 'A' ? 'bg-sky-500/10 text-sky-400 border border-sky-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20'}">
-                  Jalur ${s.side}
-                </span>
-                <span class="text-[11px] font-medium text-slate-500">
-                  ${formatSegment(s.segment, s.side)}
-                </span>
-              </div>
-              <h3 class="font-bold text-white text-base tracking-tight group-hover:text-emerald-300 transition-colors">
-                ${s.name}
-              </h3>
+          <!-- Compact Header: Milestone, Side, Distance & Power Rating -->
+          <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-800/60">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                KM ${s.km}
+              </span>
+              <span class="text-[11px] font-bold px-1.5 py-0.5 rounded ${s.side === 'A' ? 'bg-sky-500/10 text-sky-400 border border-sky-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20'}">
+                Jalur ${s.side}
+              </span>
+              ${distanceBadge}
+              ${batteryBadge}
             </div>
 
             <!-- Peak Power Rating -->
             <div class="text-right shrink-0">
-              <div class="font-mono font-black text-xl sm:text-2xl ${s.highest_power >= 200 ? 'text-amber-400' : s.highest_power >= 100 ? 'text-emerald-400' : 'text-slate-200'}">
+              <span class="font-mono font-black text-lg text-white">
                 ${s.lowest_power !== s.highest_power ? `${s.lowest_power}~${s.highest_power}` : s.highest_power}<span class="text-xs font-sans font-bold text-slate-400 ml-0.5">kW</span>
-              </div>
-              <span class="block text-[10px] uppercase font-bold tracking-wider text-slate-400">
-                ${powerLabel}
+              </span>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 ml-1.5">${powerLabel}</span>
+            </div>
+          </div>
+
+          <!-- Middle: Name & Action Links -->
+          <div class="mt-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h3 class="font-bold text-white text-sm sm:text-base leading-tight group-hover:text-emerald-300 transition-colors">
+                ${s.name}
+              </h3>
+              <span class="text-[11px] text-slate-500 font-medium">
+                ${formatSegment(s.segment, s.side)}
               </span>
             </div>
-          </div>
 
-          <!-- Dispensers Chips -->
-          <div class="mt-3.5 space-y-1.5">
-            ${dispenserChips}
-          </div>
-
-          <!-- Action Links -->
-          <div class="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs">
-            <div class="flex items-center gap-1.5">
-              ${(s.types || []).map(tp => `
-                <span class="text-[10px] font-bold font-mono px-2 py-0.5 rounded-md ${getConnectorStyle(tp)} border">
-                  ${tp}
-                </span>
-              `).join("")}
-            </div>
-
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1.5 shrink-0">
               <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" target="_blank" rel="noopener" 
-                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700/60 active:scale-95 transition-all text-xs font-medium shadow-sm">
-                <svg class="w-3.5 h-3.5 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                 class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700/60 transition-all text-xs font-medium">
+                <svg class="w-3 h-3 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                 <span>${t('btn_maps')}</span>
               </a>
               <a href="https://waze.com/ul?ll=${s.lat},${s.lng}&navigate=yes" target="_blank" rel="noopener" 
-                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700/60 active:scale-95 transition-all text-xs font-medium shadow-sm">
-                <svg class="w-3.5 h-3.5 text-sky-400" fill="currentColor" viewBox="0 0 24 24"><path d="M20.5 12c0-4.69-3.81-8.5-8.5-8.5S3.5 7.31 3.5 12c0 2.21.84 4.22 2.22 5.73l-1.16 3.48c-.14.42.24.83.67.72l3.65-.91c1.37.63 2.91.98 4.54.98 4.69 0 8.5-3.81 8.5-8.5zm-11 1.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                 class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700/60 transition-all text-xs font-medium">
+                <svg class="w-3 h-3 text-sky-400" fill="currentColor" viewBox="0 0 24 24"><path d="M20.5 12c0-4.69-3.81-8.5-8.5-8.5S3.5 7.31 3.5 12c0 2.21.84 4.22 2.22 5.73l-1.16 3.48c-.14.42.24.83.67.72l3.65-.91c1.37.63 2.91.98 4.54.98 4.69 0 8.5-3.81 8.5-8.5zm-11 1.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
                 <span>${t('btn_waze')}</span>
               </a>
             </div>
+          </div>
+
+          <!-- Bottom: Inline Dispensers & Connectors -->
+          <div class="mt-2.5 flex flex-wrap gap-1.5">
+            ${dispenserChips}
           </div>
         </div>
       `;
