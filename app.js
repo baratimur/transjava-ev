@@ -479,7 +479,7 @@ function generateStationCardHTML(s, idx, isFavList = false) {
     <article style="animation-delay: ${staggerDelay}ms" class="animate-ios-card group border rounded-xl p-2.5 sm:p-3 transition-all ${cardContainerStyle}">
       <div class="flex items-center justify-between gap-1.5 pb-1.5 border-b border-slate-100 dark:border-slate-800/80">
         <div class="flex items-center gap-1 flex-wrap">
-          <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded ${s.side === 'A' ? 'bg-sky-100 text-sky-900 border border-sky-200 dark:bg-sky-500/20 dark:text-sky-400 dark:border-sky-500/30' : 'bg-purple-100 text-purple-900 border border-purple-200 dark:bg-purple-500/20 dark:text-purple-400 dark:border-purple-500/30'}">Jalur ${s.side}</span>
+          <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded ${s.side === 'A' ? 'bg-sky-100 text-sky-900 border border-sky-200 dark:bg-sky-500/20 dark:text-sky-400 dark:border-sky-500/30' : 'bg-purple-100 text-purple-900 border border-purple-200 dark:bg-purple-500/20 dark:text-purple-400 dark:border-purple-500/30'}">${s.side}</span>
           ${capacityBadge}
           ${distanceBadge}
           ${batteryBadge}
