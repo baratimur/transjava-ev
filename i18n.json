@@ -37,7 +37,9 @@
     "hub_medium": "Medium",
     "hub_small": "1 Charger (High Queue Risk)",
     "label_chargers": "Chargers",
-    "label_plugs": "Plugs"
+    "label_plugs": "Plugs","
+    "label_unit": "Machines",
+    "label_port": "Port"
   },
   "id": {
     "title": "SPKLU Trans Jawa",
@@ -77,6 +79,8 @@
     "hub_medium": "Sedang",
     "hub_small": "1 Charger (Rentan Antre)",
     "label_chargers": "Charger",
-    "label_plugs": "Colokan"
+    "label_plugs": "Colokan",
+    "label_unit": "Mesin",
+    "label_port": "Port"
   }
 }
