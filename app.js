@@ -757,6 +757,123 @@ async function initApp() {
   }
 }
 
+// Rumus Haversine untuk menghitung jarak antara 2 koordinat (dalam km)
+function getDistanceKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * (Math.PI / 180);
+  const dLon = (lon2 - lon1) * (Math.PI / 180);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+    Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+// Menghitung estimasi KM berdasarkan posisi GPS
+function calculateKmFromCoords(userLat, userLng) {
+  if (!SPKLU_NETWORK || SPKLU_NETWORK.length === 0) return null;
+
+  // Filter stasiun yang memiliki koordinat valid dan urutkan dari yang terdekat
+  const validStations = SPKLU_NETWORK
+    .filter(s => typeof s.lat === 'number' && typeof s.lng === 'number' && typeof s.km === 'number')
+    .map(s => ({
+      ...s,
+      dist: getDistanceKm(userLat, userLng, s.lat, s.lng)
+    }))
+    .sort((a, b) => a.dist - b.dist);
+
+  if (validStations.length === 0) return null;
+
+  const s1 = validStations[0]; // Stasiun paling dekat
+
+  // Peringatan opsional jika jarak pengguna terlalu jauh dari rute tol (> 80 km)
+  if (s1.dist > 80) {
+    console.warn(`Posisi GPS berjarak ${Math.round(s1.dist)} km dari titik SPKLU terdekat.`);
+  }
+
+  // Cari stasiun terdekat kedua yang berada pada ruas (segment) yang sama untuk interpolasi presisi
+  const s2 = validStations.slice(1).find(s => s.segment === s1.segment && s.km !== s1.km);
+
+  if (s2) {
+    // Vektor proyeksi linier antara s1 dan s2
+    const dLat = s2.lat - s1.lat;
+    const dLng = s2.lng - s1.lng;
+    const lenSq = dLat * dLat + dLng * dLng;
+
+    if (lenSq > 0) {
+      const t = ((userLat - s1.lat) * dLat + (userLng - s1.lng) * dLng) / lenSq;
+      // Jika posisi pengguna berada di antara rentang dua rest area
+      if (t >= -0.2 && t <= 1.2) {
+        const clampedT = Math.max(0, Math.min(1, t));
+        return Math.round(s1.km + clampedT * (s2.km - s1.km));
+      }
+    }
+  }
+
+  // Fallback: gunakan KM dari stasiun terdekat
+  return s1.km;
+}
+
+// Handler klik tombol GPS
+function detectCurrentKm() {
+  if (!navigator.geolocation) {
+    alert("Perangkat atau browser Anda tidak mendukung fitur lokasi (GPS).");
+    return;
+  }
+
+  const iconGps = document.getElementById("icon-gps");
+  const iconLoading = document.getElementById("icon-gps-loading");
+
+  if (iconGps && iconLoading) {
+    iconGps.classList.add("hidden");
+    iconLoading.classList.remove("hidden");
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      if (iconGps && iconLoading) {
+        iconGps.classList.remove("hidden");
+        iconLoading.classList.add("hidden");
+      }
+
+      const userLat = position.coords.latitude;
+      const userLng = position.coords.longitude;
+      const detectedKm = calculateKmFromCoords(userLat, userLng);
+
+      if (detectedKm !== null) {
+        const kmInput = document.getElementById("current-km");
+        if (kmInput) {
+          kmInput.value = detectedKm;
+          animatedRouting(false);
+        }
+      } else {
+        alert("Tidak dapat menentukan posisi KM dari lokasi saat ini.");
+      }
+    },
+    (error) => {
+      if (iconGps && iconLoading) {
+        iconGps.classList.remove("hidden");
+        iconLoading.classList.add("hidden");
+      }
+
+      let errorMsg = "Gagal mengambil lokasi GPS.";
+      if (error.code === error.PERMISSION_DENIED) {
+        errorMsg = "Akses lokasi ditolak. Harap izinkan akses lokasi (GPS) pada browser Anda.";
+      } else if (error.code === error.POSITION_UNAVAILABLE) {
+        errorMsg = "Sinyal GPS tidak tersedia atau perangkat sedang di dalam ruangan.";
+      } else if (error.code === error.TIMEOUT) {
+        errorMsg = "Waktu pencarian lokasi habis. Silakan coba lagi.";
+      }
+      alert(errorMsg);
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 30000
+    }
+  );
+}
+
 // PWA Install Prompt
 window.addEventListener('load', () => {
   let deferredPrompt;
