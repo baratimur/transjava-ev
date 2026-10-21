@@ -1,4 +1,5 @@
 // SPKLU Trans Jawa - Core Application Logic
+const APP_VERSION = '1.0.2'; // Versi untuk cache-busting
 
 let i18nDictionary = {};
 let SPKLU_NETWORK = [];
@@ -11,23 +12,20 @@ let selectedSpeedFilter = 'all';
 let selectedConnectors = new Set(['CCS2', 'Chademo', 'AC']);
 let openDropdownId = null;
 
-// Helper: 2 State Validator (Operasional vs Tidak Operasional)
+// ==========================================
+// 1. HELPERS: STATUS & PERHITUNGAN DAYA
+// ==========================================
+
+// Hanya status 50 yang dianggap operasional
 function isOperational(item) {
   if (!item) return false;
-  if (item.operational !== undefined) return Boolean(item.operational);
-  if (item.is_operational !== undefined) return Boolean(item.is_operational);
   if (item.status !== undefined) {
-    if (typeof item.status === 'number') return item.status === 50;
-    if (typeof item.status === 'string') {
-      const s = item.status.toLowerCase().trim();
-      return s === 'operational' || s === '50' || s === 'active' || s === 'online';
-    }
-    if (typeof item.status === 'boolean') return item.status;
+    return item.status === 50;
   }
-  return true; // Default dianggap operasional jika tidak didefinisikan
+  return true; // Jika field status tidak ada, asumsikan normal
 }
 
-// Helper: Hitung metrik operasional stasiun
+// Evaluasi status operasional dan hitung kapasitas
 function evaluateStationOperationalData(s) {
   const stationIsOp = isOperational(s);
   let operationalPorts = [];
@@ -53,15 +51,9 @@ function evaluateStationOperationalData(s) {
     }
   });
 
-  // Jika tidak memiliki struktur array chargers, fallback ke data stasiun langsung
   const isCompletelyOffline = allPorts.length > 0 ? (operationalPorts.length === 0) : !stationIsOp;
 
-  // Hitung rentang daya HANYA dari port yang operasional
-  let powerValues = operationalPorts.map(p => {
-    if (p.power_kw) return Number(p.power_kw);
-    const m = String(p.power || '').match(/\d+/);
-    return m ? parseInt(m[0], 10) : 0;
-  }).filter(pw => pw > 0);
+  let powerValues = operationalPorts.map(p => Number(p.power_max) || 0).filter(pw => pw > 0);
 
   const highestPower = powerValues.length > 0 
     ? Math.max(...powerValues) 
@@ -85,6 +77,113 @@ function evaluateStationOperationalData(s) {
   };
 }
 
+// ==========================================
+// 2. DETEKSI GPS & LOKASI
+// ==========================================
+
+function getDistanceKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * (Math.PI / 180);
+  const dLon = (lon2 - lon1) * (Math.PI / 180);
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function calculateKmFromCoords(userLat, userLng) {
+  if (!SPKLU_NETWORK || SPKLU_NETWORK.length === 0) return null;
+
+  const validStations = SPKLU_NETWORK
+    .filter(s => typeof s.lat === 'number' && typeof s.lng === 'number' && typeof s.km === 'number')
+    .map(s => ({ ...s, dist: getDistanceKm(userLat, userLng, s.lat, s.lng) }))
+    .sort((a, b) => a.dist - b.dist);
+
+  if (validStations.length === 0) return null;
+
+  const s1 = validStations[0];
+  if (s1.dist > 80) console.warn(`Posisi GPS berjarak ${Math.round(s1.dist)} km dari SPKLU terdekat.`);
+
+  const s2 = validStations.slice(1).find(s => s.segment === s1.segment && s.km !== s1.km);
+  if (s2) {
+    const dLat = s2.lat - s1.lat;
+    const dLng = s2.lng - s1.lng;
+    const lenSq = dLat * dLat + dLng * dLng;
+
+    if (lenSq > 0) {
+      const t = ((userLat - s1.lat) * dLat + (userLng - s1.lng) * dLng) / lenSq;
+      if (t >= -0.2 && t <= 1.2) {
+        const clampedT = Math.max(0, Math.min(1, t));
+        return Math.round(s1.km + clampedT * (s2.km - s1.km));
+      }
+    }
+  }
+  return s1.km;
+}
+
+function detectCurrentKm() {
+  if (!navigator.geolocation) {
+    alert("Perangkat atau browser Anda tidak mendukung fitur lokasi (GPS).");
+    return;
+  }
+
+  const iconGps = document.getElementById("icon-gps");
+  const iconLoading = document.getElementById("icon-gps-loading");
+
+  if (iconGps && iconLoading) {
+    iconGps.classList.add("hidden");
+    iconLoading.classList.remove("hidden");
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      if (iconGps && iconLoading) {
+        iconGps.classList.remove("hidden");
+        iconLoading.classList.add("hidden");
+      }
+      const detectedKm = calculateKmFromCoords(position.coords.latitude, position.coords.longitude);
+      if (detectedKm !== null) {
+        const kmInput = document.getElementById("current-km");
+        if (kmInput) {
+          kmInput.value = detectedKm;
+          animatedRouting(false);
+        }
+      } else {
+        alert("Tidak dapat menentukan posisi KM dari lokasi saat ini.");
+      }
+    },
+    (error) => {
+      if (iconGps && iconLoading) {
+        iconGps.classList.remove("hidden");
+        iconLoading.classList.add("hidden");
+      }
+      let errorMsg = "Gagal mengambil lokasi GPS.";
+      if (error.code === error.PERMISSION_DENIED) errorMsg = "Akses lokasi ditolak. Harap izinkan GPS pada browser Anda.";
+      else if (error.code === error.POSITION_UNAVAILABLE) errorMsg = "Sinyal GPS tidak tersedia.";
+      else if (error.code === error.TIMEOUT) errorMsg = "Waktu pencarian lokasi habis.";
+      alert(errorMsg);
+    },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
+  );
+}
+
+// Mobile Native Navigation (Auto Chooser Maps/Waze/Apple Maps)
+function openNativeNavigation(lat, lng, name) {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isAndroid = /Android/.test(navigator.userAgent);
+  const cleanName = encodeURIComponent(name || 'SPKLU');
+
+  if (isAndroid) {
+    window.location.href = `geo:${lat},${lng}?q=${lat},${lng}(${cleanName})`;
+  } else if (isIOS) {
+    window.location.href = `https://maps.apple.com/?daddr=${lat},${lng}&q=${cleanName}`;
+  } else {
+    window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
+  }
+}
+
+// ==========================================
+// 3. UI COMPONENTS & INTERACTIONS
+// ==========================================
+
 function animatedRouting(resetSegment = false) {
   if (resetSegment) selectedSegmentFilter = null;
   if (document.startViewTransition) {
@@ -94,7 +193,6 @@ function animatedRouting(resetSegment = false) {
   }
 }
 
-// Inisialisasi & Pengaturan Tema
 function initTheme() {
   const saved = localStorage.getItem('theme');
   const isDark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -121,7 +219,6 @@ function setTheme(theme) {
   localStorage.setItem('theme', theme);
 }
 
-// Sistem Bahasa / i18n
 function t(key) {
   if (!i18nDictionary[currentLang]) return key;
   return i18nDictionary[currentLang][key] || key;
@@ -133,13 +230,10 @@ function setLang(lang) {
   document.documentElement.lang = lang;
 
   document.title = t('seo_title') || 'SPKLU Trans Jawa • Peta Cas Mobil Listrik Rest Area Tol';
-  const metaDesc = document.querySelector('meta[name="description"]');
-  if (metaDesc && t('seo_desc') !== 'seo_desc') metaDesc.setAttribute('content', t('seo_desc'));
-
   const btnId = document.getElementById('btn-id');
   const btnEn = document.getElementById('btn-en');
-  if (btnId) btnId.className = `px-2.5 py-1 min-h-[32px] text-xs font-bold rounded transition-all ${lang === 'id' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'}`;
-  if (btnEn) btnEn.className = `px-2.5 py-1 min-h-[32px] text-xs font-bold rounded transition-all ${lang === 'en' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'}`;
+  if (btnId) btnId.className = `px-2 h-6 text-[10px] font-bold rounded transition-all ${lang === 'id' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'}`;
+  if (btnEn) btnEn.className = `px-2 h-6 text-[10px] font-bold rounded transition-all ${lang === 'en' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'}`;
 
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
@@ -148,19 +242,7 @@ function setLang(lang) {
     else if (el.hasAttribute('title')) el.title = t(key);
     else el.textContent = t(key);
   });
-
-  const kmInput = document.getElementById("current-km");
-  if (kmInput) kmInput.placeholder = t('km_ph');
-  const batteryInput = document.getElementById("battery-range");
-  if (batteryInput) batteryInput.placeholder = t('battery_ph');
-
   animatedRouting(false);
-}
-
-// Dropdown & Searchable Popover
-function populateDropdowns(cities) {
-  renderDropdownItems('origin', cities, 'jakarta');
-  renderDropdownItems('destination', cities, 'surabaya');
 }
 
 function renderDropdownItems(type, cities, defaultVal) {
@@ -177,16 +259,16 @@ function renderDropdownItems(type, cities, defaultVal) {
   const currentSelected = input.value;
 
   if (!cities || cities.length === 0) {
-    listContainer.innerHTML = `<div class="px-3 py-4 text-center text-sm text-slate-500 font-medium">Kota tidak ditemukan</div>`;
+    listContainer.innerHTML = `<div class="px-2 py-3 text-center text-xs text-slate-500">Kota tidak ditemukan</div>`;
     return;
   }
 
   listContainer.innerHTML = cities.map(city => {
     const isSelected = city.id === currentSelected;
     return `
-      <button type="button" aria-selected="${isSelected}" onclick="selectCity('${type}', '${city.id}', '${city.name}')" class="w-full flex items-center justify-between px-3 py-3 min-h-[44px] text-sm font-bold rounded-xl transition-all duration-150 ${isSelected ? 'bg-emerald-50 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-400' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}">
+      <button type="button" aria-selected="${isSelected}" onclick="selectCity('${type}', '${city.id}', '${city.name.replace(/'/g, "\\'")}')" class="w-full flex items-center justify-between px-2.5 py-1.5 text-xs font-semibold rounded-lg transition-all ${isSelected ? 'bg-emerald-50 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-400 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}">
         <span>${city.name}</span>
-        ${isSelected ? '<span class="text-emerald-700 dark:text-emerald-400 text-sm">✓</span>' : ''}
+        ${isSelected ? '<span class="text-emerald-600 dark:text-emerald-400 text-xs">✓</span>' : ''}
       </button>
     `;
   }).join("");
@@ -215,7 +297,6 @@ function toggleDropdown(type) {
     menu.classList.remove('hidden');
     if (chevron) chevron.classList.add('rotate-180');
     openDropdownId = type;
-
     setTimeout(() => { if (searchInput) searchInput.focus(); }, 50);
   }
 }
@@ -286,9 +367,9 @@ function setSpeedFilter(minPower) {
     if (btn) {
       btn.setAttribute('aria-pressed', val === minPower ? "true" : "false");
       if (val === minPower) {
-        btn.className = "px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm";
+        btn.className = "h-6 px-1.5 rounded text-[11px] font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm";
       } else {
-        btn.className = "px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white";
+        btn.className = "h-6 px-1.5 rounded text-[11px] font-bold transition-all text-slate-600 dark:text-slate-300";
       }
     }
   });
@@ -308,9 +389,9 @@ function toggleConnector(type) {
       const isActive = selectedConnectors.has(tp);
       btn.setAttribute('aria-pressed', isActive ? "true" : "false");
       if (isActive) {
-        btn.className = "px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all bg-emerald-700 text-white shadow-sm dark:bg-emerald-600 dark:text-white active:scale-95";
+        btn.className = "h-6 px-1.5 rounded text-[11px] font-bold transition-all bg-emerald-600 text-white shadow-sm dark:bg-emerald-600 active:scale-95";
       } else {
-        btn.className = "px-2.5 py-1.5 min-h-[36px] rounded-md text-[11px] sm:text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white active:scale-95";
+        btn.className = "h-6 px-1.5 rounded text-[11px] font-bold transition-all text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white active:scale-95";
       }
     }
   });
@@ -351,7 +432,10 @@ function getBrandDot(brand) {
   return 'bg-emerald-600 dark:bg-emerald-400';
 }
 
-// Logika Render & Filter Utama
+// ==========================================
+// 4. RENDERING ALGORITHM
+// ==========================================
+
 function runRouting() {
   if (SPKLU_NETWORK.length === 0 || Object.keys(HIGHWAY_GRAPH).length === 0) return;
 
@@ -373,8 +457,8 @@ function runRouting() {
     corridorSummary.innerHTML = "";
     matchCounter.textContent = `0 ${t('spots_ahead')}`;
     resultsContainer.innerHTML = `
-      <div class="text-center py-10 border border-dashed border-slate-300 dark:border-slate-700 rounded-2xl bg-white/80 dark:bg-slate-900/40 animate-ios-card">
-        <p class="text-slate-600 dark:text-slate-400 text-sm font-bold">${t('err_same_city')}</p>
+      <div class="text-center py-6 border border-dashed border-slate-300 dark:border-slate-700 rounded-xl bg-white/80 dark:bg-slate-900/40 animate-ios-card">
+        <p class="text-slate-600 dark:text-slate-400 text-xs font-bold">${t('err_same_city')}</p>
       </div>
     `;
     return;
@@ -383,15 +467,16 @@ function runRouting() {
   const legs = findRoute(origin, destination);
   if (!legs) {
     resultsContainer.innerHTML = `
-      <div class="p-6 text-center text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-700 rounded-2xl bg-white/80 dark:bg-slate-900/40 animate-ios-card text-sm font-bold">
+      <div class="p-6 text-center text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 rounded-xl bg-white/80 dark:bg-slate-900/40 animate-ios-card text-xs font-bold">
         ${t('err_no_route')}
       </div>
     `;
     return;
   }
 
+  // Render Horizontal Tabs untuk Ruas (Tinggi Seragam h-7)
   let chipsMarkup = `
-    <button type="button" aria-pressed="${selectedSegmentFilter === null}" onclick="selectedSegmentFilter = null; animatedRouting(false)" class="whitespace-nowrap shrink-0 px-3 py-1.5 min-h-[36px] rounded-lg text-xs font-bold transition-all duration-200 ${selectedSegmentFilter === null ? 'bg-slate-800 text-white dark:bg-slate-700 shadow-sm' : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-700'} active:scale-95">
+    <button type="button" aria-pressed="${selectedSegmentFilter === null}" onclick="selectedSegmentFilter = null; animatedRouting(false)" class="whitespace-nowrap shrink-0 h-7 px-2.5 rounded-md text-[11px] font-bold transition-all ${selectedSegmentFilter === null ? 'bg-slate-800 text-white dark:bg-slate-700 shadow-sm' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-800'} active:scale-95">
       ${t('all_segments')}
     </button>
   `;
@@ -399,8 +484,8 @@ function runRouting() {
   chipsMarkup += legs.map(leg => {
     const isSelected = selectedSegmentFilter === leg.segment;
     return `
-      <button type="button" aria-pressed="${isSelected}" onclick="toggleSegmentFilter('${leg.segment}')" class="whitespace-nowrap shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[36px] rounded-lg text-xs font-mono transition-all duration-200 ${isSelected ? 'bg-emerald-700 text-white dark:bg-emerald-600 dark:text-white font-bold shadow-sm' : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-300'} active:scale-95">
-        <span class="w-4 h-4 rounded text-[10px] font-black flex items-center justify-center ${isSelected ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400'}">${leg.side}</span>
+      <button type="button" aria-pressed="${isSelected}" onclick="toggleSegmentFilter('${leg.segment}')" class="whitespace-nowrap shrink-0 inline-flex items-center gap-1 h-7 px-2 rounded-md text-[11px] font-mono transition-all ${isSelected ? 'bg-emerald-700 text-white dark:bg-emerald-600 font-bold shadow-sm' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-300'} active:scale-95">
+        <span class="w-3.5 h-3.5 rounded text-[9px] font-black flex items-center justify-center ${isSelected ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400'}">${leg.side}</span>
         <span class="font-bold">${formatSegment(leg.segment, leg.side)}</span>
       </button>
     `;
@@ -419,22 +504,12 @@ function runRouting() {
     matchedStations = matchedStations.filter(s => s.segment === selectedSegmentFilter);
   }
 
-  // Siapkan evaluasi status operasional untuk setiap stasiun
-  matchedStations = matchedStations.map(s => {
-    const opData = evaluateStationOperationalData(s);
-    return {
-      ...s,
-      ...opData
-    };
-  });
+  // Evaluasi Daya & Kapasitas secara dinamis (Hanya menghitung yang hidup)
+  matchedStations = matchedStations.map(s => ({ ...s, ...evaluateStationOperationalData(s) }));
 
-  // Filter jenis colokan: Stasiun harus memiliki port operasional dari tipe yang dipilih
   if (selectedConnectors.size > 0 && selectedConnectors.size < 3) {
     matchedStations = matchedStations.filter(s => {
-      // Jika stasiun mati total, tetap tampilkan selama tipe aslinya cocok (agar teridentifikasi offline)
-      if (s.isCompletelyOffline) {
-        return (s.types || []).some(tp => selectedConnectors.has(tp));
-      }
+      if (s.isCompletelyOffline) return (s.types || []).some(tp => selectedConnectors.has(tp));
       return s.operationalTypes.some(tp => selectedConnectors.has(tp));
     });
   }
@@ -446,7 +521,6 @@ function runRouting() {
     passedCount = totalBefore - matchedStations.length;
   }
 
-  // Filter kecepatan (hanya mengukur daya dari port yang operasional)
   if (selectedSpeedFilter !== 'all') {
     const minKW = parseInt(selectedSpeedFilter, 10);
     matchedStations = matchedStations.filter(s => s.highestPower >= minKW);
@@ -468,7 +542,6 @@ function runRouting() {
     matchedStations = matchedStations.filter(s => s.isWithinBattery);
   }
 
-  // Hitung jumlah Ultra Cepat HANYA dari stasiun yang port 200 kW-nya aktif operasional
   const ultraCount = matchedStations.filter(s => s.highestPower >= 200 && !s.isCompletelyOffline).length;
   let counterText = `${matchedStations.length} ${t('spots_ahead')} (${ultraCount} ${t('speed_ultra')} 200 kW)`;
   if (passedCount > 0) counterText += ` • <span class="text-amber-700 dark:text-amber-400 font-bold">${passedCount} ${t('past_hidden')}</span>`;
@@ -476,69 +549,67 @@ function runRouting() {
 
   if (matchedStations.length === 0) {
     resultsContainer.innerHTML = `
-      <div class="text-center py-10 border border-slate-300 dark:border-slate-800 bg-white/80 dark:bg-slate-900/40 rounded-2xl animate-ios-card shadow-sm">
-        <p class="text-slate-600 dark:text-slate-400 text-sm font-bold">${t('err_no_match')}</p>
+      <div class="text-center py-6 border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/40 rounded-xl animate-ios-card shadow-sm">
+        <p class="text-slate-600 dark:text-slate-400 text-xs font-bold">${t('err_no_match')}</p>
       </div>
     `;
     return;
   }
 
+  // Render Kartu Hasil SPKLU
   resultsContainer.innerHTML = matchedStations.map((s, idx) => {
     const isOffline = s.isCompletelyOffline;
-
-    let powerLabel = t('speed_fast');
-    if (s.highestPower >= 200) powerLabel = t('speed_ultra');
-    else if (s.highestPower >= 100) powerLabel = t('speed_rapid');
 
     const unitLabel = t('label_unit') || 'Mesin';
     const portLabel = t('label_port') || 'Port';
 
-    // Kapasitas & Status Badge (Perhitungan hanya dari yang operasional)
+    // 1. Kapasitas Badge (Ringkas)
     let capacityBadge = '';
     if (isOffline) {
       capacityBadge = `
-        <span class="inline-flex items-center gap-1 font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-rose-100 text-rose-800 border border-rose-300 dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-800 line-through">
+        <span class="inline-flex items-center font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-200 dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-800 line-through">
           ⚠️ Tidak Beroperasi
         </span>
       `;
     } else if (s.operationalMachinesCount > 4 && s.operationalPortsCount > 10) {
       capacityBadge = `
-        <span class="inline-flex items-center gap-1 font-mono text-[11px] font-extrabold px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/30">
+        <span class="inline-flex items-center gap-0.5 font-mono text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/30">
           ⚡⚡ ${s.operationalMachinesCount} ${unitLabel} (${s.operationalPortsCount} ${portLabel})
         </span>
       `;
     } else if (s.operationalMachinesCount <= 1) {
       capacityBadge = `
-        <span class="inline-flex items-center font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-slate-200 text-slate-700 border border-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700">
+        <span class="inline-flex items-center font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700">
           ${s.operationalMachinesCount} ${unitLabel} (${s.operationalPortsCount} ${portLabel})
         </span>
       `;
     } else {
       capacityBadge = `
-        <span class="inline-flex items-center gap-1 font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-sky-100 text-sky-800 border border-sky-300 dark:bg-sky-500/20 dark:text-sky-400 dark:border-sky-500/30">
+        <span class="inline-flex items-center gap-0.5 font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-100 text-sky-800 border border-sky-300 dark:bg-sky-500/20 dark:text-sky-400 dark:border-sky-500/30">
           ⚡ ${s.operationalMachinesCount} ${unitLabel} (${s.operationalPortsCount} ${portLabel})
         </span>
       `;
     }
 
-    // Distance & Battery Badge
+    // 2. Distance Badge Ringkas
     let distanceBadge = '';
     if (hasCurrentKm && s.distAhead !== null) {
-      distanceBadge = `<span class="inline-flex items-center font-mono font-extrabold text-[11px] px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30">📍 ${s.distAhead} ${t('km_ahead')}</span>`;
+      distanceBadge = `<span class="inline-flex items-center font-mono font-extrabold text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30">📍 ${s.distAhead} km</span>`;
     } else {
       distanceBadge = idx === 0 
-        ? `<span class="inline-flex items-center font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-700">${t('first_stop')}</span>`
-        : `<span class="inline-flex items-center font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700">🚗 +${s.distFromPrev} ${t('from_prev_stop')}</span>`;
+        ? `<span class="inline-flex items-center font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">Awal</span>`
+        : `<span class="inline-flex items-center font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">🚗 +${s.distFromPrev} km</span>`;
     }
 
+    // 3. Battery Badge Ringkas
     let batteryBadge = '';
     if (hasBatteryRange && hasCurrentKm) {
       batteryBadge = s.isWithinBattery
-        ? `<span class="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30">✓ ${t('within_battery')}</span>`
-        : `<span class="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-rose-50 text-rose-800 border border-rose-300 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/30">⚠️ ${t('outside_battery')}</span>`;
+        ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30">✓ Aman</span>`
+        : `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/30">⚠️ Kritis</span>`;
     }
 
-    // Render Mesin & Port dengan Style Strikethrough jika Tidak Operasional
+    // List Port & Dispenser dengan status per port
     const dispenserGroupMap = {};
     (s.chargers || []).forEach(charger => {
       const chargerIsOp = !isOffline && isOperational(charger);
@@ -546,14 +617,11 @@ function runRouting() {
 
       (charger.ports || []).forEach(port => {
         const portIsOp = chargerIsOp && isOperational(port);
-        const groupKey = `${port.type} ${port.power}___${portIsOp}`;
+        const powerLabel = port.power_max || (typeof port.power === 'string' ? port.power.replace(' kW','') : port.power);
+        const groupKey = `${port.type} ${powerLabel}___${portIsOp}`;
+        
         if (!portGroups[groupKey]) {
-          portGroups[groupKey] = {
-            type: port.type,
-            power: port.power,
-            isOp: portIsOp,
-            count: 0
-          };
+          portGroups[groupKey] = { type: port.type, power: powerLabel, isOp: portIsOp, count: 0 };
         }
         portGroups[groupKey].count += 1;
       });
@@ -563,19 +631,13 @@ function runRouting() {
         if (pg.isOp) {
           return `<span>${countPrefix}${pg.type} ${pg.power}</span>`;
         } else {
-          // Strikethrough port yang tidak operasional
           return `<span class="line-through decoration-rose-500 text-slate-400 dark:text-slate-500" title="Port Tidak Beroperasi">${countPrefix}${pg.type} ${pg.power}</span>`;
         }
       }).join('<span class="text-slate-300 dark:text-slate-700 mx-1">•</span>');
 
       const signature = `${charger.brand}___${portSummaries}`;
       if (!dispenserGroupMap[signature]) {
-        dispenserGroupMap[signature] = {
-          brand: charger.brand,
-          portSummaries: portSummaries,
-          count: 0,
-          chargerIsOp: chargerIsOp
-        };
+        dispenserGroupMap[signature] = { brand: charger.brand, portSummaries: portSummaries, count: 0, chargerIsOp: chargerIsOp };
       }
       dispenserGroupMap[signature].count += 1;
     });
@@ -583,40 +645,37 @@ function runRouting() {
     const dispenserList = Object.values(dispenserGroupMap).map(item => {
       const machineCountPrefix = item.count > 1 ? `<span class="font-extrabold ${item.chargerIsOp ? 'text-emerald-800 dark:text-emerald-400' : 'text-slate-400'} mr-0.5">${item.count}×</span>` : '';
       return `
-        <div class="inline-flex items-center gap-1.5 ${item.chargerIsOp ? 'bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-700' : 'bg-slate-100/70 dark:bg-slate-900/30 border-dashed border-slate-300 dark:border-slate-800 opacity-60'} border rounded-lg px-2.5 py-1 text-xs">
-          <span class="w-2 h-2 rounded-full ${item.chargerIsOp ? getBrandDot(item.brand) : 'bg-slate-400'} shrink-0"></span>
-          <span class="font-bold ${item.chargerIsOp ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400 line-through'} text-[11px]">${machineCountPrefix}${item.brand}</span>
-          <span class="text-slate-300 dark:text-slate-600 text-[10px]" aria-hidden="true">|</span>
-          <span class="font-mono text-[11px] font-bold flex items-center flex-wrap">${item.portSummaries}</span>
+        <div class="inline-flex items-center gap-1 ${item.chargerIsOp ? 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800' : 'bg-slate-100/70 dark:bg-slate-900/30 border-dashed border-slate-300 dark:border-slate-800 opacity-60'} border rounded px-1.5 py-0.5 text-[10px]">
+          <span class="w-1.5 h-1.5 rounded-full ${item.chargerIsOp ? getBrandDot(item.brand) : 'bg-slate-400'} shrink-0"></span>
+          <span class="font-bold ${item.chargerIsOp ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400 line-through'}">${machineCountPrefix}${item.brand}</span>
+          <span class="text-slate-300 dark:text-slate-700" aria-hidden="true">|</span>
+          <span class="font-mono font-bold flex items-center flex-wrap">${item.portSummaries}</span>
         </div>
       `;
     }).join("");
 
-    const staggerDelay = Math.min(idx * 28, 250);
+    const staggerDelay = Math.min(idx * 20, 200);
 
-    // Style Card Penuh jika Stasiun Tidak Operasional
     const cardContainerStyle = isOffline 
       ? "opacity-60 bg-slate-100/50 dark:bg-slate-900/20 border-slate-300 dark:border-slate-800" 
-      : "bg-white dark:bg-slate-900/60 hover:bg-slate-50/80 dark:hover:bg-slate-900/90 border-slate-300 dark:border-slate-700/80 hover:border-slate-400 dark:hover:border-slate-600 shadow-sm hover:shadow-md";
+      : "bg-white dark:bg-slate-900/60 hover:bg-slate-50/80 dark:hover:bg-slate-900/90 border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700 shadow-sm";
 
     const titleStyle = isOffline 
       ? "line-through text-slate-400 dark:text-slate-500" 
-      : "text-slate-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400";
+      : "text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400";
 
     const powerStyle = isOffline 
       ? "line-through text-slate-400 dark:text-slate-600" 
       : "text-slate-900 dark:text-white";
 
     return `
-      <article style="animation-delay: ${staggerDelay}ms" class="animate-ios-card group border rounded-2xl p-3.5 sm:p-4 transition-all duration-200 ${cardContainerStyle}">
+      <article style="animation-delay: ${staggerDelay}ms" class="animate-ios-card group border rounded-xl p-2.5 sm:p-3 transition-all ${cardContainerStyle}">
         
-        <div class="flex items-center justify-between gap-1.5 pb-2.5 border-b border-slate-200 dark:border-slate-800">
-          <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="font-mono text-xs font-extrabold px-2.5 py-0.5 rounded-md ${isOffline ? 'bg-slate-200 text-slate-500 line-through' : 'bg-emerald-100 text-emerald-900 border border-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/30'}">
-              KM ${s.km}
-            </span>
-            <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-md ${s.side === 'A' ? 'bg-sky-100 text-sky-900 border border-sky-300 dark:bg-sky-500/20 dark:text-sky-400 dark:border-sky-500/30' : 'bg-purple-100 text-purple-900 border border-purple-300 dark:bg-purple-500/20 dark:text-purple-400 dark:border-purple-500/30'}">
-              ${s.side}
+        <!-- Baris Atas: Jalur, Kapasitas, Jarak, Baterai, Daya -->
+        <div class="flex items-center justify-between gap-1.5 pb-1.5 border-b border-slate-100 dark:border-slate-800/80">
+          <div class="flex items-center gap-1 flex-wrap">
+            <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded ${s.side === 'A' ? 'bg-sky-100 text-sky-900 border border-sky-200 dark:bg-sky-500/20 dark:text-sky-400 dark:border-sky-500/30' : 'bg-purple-100 text-purple-900 border border-purple-200 dark:bg-purple-500/20 dark:text-purple-400 dark:border-purple-500/30'}">
+              Jalur ${s.side}
             </span>
             ${capacityBadge}
             ${distanceBadge}
@@ -624,47 +683,44 @@ function runRouting() {
           </div>
 
           <div class="text-right shrink-0">
-            <span class="font-mono font-extrabold text-base ${powerStyle}">
-              ${isOffline ? '0' : (s.lowestPower !== s.highestPower ? `${s.lowestPower}~${s.highestPower}` : s.highestPower)}<span class="text-xs font-sans font-bold text-slate-500 ml-0.5">kW</span>
+            <span class="font-mono font-extrabold text-sm sm:text-base ${powerStyle}">
+              ${isOffline ? '0' : (s.lowestPower !== s.highestPower ? `${s.lowestPower}~${s.highestPower}` : s.highestPower)}<span class="text-[10px] font-sans font-bold text-slate-400 ml-0.5">kW</span>
             </span>
-            ${!isOffline ? `<span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 ml-1 hidden sm:inline">${powerLabel}</span>` : ''}
           </div>
         </div>
 
-        <div class="mt-2 flex items-center justify-between gap-2">
+        <!-- Baris Tengah: Nama & Ikon Navigasi (Mobile -> 1 Native Icon | Desktop -> 2 Icons) -->
+        <div class="mt-1.5 flex items-center justify-between gap-2">
           <div class="min-w-0">
-            <h2 class="font-extrabold text-sm sm:text-base leading-tight transition-colors ${titleStyle} truncate">
+            <h2 class="font-extrabold text-xs sm:text-sm leading-tight transition-colors ${titleStyle} truncate">
               ${s.name}
             </h2>
-            <span class="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-bold">
+            <span class="text-[10px] text-slate-400 font-medium">
               ${formatSegment(s.segment, s.side)}
             </span>
           </div>
 
-          <!-- Tombol Navigasi: 1 Tombol di Mobile, Dual Maps/Waze di Desktop -->
-          <div class="flex items-center gap-1.5 shrink-0">
-            <!-- Mobile: 1 Tombol Navigasi Native Ringkas -->
-            <button type="button" onclick="openNativeNavigation(${s.lat}, ${s.lng}, '${s.name.replace(/'/g, "\\'")}')" aria-label="Navigasi ke ${s.name}" 
-               class="inline-flex sm:hidden items-center gap-1 px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] shadow-sm active:scale-95 transition-all">
+          <div class="flex items-center gap-1 shrink-0">
+            <!-- Mobile: Native App Chooser -->
+            <button type="button" onclick="openNativeNavigation(${s.lat}, ${s.lng}, '${s.name.replace(/'/g, "\\'")}')" aria-label="Navigasi ke ${s.name}" title="Navigasi"
+               class="inline-flex sm:hidden items-center justify-center h-7 w-7 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm active:scale-95 transition-all">
               <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
-              <span>Navigasi</span>
             </button>
 
-            <!-- Desktop: Tombol Google Maps & Waze -->
-            <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" aria-label="Buka di Google Maps" target="_blank" rel="noopener" 
-               class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm active:scale-95 transition-all">
+            <!-- Desktop: Maps & Waze -->
+            <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" aria-label="Buka di Google Maps" title="Buka di Google Maps" target="_blank" rel="noopener" 
+               class="hidden sm:inline-flex items-center justify-center h-7 w-7 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm active:scale-95 transition-all">
               <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-              <span>Maps</span>
             </a>
-            <a href="https://waze.com/ul?ll=${s.lat},${s.lng}&navigate=yes" aria-label="Buka di Waze" target="_blank" rel="noopener" 
-               class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-sm active:scale-95 transition-all">
+            <a href="https://waze.com/ul?ll=${s.lat},${s.lng}&navigate=yes" aria-label="Buka di Waze" title="Buka di Waze" target="_blank" rel="noopener" 
+               class="hidden sm:inline-flex items-center justify-center h-7 w-7 rounded-lg bg-sky-600 hover:bg-sky-500 text-white shadow-sm active:scale-95 transition-all">
               <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M20.5 12c0-4.69-3.81-8.5-8.5-8.5S3.5 7.31 3.5 12c0 2.21.84 4.22 2.22 5.73l-1.16 3.48c-.14.42.24.83.67.72l3.65-.91c1.37.63 2.91.98 4.54.98 4.69 0 8.5-3.81 8.5-8.5zm-11 1.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-              <span>Waze</span>
             </a>
           </div>
         </div>
 
-        <div class="mt-2.5 flex flex-wrap gap-1.5">
+        <!-- Baris Bawah: List Mesin (Compact) -->
+        <div class="mt-1.5 flex flex-wrap gap-1">
           ${dispenserList}
         </div>
       </article>
@@ -694,7 +750,10 @@ function setupCorridorDesktopScroll() {
   });
 }
 
-// Inisialisasi Aplikasi & PWA
+// ==========================================
+// 5. INISIALISASI & CACHE BUSTING
+// ==========================================
+
 async function initApp() {
   const list = document.getElementById("results-list");
   const loader = document.getElementById("initial-loader");
@@ -704,8 +763,12 @@ async function initApp() {
   setupCorridorDesktopScroll();
 
   try {
+    // Fetch dilengkapi query ?v= agar bypass cache jika ada pembaruan file
     const [langRes, stationsRes, graphRes, citiesRes] = await Promise.all([
-      fetch("i18n.json"), fetch("stations.json"), fetch("highway.json"), fetch("cities.json")
+      fetch(`i18n.json?v=${APP_VERSION}`),
+      fetch(`stations.json?v=${APP_VERSION}`),
+      fetch(`highway.json?v=${APP_VERSION}`),
+      fetch(`cities.json?v=${APP_VERSION}`)
     ]);
 
     if (!langRes.ok) throw new Error(`i18n.json error ${langRes.status}`);
@@ -713,29 +776,30 @@ async function initApp() {
     if (!graphRes.ok) throw new Error(`highway.json error ${graphRes.status}`);
     if (!citiesRes.ok) throw new Error(`cities.json error ${citiesRes.status}`);
     
-    i18nDictionary = await langRes.json();// Di dalam initApp() saat membaca stations.json
-    SPKLU_NETWORK = (await stationsRes.json()).map(s => ({
-    segment: s.seg || s.segment,
-    side: s.sd || s.side,
-    km: s.km,
-    name: s.n || s.name,
-    lat: s.lat,
-    lng: s.lng,
-    status: s.s || s.status || 50,
-    types: [...new Set((s.c || []).flatMap(ch => (ch.p || []).map(pt => pt.t || pt.type)))],
-    chargers: (s.c || s.chargers || []).map(ch => ({
-        brand: ch.b || ch.brand,
-        status: ch.s || ch.status || 50,
-        ports: (ch.p || ch.ports || []).map(pt => ({
-        type: pt.t || pt.type,
-        power: `${pt.kw || pt.power_max || 0} kW`,
-        power_max: pt.kw || pt.power_max || 0,
-        status: pt.s || pt.status || 50
-        }))
-    }))
-    }));
+    i18nDictionary = await langRes.json();
     HIGHWAY_GRAPH = await graphRes.json();
     CITIES = await citiesRes.json();
+    
+    // Normalisasi struktur JSON yang telah terkompresi (Minified)
+    SPKLU_NETWORK = (await stationsRes.json()).map(s => ({
+      segment: s.seg || s.segment,
+      side: s.sd || s.side,
+      km: s.km,
+      name: s.n || s.name,
+      lat: s.lat,
+      lng: s.lng,
+      status: s.s !== undefined ? s.s : (s.status !== undefined ? s.status : 50),
+      types: [...new Set((s.c || s.chargers || []).flatMap(ch => (ch.p || ch.ports || []).map(pt => pt.t || pt.type)))],
+      chargers: (s.c || s.chargers || []).map(ch => ({
+        brand: ch.b || ch.brand,
+        status: ch.s !== undefined ? ch.s : (ch.status !== undefined ? ch.status : 50),
+        ports: (ch.p || ch.ports || []).map(pt => ({
+          type: pt.t || pt.type,
+          power_max: pt.kw !== undefined ? pt.kw : (pt.power_max !== undefined ? pt.power_max : 0),
+          status: pt.s !== undefined ? pt.s : (pt.status !== undefined ? pt.status : 50)
+        }))
+      }))
+    }));
 
     populateDropdowns(CITIES);
     setLang(currentLang);
@@ -758,7 +822,7 @@ async function initApp() {
 
     if (list) {
       list.innerHTML = `
-        <div class="p-6 text-center text-rose-700 bg-rose-50 border border-rose-300 dark:text-rose-400 dark:bg-rose-900/20 dark:border-rose-800/60 rounded-2xl text-sm font-bold animate-ios-card">
+        <div class="p-5 text-center text-rose-700 bg-rose-50 border border-rose-300 dark:text-rose-400 dark:bg-rose-900/20 dark:border-rose-800/60 rounded-xl text-xs font-bold animate-ios-card">
           Gagal memuat data SPKLU. Pastikan koneksi internet aktif.
         </div>
       `;
@@ -766,143 +830,24 @@ async function initApp() {
   }
 }
 
-// Rumus Haversine untuk menghitung jarak antara 2 koordinat (dalam km)
-function getDistanceKm(lat1, lon1, lat2, lon2) {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * (Math.PI / 180);
-  const dLon = (lon2 - lon1) * (Math.PI / 180);
-  const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
-    Math.sin(dLon / 2) ** 2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-}
-
-// Menghitung estimasi KM berdasarkan posisi GPS
-function calculateKmFromCoords(userLat, userLng) {
-  if (!SPKLU_NETWORK || SPKLU_NETWORK.length === 0) return null;
-
-  // Filter stasiun yang memiliki koordinat valid dan urutkan dari yang terdekat
-  const validStations = SPKLU_NETWORK
-    .filter(s => typeof s.lat === 'number' && typeof s.lng === 'number' && typeof s.km === 'number')
-    .map(s => ({
-      ...s,
-      dist: getDistanceKm(userLat, userLng, s.lat, s.lng)
-    }))
-    .sort((a, b) => a.dist - b.dist);
-
-  if (validStations.length === 0) return null;
-
-  const s1 = validStations[0]; // Stasiun paling dekat
-
-  // Peringatan opsional jika jarak pengguna terlalu jauh dari rute tol (> 80 km)
-  if (s1.dist > 80) {
-    console.warn(`Posisi GPS berjarak ${Math.round(s1.dist)} km dari titik SPKLU terdekat.`);
-  }
-
-  // Cari stasiun terdekat kedua yang berada pada ruas (segment) yang sama untuk interpolasi presisi
-  const s2 = validStations.slice(1).find(s => s.segment === s1.segment && s.km !== s1.km);
-
-  if (s2) {
-    // Vektor proyeksi linier antara s1 dan s2
-    const dLat = s2.lat - s1.lat;
-    const dLng = s2.lng - s1.lng;
-    const lenSq = dLat * dLat + dLng * dLng;
-
-    if (lenSq > 0) {
-      const t = ((userLat - s1.lat) * dLat + (userLng - s1.lng) * dLng) / lenSq;
-      // Jika posisi pengguna berada di antara rentang dua rest area
-      if (t >= -0.2 && t <= 1.2) {
-        const clampedT = Math.max(0, Math.min(1, t));
-        return Math.round(s1.km + clampedT * (s2.km - s1.km));
-      }
-    }
-  }
-
-  // Fallback: gunakan KM dari stasiun terdekat
-  return s1.km;
-}
-
-// Handler klik tombol GPS
-function detectCurrentKm() {
-  if (!navigator.geolocation) {
-    alert("Perangkat atau browser Anda tidak mendukung fitur lokasi (GPS).");
-    return;
-  }
-
-  const iconGps = document.getElementById("icon-gps");
-  const iconLoading = document.getElementById("icon-gps-loading");
-
-  if (iconGps && iconLoading) {
-    iconGps.classList.add("hidden");
-    iconLoading.classList.remove("hidden");
-  }
-
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      if (iconGps && iconLoading) {
-        iconGps.classList.remove("hidden");
-        iconLoading.classList.add("hidden");
-      }
-
-      const userLat = position.coords.latitude;
-      const userLng = position.coords.longitude;
-      const detectedKm = calculateKmFromCoords(userLat, userLng);
-
-      if (detectedKm !== null) {
-        const kmInput = document.getElementById("current-km");
-        if (kmInput) {
-          kmInput.value = detectedKm;
-          animatedRouting(false);
-        }
-      } else {
-        alert("Tidak dapat menentukan posisi KM dari lokasi saat ini.");
-      }
-    },
-    (error) => {
-      if (iconGps && iconLoading) {
-        iconGps.classList.remove("hidden");
-        iconLoading.classList.add("hidden");
-      }
-
-      let errorMsg = "Gagal mengambil lokasi GPS.";
-      if (error.code === error.PERMISSION_DENIED) {
-        errorMsg = "Akses lokasi ditolak. Harap izinkan akses lokasi (GPS) pada browser Anda.";
-      } else if (error.code === error.POSITION_UNAVAILABLE) {
-        errorMsg = "Sinyal GPS tidak tersedia atau perangkat sedang di dalam ruangan.";
-      } else if (error.code === error.TIMEOUT) {
-        errorMsg = "Waktu pencarian lokasi habis. Silakan coba lagi.";
-      }
-      alert(errorMsg);
-    },
-    {
-      enableHighAccuracy: true,
-      timeout: 10000,
-      maximumAge: 30000
-    }
-  );
-}
-
-// Fungsi Navigasi Native Otomatis (Memicu App Chooser di Ponsel)
-function openNativeNavigation(lat, lng, name) {
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  const isAndroid = /Android/.test(navigator.userAgent);
-  const cleanName = encodeURIComponent(name || 'SPKLU');
-
-  if (isAndroid) {
-    // URI scheme geo: memicu prompt bawaan Android (Google Maps, Waze, dsb)
-    window.location.href = `geo:${lat},${lng}?q=${lat},${lng}(${cleanName})`;
-  } else if (isIOS) {
-    // Apple Maps URL otomatis memicu navigasi di iOS
-    window.location.href = `https://maps.apple.com/?daddr=${lat},${lng}&q=${cleanName}`;
-  } else {
-    // Fallback Desktop: buka Google Maps rute langsung
-    window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
-  }
-}
-
-// PWA Install Prompt
+// Service Worker Registration dengan Auto-Reload
 window.addEventListener('load', () => {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').then((reg) => {
+      reg.update(); // Force check updates setiap buka web
+    }).catch(console.warn);
+
+    // Muat ulang otomatis bila ada Service Worker versi terbaru terinstal
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!refreshing) {
+        refreshing = true;
+        window.location.reload();
+      }
+    });
+  }
+
+  // PWA Install Prompt
   let deferredPrompt;
   const installBtn = document.getElementById('btn-install');
   window.addEventListener('beforeinstallprompt', (e) => {
@@ -913,6 +858,7 @@ window.addEventListener('load', () => {
       installBtn.classList.add('inline-flex');
     }
   });
+  
   if (installBtn) {
     installBtn.addEventListener('click', async () => {
       if (deferredPrompt) {
@@ -925,16 +871,15 @@ window.addEventListener('load', () => {
       }
     });
   }
+  
   if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !window.navigator.standalone && installBtn) {
     installBtn.classList.remove('hidden');
     installBtn.classList.add('inline-flex');
   }
+  
   window.addEventListener('appinstalled', () => {
     if (installBtn) installBtn.classList.add('hidden');
   });
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(console.warn);
-  }
 });
 
 document.addEventListener("DOMContentLoaded", initApp);

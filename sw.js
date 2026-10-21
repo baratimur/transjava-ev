@@ -1,22 +1,33 @@
-const CACHE_NAME = 'transjava-ev-v1';
+const CACHE_NAME = 'spklu-v2'; // Bump this version on every update
 const ASSETS = [
   './',
   './index.html',
+  './style.css',
+  './app.js',
   './stations.json',
-  './cities.json',
   './highway.json',
-  './i18n.json',
-  './manifest.json'
+  './cities.json',
+  './i18n.json'
 ];
 
-self.addEventListener('install', (e) => {
-  e.waitUntil(
+self.addEventListener('install', (event) => {
+  self.skipWaiting(); // Force the waiting service worker to become the active service worker
+  event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
   );
 });
 
-self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then((response) => response || fetch(e.request))
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key); // Delete old cached versions
+          }
+        })
+      )
+    )
   );
+  return self.clients.claim(); // Take control of all open client tabs immediately
 });
