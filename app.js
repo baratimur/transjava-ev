@@ -596,22 +596,22 @@ function runRouting() {
       `;
     }
 
-    // 2. Distance Badge Ringkas
+    // 2. Distance Badge Ringkas dengan i18n
     let distanceBadge = '';
     if (hasCurrentKm && s.distAhead !== null) {
-      distanceBadge = `<span class="inline-flex items-center font-mono font-extrabold text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30">📍 ${s.distAhead} km</span>`;
+      distanceBadge = `<span class="inline-flex items-center font-mono font-extrabold text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30">📍 ${s.distAhead} ${t('km_ahead')}</span>`;
     } else {
       distanceBadge = idx === 0 
-        ? `<span class="inline-flex items-center font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">Awal</span>`
-        : `<span class="inline-flex items-center font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">🚗 +${s.distFromPrev} km</span>`;
+        ? `<span class="inline-flex items-center font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">${t('first_stop')}</span>`
+        : `<span class="inline-flex items-center font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">🚗 +${s.distFromPrev} ${t('from_prev_stop')}</span>`;
     }
 
-    // 3. Battery Badge Ringkas
+    // 3. Battery Badge Ringkas dengan i18n
     let batteryBadge = '';
     if (hasBatteryRange && hasCurrentKm) {
       batteryBadge = s.isWithinBattery
-        ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30">✓ Aman</span>`
-        : `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/30">⚠️ Kritis</span>`;
+        ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30">✓ ${t('within_battery')}</span>`
+        : `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/30">⚠️ ${t('outside_battery')}</span>`;
     }
 
     // List Port & Dispenser dengan status per port
