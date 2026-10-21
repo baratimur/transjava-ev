@@ -601,6 +601,36 @@
         if (s.highest_power >= 200) powerLabel = t('speed_ultra');
         else if (s.highest_power >= 100) powerLabel = t('speed_rapid');
 
+        // Hitung total fisik mesin charger dan total colokan/port
+        const totalMachines = (s.chargers || []).length;
+        const totalPorts = (s.chargers || []).reduce((acc, c) => acc + (c.total_ports || (c.ports ? c.ports.length : 1)), 0);
+
+        // Badge Kapasitas: User langsung tahu stasiun besar atau kecil
+        let capacityBadge = '';
+        if (totalPorts >= 6 || totalMachines >= 3) {
+          // Hub Besar
+          capacityBadge = `
+            <span class="inline-flex items-center gap-1 font-mono text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              ⚡ ${totalMachines} ${t('label_chargers')} • ${totalPorts} ${t('label_plugs')} (${t('hub_large')})
+            </span>
+          `;
+        } else if (totalPorts >= 3 || totalMachines === 2) {
+          // Sedang
+          capacityBadge = `
+            <span class="inline-flex items-center gap-1 font-mono text-[11px] font-semibold px-2 py-0.5 rounded-md bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20">
+              ⚡ ${totalMachines} ${t('label_chargers')} • ${totalPorts} ${t('label_plugs')}
+            </span>
+          `;
+        } else {
+          // Kecil (1 Mesin / 1-2 Colokan)
+          capacityBadge = `
+            <span class="inline-flex items-center gap-1 font-mono text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-700/60">
+              ${totalMachines} ${t('label_chargers')} • ${totalPorts} ${t('label_plugs')} (${t('hub_small')})
+            </span>
+          `;
+        }
+
         // Distance Tag
         let distanceBadge = '';
         if (hasCurrentKm && s.distAhead !== null) {
@@ -623,8 +653,9 @@
             : `<span class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20">⚠️ ${t('outside_battery')}</span>`;
         }
 
-        // Clean Dispenser Breakdown
-        const dispenserList = (s.chargers || []).map(c => {
+        // Pengelompokan Mesin & Charger yang Sama (contoh: 2× PLN | 2× CCS2 180 kW)
+        const dispenserGroupMap = {};
+        (s.chargers || []).forEach(c => {
           const portCountMap = {};
           (c.ports || []).forEach(p => {
             const key = `${p.type} ${p.power}`;
@@ -635,12 +666,25 @@
             return count > 1 ? `${count}× ${desc}` : desc;
           }).join(" • ");
 
+          const signature = `${c.brand}___${portSummaries}`;
+          if (!dispenserGroupMap[signature]) {
+            dispenserGroupMap[signature] = {
+              brand: c.brand,
+              portSummaries: portSummaries,
+              count: 0
+            };
+          }
+          dispenserGroupMap[signature].count += 1;
+        });
+
+        const dispenserList = Object.values(dispenserGroupMap).map(item => {
+          const machineCountPrefix = item.count > 1 ? `<span class="font-extrabold text-emerald-600 dark:text-emerald-400 mr-0.5">${item.count}×</span>` : '';
           return `
-            <div class="inline-flex items-center gap-1.5 bg-slate-100/80 dark:bg-slate-950/70 border border-slate-200/70 dark:border-slate-800/80 rounded-lg px-2.5 py-1 text-xs">
-              <span class="w-1.5 h-1.5 rounded-full ${getBrandDot(c.brand)} shrink-0"></span>
-              <span class="font-semibold text-slate-700 dark:text-slate-300 text-[11px]">${c.brand}</span>
+            <div class="inline-flex items-center gap-1.5 bg-slate-100/90 dark:bg-slate-950/70 border border-slate-200/80 dark:border-slate-800/80 rounded-lg px-2.5 py-1 text-xs">
+              <span class="w-1.5 h-1.5 rounded-full ${getBrandDot(item.brand)} shrink-0"></span>
+              <span class="font-semibold text-slate-700 dark:text-slate-300 text-[11px]">${machineCountPrefix}${item.brand}</span>
               <span class="text-slate-300 dark:text-slate-700 text-[10px]">|</span>
-              <span class="font-mono text-slate-800 dark:text-slate-200 text-[11px] font-medium">${portSummaries}</span>
+              <span class="font-mono text-slate-800 dark:text-slate-200 text-[11px] font-medium">${item.portSummaries}</span>
             </div>
           `;
         }).join("");
@@ -648,17 +692,18 @@
         const staggerDelay = Math.min(idx * 28, 250);
 
         return `
-        <article style="animation-delay: ${staggerDelay}ms" class="animate-ios-card group bg-white/90 dark:bg-slate-900/40 hover:bg-white dark:hover:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700 rounded-2xl p-3.5 transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.995]">
+        <article style="animation-delay: ${staggerDelay}ms" class="animate-ios-card group bg-white/95 dark:bg-slate-900/40 hover:bg-white dark:hover:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700 rounded-2xl p-3.5 transition-all duration-200 shadow-sm hover:shadow-md">
           
-          <!-- Top Row: Location Meta, Distance, and Power Rating -->
+          <!-- Baris 1: Milestone KM, Jalur, Total Kapasitas Charger, Jarak, & Rating Daya -->
           <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-100 dark:border-slate-800/60">
             <div class="flex items-center gap-1.5 flex-wrap">
               <span class="font-mono text-xs font-bold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                 KM ${s.km}
               </span>
               <span class="text-[11px] font-bold px-1.5 py-0.5 rounded-md ${s.side === 'A' ? 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20' : 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20'}">
-                Jalur ${s.side}
+                ${s.side}
               </span>
+              ${capacityBadge}
               ${distanceBadge}
               ${batteryBadge}
             </div>
@@ -672,8 +717,8 @@
             </div>
           </div>
 
-          <!-- Middle Row: Station Name, Route Corridor, and Map Links -->
-          <div class="mt-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <!-- Baris 2: Nama Rest Area & Tombol Navigasi Kontras (Peta & Waze) -->
+          <div class="mt-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
             <div>
               <h2 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base leading-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors">
                 ${s.name}
@@ -683,22 +728,21 @@
               </span>
             </div>
 
-            <!-- Navigation Buttons -->
-            <div class="flex items-center gap-1.5 shrink-0">
+            <div class="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
               <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" target="_blank" rel="noopener" 
-                 class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700/60 transition-all text-xs font-medium shadow-sm active:scale-95">
-                <svg class="w-3 h-3 text-emerald-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs shadow-sm shadow-emerald-500/20 active:scale-95 transition-all">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                 <span>${t('btn_maps')}</span>
               </a>
               <a href="https://waze.com/ul?ll=${s.lat},${s.lng}&navigate=yes" target="_blank" rel="noopener" 
-                 class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700/60 transition-all text-xs font-medium shadow-sm active:scale-95">
-                <svg class="w-3 h-3 text-sky-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20.5 12c0-4.69-3.81-8.5-8.5-8.5S3.5 7.31 3.5 12c0 2.21.84 4.22 2.22 5.73l-1.16 3.48c-.14.42.24.83.67.72l3.65-.91c1.37.63 2.91.98 4.54.98 4.69 0 8.5-3.81 8.5-8.5zm-11 1.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-semibold text-xs shadow-sm shadow-sky-500/20 active:scale-95 transition-all">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M20.5 12c0-4.69-3.81-8.5-8.5-8.5S3.5 7.31 3.5 12c0 2.21.84 4.22 2.22 5.73l-1.16 3.48c-.14.42.24.83.67.72l3.65-.91c1.37.63 2.91.98 4.54.98 4.69 0 8.5-3.81 8.5-8.5zm-11 1.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
                 <span>${t('btn_waze')}</span>
               </a>
             </div>
           </div>
 
-          <!-- Bottom: Clean Hardware Grouping -->
+          <!-- Baris 3: Daftar Mesin & Colokan -->
           <div class="mt-2.5 flex flex-wrap gap-1.5">
             ${dispenserList}
           </div>
