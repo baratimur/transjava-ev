@@ -77,14 +77,12 @@
       font-family: 'SF Mono', 'JetBrains Mono', Menlo, monospace;
     }
 
-    /* Mencegah auto-zoom input di smartphone */
     @media (max-width: 640px) {
       select, input {
         font-size: 16px !important;
       }
     }
 
-    /* Sembunyikan scrollbar native */
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
@@ -93,7 +91,6 @@
       scrollbar-width: none;
     }
 
-    /* Kursor drag scroll ruas desktop */
     .drag-scroll {
       cursor: grab;
       user-select: none;
@@ -163,40 +160,48 @@
 
   <main class="max-w-4xl mx-auto px-3 py-3 w-full flex-grow">
     
-    <!-- Top Card: Compact Navigation Planner -->
+    <!-- Planner Box -->
     <section aria-label="Filter dan Rute" class="bg-white/95 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-3 shadow-sm dark:shadow-xl backdrop-blur-xl mb-3 transition-all">
       
-      <!-- Unified Route Box -->
+      <!-- Unified Route Box with Modern Floating Dropdowns -->
       <div class="relative flex items-center bg-slate-50 dark:bg-slate-950/70 border border-slate-200/90 dark:border-slate-800/90 rounded-xl p-2 sm:p-2.5">
         
-        <!-- Indikator Rute -->
+        <!-- Indikator Jalur -->
         <div class="flex flex-col items-center justify-between self-stretch py-1.5 px-1 shrink-0">
           <span class="w-2.5 h-2.5 rounded-full border-2 border-emerald-600 dark:border-emerald-500 bg-emerald-100 dark:bg-emerald-950"></span>
           <span class="w-0.5 flex-1 my-0.5 bg-slate-300 dark:bg-slate-700"></span>
           <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
         </div>
 
-        <!-- Dropdowns Stacked Vertikal -->
+        <!-- Kontainer Dropdown Asal & Tujuan -->
         <div class="flex-1 min-w-0 flex flex-col gap-1 pr-2">
-          <!-- Asal -->
-          <div class="relative">
-            <select id="origin" onchange="animatedRouting(true)" class="w-full bg-transparent text-slate-900 dark:text-white text-xs sm:text-sm font-bold focus:outline-none cursor-pointer py-0.5 truncate appearance-none pr-4">
-            </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center text-slate-400">
-              <svg class="h-3 w-3 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+          
+          <!-- Origin Dropdown -->
+          <div class="relative" id="dropdown-origin-wrapper">
+            <button type="button" id="origin-trigger" onclick="toggleDropdown('origin')" class="w-full flex items-center justify-between text-left py-1 text-slate-900 dark:text-white text-xs sm:text-sm font-bold focus:outline-none group">
+              <span id="origin-label" class="truncate">Jakarta</span>
+              <svg class="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-500 transition-transform duration-200" id="origin-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div id="origin-menu" class="hidden absolute left-0 top-full mt-2 w-56 sm:w-64 max-h-60 overflow-y-auto no-scrollbar z-50 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl backdrop-blur-xl p-1.5 animate-ios-card">
             </div>
+            <input type="hidden" id="origin" value="jakarta">
           </div>
 
-          <!-- Divider -->
           <div class="h-px bg-slate-200 dark:bg-slate-800 w-full"></div>
 
-          <!-- Tujuan -->
-          <div class="relative">
-            <select id="destination" onchange="animatedRouting(true)" class="w-full bg-transparent text-slate-900 dark:text-white text-xs sm:text-sm font-bold focus:outline-none cursor-pointer py-0.5 truncate appearance-none pr-4">
-            </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center text-slate-400">
-              <svg class="h-3 w-3 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+          <!-- Destination Dropdown -->
+          <div class="relative" id="dropdown-destination-wrapper">
+            <button type="button" id="destination-trigger" onclick="toggleDropdown('destination')" class="w-full flex items-center justify-between text-left py-1 text-slate-900 dark:text-white text-xs sm:text-sm font-bold focus:outline-none group">
+              <span id="destination-label" class="truncate">Surabaya</span>
+              <svg class="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-500 transition-transform duration-200" id="destination-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div id="destination-menu" class="hidden absolute left-0 top-full mt-2 w-56 sm:w-64 max-h-60 overflow-y-auto no-scrollbar z-50 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl backdrop-blur-xl p-1.5 animate-ios-card">
             </div>
+            <input type="hidden" id="destination" value="surabaya">
           </div>
         </div>
 
@@ -344,6 +349,7 @@
     let selectedSegmentFilter = null;
     let selectedSpeedFilter = 'all';
     let selectedConnectors = new Set(['CCS2', 'Chademo', 'AC']);
+    let openDropdownId = null;
 
     function animatedRouting(resetSegment = false) {
       if (resetSegment) selectedSegmentFilter = null;
@@ -374,12 +380,12 @@
 
       if (theme === 'dark') {
         document.documentElement.classList.add('dark');
-        darkIcon.classList.remove('hidden');
-        lightIcon.classList.add('hidden');
+        if (darkIcon) darkIcon.classList.remove('hidden');
+        if (lightIcon) lightIcon.classList.add('hidden');
       } else {
         document.documentElement.classList.remove('dark');
-        darkIcon.classList.add('hidden');
-        lightIcon.classList.remove('hidden');
+        if (darkIcon) darkIcon.classList.add('hidden');
+        if (lightIcon) lightIcon.classList.remove('hidden');
       }
       localStorage.setItem('theme', theme);
     }
@@ -422,28 +428,96 @@
       animatedRouting(false);
     }
 
+    // --- LOGIKA CUSTOM DROPDOWN ---
     function populateDropdowns(cities) {
-      const originEl = document.getElementById("origin");
-      const destEl = document.getElementById("destination");
-      const optionsMarkup = cities.map(city => `<option value="${city.id}">${city.name}</option>`).join("");
-      originEl.innerHTML = optionsMarkup;
-      destEl.innerHTML = optionsMarkup;
-      originEl.value = "jakarta";
-      destEl.value = "surabaya";
+      renderDropdownItems('origin', cities, 'jakarta');
+      renderDropdownItems('destination', cities, 'surabaya');
+    }
+
+    function renderDropdownItems(type, cities, defaultVal) {
+      const menu = document.getElementById(`${type}-menu`);
+      const label = document.getElementById(`${type}-label`);
+      const input = document.getElementById(type);
+
+      input.value = defaultVal;
+      const initialCity = cities.find(c => c.id === defaultVal);
+      if (initialCity) label.textContent = initialCity.name;
+
+      menu.innerHTML = cities.map(city => {
+        const isSelected = city.id === defaultVal;
+        return `
+          <button type="button" onclick="selectCity('${type}', '${city.id}', '${city.name}')" class="w-full flex items-center justify-between px-3 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-150 ${isSelected ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80'}">
+            <span>${city.name}</span>
+            ${isSelected ? '<span class="text-emerald-600 dark:text-emerald-400 text-xs font-bold">✓</span>' : ''}
+          </button>
+        `;
+      }).join("");
+    }
+
+    function toggleDropdown(type) {
+      const menu = document.getElementById(`${type}-menu`);
+      const chevron = document.getElementById(`${type}-chevron`);
+      const isCurrentlyOpen = openDropdownId === type;
+
+      closeAllDropdowns();
+
+      if (!isCurrentlyOpen) {
+        menu.classList.remove('hidden');
+        if (chevron) chevron.classList.add('rotate-180');
+        openDropdownId = type;
+      }
+    }
+
+    function closeAllDropdowns() {
+      ['origin', 'destination'].forEach(type => {
+        const menu = document.getElementById(`${type}-menu`);
+        const chevron = document.getElementById(`${type}-chevron`);
+        if (menu) menu.classList.add('hidden');
+        if (chevron) chevron.classList.remove('rotate-180');
+      });
+      openDropdownId = null;
+    }
+
+    function selectCity(type, id, name) {
+      document.getElementById(type).value = id;
+      document.getElementById(`${type}-label`).textContent = name;
+      closeAllDropdowns();
+
+      renderDropdownItems(type, CITIES, id);
+      animatedRouting(true);
     }
 
     function swapLocations() {
       const swapBtn = document.getElementById("btn-swap");
       swapBtn.classList.toggle("swap-active");
 
-      const originEl = document.getElementById("origin");
-      const destEl = document.getElementById("destination");
-      const temp = originEl.value;
-      originEl.value = destEl.value;
-      destEl.value = temp;
+      const originInput = document.getElementById("origin");
+      const destInput = document.getElementById("destination");
+
+      const tempVal = originInput.value;
+      originInput.value = destInput.value;
+      destInput.value = tempVal;
+
+      const originCity = CITIES.find(c => c.id === originInput.value);
+      const destCity = CITIES.find(c => c.id === destInput.value);
+
+      if (originCity) {
+        document.getElementById("origin-label").textContent = originCity.name;
+        renderDropdownItems('origin', CITIES, originInput.value);
+      }
+      if (destCity) {
+        document.getElementById("destination-label").textContent = destCity.name;
+        renderDropdownItems('destination', CITIES, destInput.value);
+      }
 
       animatedRouting(true);
     }
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#dropdown-origin-wrapper') && !e.target.closest('#dropdown-destination-wrapper')) {
+        closeAllDropdowns();
+      }
+    });
 
     function clearKm() {
       document.getElementById("current-km").value = "";
@@ -566,7 +640,7 @@
         return;
       }
 
-      // Single-line Horizontal Scroll Segment Chips
+      // Tombol Ruas Tol
       let chipsMarkup = `
         <button type="button" onclick="selectedSegmentFilter = null; animatedRouting(false)" class="whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all duration-200 ${selectedSegmentFilter === null ? 'bg-slate-900 text-white dark:bg-slate-700 shadow-sm' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 dark:bg-slate-950/70 dark:text-slate-400 dark:border-slate-800'} active:scale-95">
           ${t('all_segments')}
@@ -667,32 +741,34 @@
         if (s.highest_power >= 200) powerLabel = t('speed_ultra');
         else if (s.highest_power >= 100) powerLabel = t('speed_rapid');
 
-        // Total Kapasitas
         // Hitung total fisik mesin charger dan total colokan/port
         const totalMachines = (s.chargers || []).length;
         const totalPorts = (s.chargers || []).reduce((acc, c) => acc + (c.total_ports || (c.ports ? c.ports.length : 1)), 0);
-        
-        // Format badge minimalis sesuai klasifikasi kapasitas
+
+        const unitLabel = t('label_unit') || 'Mesin';
+        const portLabel = t('label_port') || 'Port';
+
+        // SKEMA BARU KATEGORISASI KAPASITAS
         let capacityBadge = '';
-        if (totalPorts >= 6 || totalMachines >= 3) {
-          // Hub Besar: Simbol ⚡⚡ dengan warna emerald
+        if (totalMachines > 4 && totalPorts > 10) {
+          // Hub Besar (⚡⚡): > 4 mesin dan > 10 port
           capacityBadge = `
-            <span class="inline-flex items-center gap-1 font-mono text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
-              ⚡⚡ ${totalMachines} ${t('label_unit')} (${totalPorts} ${t('label_port')})
+            <span class="inline-flex items-center gap-1 font-mono text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
+              ⚡⚡ ${totalMachines} ${unitLabel} (${totalPorts} ${portLabel})
             </span>
           `;
-        } else if (totalPorts >= 3 || totalMachines === 2) {
-          // Normal / Sedang: Simbol ⚡ dengan warna sky
+        } else if (totalMachines <= 1) {
+          // Kecil: 1 mesin saja (tanpa ikon)
           capacityBadge = `
-            <span class="inline-flex items-center gap-1 font-mono text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-md bg-sky-50 text-sky-700 border border-sky-200 dark:bg-sky-500/10 dark:text-sky-400 dark:border-sky-500/20">
-              ⚡ ${totalMachines} ${t('label_unit')} (${totalPorts} ${t('label_port')})
+            <span class="inline-flex items-center font-mono text-[10px] sm:text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700/60">
+              ${totalMachines} ${unitLabel} (${totalPorts} ${portLabel})
             </span>
           `;
         } else {
-          // Kecil: Tanpa simbol dengan warna netral slate
+          // Sedang (⚡): 2-4 mesin, atau mesin > 4 namun port <= 10
           capacityBadge = `
-            <span class="inline-flex items-center font-mono text-[10px] sm:text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700/60">
-              ${totalMachines} ${t('label_unit')} (${totalPorts} ${t('label_port')})
+            <span class="inline-flex items-center gap-1 font-mono text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-md bg-sky-50 text-sky-800 border border-sky-200 dark:bg-sky-500/10 dark:text-sky-400 dark:border-sky-500/20">
+              ⚡ ${totalMachines} ${unitLabel} (${totalPorts} ${portLabel})
             </span>
           `;
         }
@@ -718,7 +794,7 @@
             : `<span class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/20">⚠️ ${t('outside_battery')}</span>`;
         }
 
-        // Kelompokkan Mesin Seragam (2× PLN | 2× CCS2 180 kW)
+        // Pengelompokan Mesin Sejenis (misal: 2× PLN | 2× CCS2 180 kW)
         const dispenserGroupMap = {};
         (s.chargers || []).forEach(c => {
           const portCountMap = {};
@@ -757,9 +833,9 @@
         const staggerDelay = Math.min(idx * 28, 250);
 
         return `
-        <article style="animation-delay: ${staggerDelay}ms" class="animate-ios-card group bg-white/95 dark:bg-slate-900/40 hover:bg-slate-50/70 dark:hover:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700 rounded-2xl p-3 sm:p-3.5 transition-all duration-200 shadow-sm hover:shadow-md">
+        <article style="animation-delay: ${staggerDelay}ms" class="animate-ios-card group bg-white dark:bg-slate-900/40 hover:bg-slate-50/70 dark:hover:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700 rounded-2xl p-3 sm:p-3.5 transition-all duration-200 shadow-sm hover:shadow-md">
           
-          <!-- Baris 1: Info KM, Jalur, Jarak, & Daya -->
+          <!-- Baris 1: Info KM, Jalur, Kapasitas Mesin, Jarak & Daya -->
           <div class="flex items-center justify-between gap-1.5 pb-2 border-b border-slate-100 dark:border-slate-800/60">
             <div class="flex items-center gap-1.5 flex-wrap">
               <span class="font-mono text-xs font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
@@ -793,7 +869,6 @@
               </span>
             </div>
 
-            <!-- Tombol Navigasi Kontras -->
             <div class="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
               <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" target="_blank" rel="noopener" 
                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-sm shadow-emerald-600/20 active:scale-95 transition-all">
@@ -817,12 +892,10 @@
       }).join("");
     }
 
-    // Inisialisasi Event Scroll Horizontal & Drag pada Ruas di Desktop
     function setupCorridorDesktopScroll() {
       const el = document.getElementById("corridor-summary");
       if (!el) return;
 
-      // 1. Wheel Scroll to Horizontal
       el.addEventListener("wheel", (e) => {
         if (e.deltaY !== 0) {
           e.preventDefault();
@@ -830,7 +903,6 @@
         }
       }, { passive: false });
 
-      // 2. Click & Drag Scroll
       let isDown = false;
       let startX = 0;
       let scrollLeft = 0;
