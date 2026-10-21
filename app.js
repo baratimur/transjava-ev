@@ -631,25 +631,34 @@ function runRouting() {
           </div>
         </div>
 
-        <div class="mt-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div>
-            <h2 class="font-extrabold text-base leading-tight transition-colors ${titleStyle}">
+        <div class="mt-2 flex items-center justify-between gap-2">
+          <div class="min-w-0">
+            <h2 class="font-extrabold text-sm sm:text-base leading-tight transition-colors ${titleStyle} truncate">
               ${s.name}
             </h2>
-            <span class="text-[11px] text-slate-500 dark:text-slate-400 font-bold">
+            <span class="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-bold">
               ${formatSegment(s.segment, s.side)}
             </span>
           </div>
 
-          <div class="flex items-center gap-2 shrink-0 self-end sm:self-center">
+          <!-- Tombol Navigasi: 1 Tombol di Mobile, Dual Maps/Waze di Desktop -->
+          <div class="flex items-center gap-1.5 shrink-0">
+            <!-- Mobile: 1 Tombol Navigasi Native Ringkas -->
+            <button type="button" onclick="openNativeNavigation(${s.lat}, ${s.lng}, '${s.name.replace(/'/g, "\\'")}')" aria-label="Navigasi ke ${s.name}" 
+               class="inline-flex sm:hidden items-center gap-1 px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] shadow-sm active:scale-95 transition-all">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+              <span>Navigasi</span>
+            </button>
+
+            <!-- Desktop: Tombol Google Maps & Waze -->
             <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" aria-label="Buka di Google Maps" target="_blank" rel="noopener" 
-               class="inline-flex items-center gap-1.5 px-3.5 py-2 min-h-[36px] rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs shadow-sm active:scale-95 transition-all">
-              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+               class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm active:scale-95 transition-all">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
               <span>Maps</span>
             </a>
             <a href="https://waze.com/ul?ll=${s.lat},${s.lng}&navigate=yes" aria-label="Buka di Waze" target="_blank" rel="noopener" 
-               class="inline-flex items-center gap-1.5 px-3.5 py-2 min-h-[36px] rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-sm active:scale-95 transition-all">
-              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20.5 12c0-4.69-3.81-8.5-8.5-8.5S3.5 7.31 3.5 12c0 2.21.84 4.22 2.22 5.73l-1.16 3.48c-.14.42.24.83.67.72l3.65-.91c1.37.63 2.91.98 4.54.98 4.69 0 8.5-3.81 8.5-8.5zm-11 1.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+               class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-sm active:scale-95 transition-all">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M20.5 12c0-4.69-3.81-8.5-8.5-8.5S3.5 7.31 3.5 12c0 2.21.84 4.22 2.22 5.73l-1.16 3.48c-.14.42.24.83.67.72l3.65-.91c1.37.63 2.91.98 4.54.98 4.69 0 8.5-3.81 8.5-8.5zm-11 1.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
               <span>Waze</span>
             </a>
           </div>
@@ -872,6 +881,24 @@ function detectCurrentKm() {
       maximumAge: 30000
     }
   );
+}
+
+// Fungsi Navigasi Native Otomatis (Memicu App Chooser di Ponsel)
+function openNativeNavigation(lat, lng, name) {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isAndroid = /Android/.test(navigator.userAgent);
+  const cleanName = encodeURIComponent(name || 'SPKLU');
+
+  if (isAndroid) {
+    // URI scheme geo: memicu prompt bawaan Android (Google Maps, Waze, dsb)
+    window.location.href = `geo:${lat},${lng}?q=${lat},${lng}(${cleanName})`;
+  } else if (isIOS) {
+    // Apple Maps URL otomatis memicu navigasi di iOS
+    window.location.href = `https://maps.apple.com/?daddr=${lat},${lng}&q=${cleanName}`;
+  } else {
+    // Fallback Desktop: buka Google Maps rute langsung
+    window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
+  }
 }
 
 // PWA Install Prompt
