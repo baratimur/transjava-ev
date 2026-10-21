@@ -2,7 +2,7 @@
 <html lang="id" class="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Trans Java EV Rest Area Locator</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -12,67 +12,95 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    /* iOS Standard Typography & Physics */
+    :root {
+      --ios-ease: cubic-bezier(0.25, 1, 0.5, 1);
+      --ios-spring: cubic-bezier(0.32, 0.72, 0, 1);
+    }
 
-    @keyframes cardFadeUp {
-      from {
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .font-mono {
+      font-family: 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+    }
+
+    /* iOS Native View Transitions */
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 0.24s;
+      animation-timing-function: var(--ios-ease);
+    }
+
+    /* Staggered Entrance Animation */
+    @keyframes iosCardIn {
+      0% {
         opacity: 0;
-        transform: translateY(6px);
+        transform: translateY(10px) scale(0.985);
       }
-      to {
+      100% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
     }
 
-    .animate-card {
-      animation: cardFadeUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+    .animate-ios-card {
+      animation: iosCardIn 0.3s var(--ios-spring) both;
     }
 
+    /* Smooth Swap Spring */
     .swap-active svg {
       transform: rotate(180deg);
     }
+
+    /* Custom iOS checkbox */
+    .ios-checkbox:checked {
+      background-color: #10b981;
+      border-color: #10b981;
+    }
   </style>
 </head>
-<body class="bg-slate-50 dark:bg-[#0a0f1d] text-slate-800 dark:text-slate-100 min-h-screen antialiased flex flex-col justify-between selection:bg-emerald-500 selection:text-white transition-colors duration-200">
+<body class="bg-slate-100 dark:bg-[#070b14] text-slate-800 dark:text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-white transition-colors duration-300">
 
   <!-- Header -->
-  <header class="border-b border-slate-200 dark:border-slate-800/80 bg-white/80 dark:bg-[#0a0f1d]/85 backdrop-blur-md sticky top-0 z-30 transition-colors">
-    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+  <header class="border-b border-slate-200/80 dark:border-slate-800/60 bg-white/75 dark:bg-[#070b14]/80 backdrop-blur-xl sticky top-0 z-30 transition-colors duration-300">
+    <div class="max-w-4xl mx-auto px-4 py-2.5 flex items-center justify-between">
       <div class="flex items-center gap-2.5">
-        <div class="h-8 w-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold text-sm shadow-sm">
+        <div class="h-8 w-8 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/20 dark:border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold text-sm shadow-sm transition-transform active:scale-90 duration-150">
           ⚡
         </div>
-        <span data-i18n="title" class="font-bold text-slate-900 dark:text-white text-base tracking-tight">SPKLU Trans Jawa</span>
+        <span data-i18n="title" class="font-extrabold text-slate-900 dark:text-white text-base tracking-tight">SPKLU Trans Jawa</span>
       </div>
       
       <div class="flex items-center gap-2">
         <!-- Theme Toggle -->
-        <button type="button" onclick="toggleTheme()" id="theme-btn" aria-label="Toggle theme" class="h-8 w-8 rounded-lg flex items-center justify-center border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
-          <svg id="theme-icon-dark" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <button type="button" onclick="toggleTheme()" id="theme-btn" aria-label="Toggle theme" class="h-8 w-8 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white shadow-sm transition-all duration-200 active:scale-90">
+          <svg id="theme-icon-dark" class="w-4 h-4 hidden transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
-          <svg id="theme-icon-light" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg id="theme-icon-light" class="w-4 h-4 hidden transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
           </svg>
         </button>
 
-        <!-- Language Toggle -->
-        <div class="flex items-center bg-slate-100 dark:bg-slate-900 rounded-lg p-0.5 border border-slate-200 dark:border-slate-800 text-xs">
-          <button onclick="setLang('id')" id="btn-id" class="px-2.5 py-1 font-bold rounded-md transition-all duration-200 bg-emerald-500 text-slate-950 shadow-sm">ID</button>
-          <button onclick="setLang('en')" id="btn-en" class="px-2.5 py-1 font-bold rounded-md transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">EN</button>
+        <!-- iOS Segmented Language Toggle -->
+        <div class="flex items-center bg-slate-200/70 dark:bg-slate-900/90 rounded-xl p-0.5 border border-slate-200/80 dark:border-slate-800 text-xs shadow-inner">
+          <button onclick="setLang('id')" id="btn-id" class="px-2.5 py-1 font-bold rounded-lg transition-all duration-200 bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm active:scale-95">ID</button>
+          <button onclick="setLang('en')" id="btn-en" class="px-2.5 py-1 font-bold rounded-lg transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white active:scale-95">EN</button>
         </div>
       </div>
     </div>
   </header>
 
-  <main class="max-w-4xl mx-auto px-4 py-5 w-full flex-grow">
+  <main class="max-w-4xl mx-auto px-4 py-4 w-full flex-grow">
     
     <!-- Planner Box -->
-    <div class="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-4 sm:p-5 shadow-sm dark:shadow-xl backdrop-blur-sm mb-5 transition-all">
+    <div class="bg-white/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-4 sm:p-5 shadow-sm dark:shadow-2xl backdrop-blur-xl mb-4 transition-all duration-300">
       
       <!-- Route Pickers with Swap Action Button -->
       <div class="flex flex-col sm:flex-row items-center gap-2.5">
@@ -81,7 +109,7 @@
         <div class="w-full flex-1">
           <label data-i18n="dep_label" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Mulai dari</label>
           <div class="relative">
-            <select id="origin" onchange="resetSegmentFilter(); runRouting()" class="w-full bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white text-sm font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all appearance-none cursor-pointer">
+            <select id="origin" onchange="animatedRouting(true)" class="w-full bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white text-sm font-semibold focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/15 transition-all duration-200 appearance-none cursor-pointer shadow-sm">
               <!-- Dynamically populated from cities.json -->
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-slate-400 dark:text-slate-500">
@@ -103,7 +131,7 @@
         <div class="w-full flex-1">
           <label data-i18n="dest_label" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Mau ke mana?</label>
           <div class="relative">
-            <select id="destination" onchange="resetSegmentFilter(); runRouting()" class="w-full bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white text-sm font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all appearance-none cursor-pointer">
+            <select id="destination" onchange="animatedRouting(true)" class="w-full bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white text-sm font-semibold focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/15 transition-all duration-200 appearance-none cursor-pointer shadow-sm">
               <!-- Dynamically populated from cities.json -->
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-slate-400 dark:text-slate-500">
@@ -119,36 +147,36 @@
       </div>
 
       <!-- Fitted Inputs & Speed Buttons -->
-      <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800/60 flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800/60 flex flex-wrap items-center justify-between gap-2.5 text-xs">
         
-        <!-- Speed Buttons Filter -->
-        <div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-950/80 p-1 border border-slate-200 dark:border-slate-800 rounded-xl">
-          <button type="button" onclick="setSpeedFilter('all')" id="btn-speed-all" class="px-2.5 py-1 rounded-lg font-semibold transition-all duration-150 bg-emerald-500 text-slate-950 shadow-sm" data-i18n="speed_all">Semua</button>
-          <button type="button" onclick="setSpeedFilter('50')" id="btn-speed-50" class="px-2.5 py-1 rounded-lg font-semibold transition-all duration-150 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">≥ 50 kW</button>
-          <button type="button" onclick="setSpeedFilter('100')" id="btn-speed-100" class="px-2.5 py-1 rounded-lg font-semibold transition-all duration-150 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">≥ 100 kW</button>
-          <button type="button" onclick="setSpeedFilter('200')" id="btn-speed-200" class="px-2.5 py-1 rounded-lg font-semibold transition-all duration-150 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">200 kW</button>
+        <!-- iOS Segmented Control Speed Filter -->
+        <div class="flex items-center gap-1 bg-slate-200/70 dark:bg-slate-950/80 p-1 border border-slate-200/80 dark:border-slate-800 rounded-xl shadow-inner">
+          <button type="button" onclick="setSpeedFilter('all')" id="btn-speed-all" class="px-2.5 py-1 rounded-lg font-semibold transition-all duration-200 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm active:scale-95" data-i18n="speed_all">Semua</button>
+          <button type="button" onclick="setSpeedFilter('50')" id="btn-speed-50" class="px-2.5 py-1 rounded-lg font-semibold transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white active:scale-95">≥ 50 kW</button>
+          <button type="button" onclick="setSpeedFilter('100')" id="btn-speed-100" class="px-2.5 py-1 rounded-lg font-semibold transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white active:scale-95">≥ 100 kW</button>
+          <button type="button" onclick="setSpeedFilter('200')" id="btn-speed-200" class="px-2.5 py-1 rounded-lg font-semibold transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white active:scale-95">200 kW</button>
         </div>
 
-        <!-- Position & Battery Inputs (Spacious & Fitted) -->
+        <!-- Spacious, Fitted Position & Battery Inputs -->
         <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           
-          <!-- Current KM Position Input -->
-          <div class="flex items-center bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl px-2.5 py-1.5 focus-within:border-emerald-500 transition-all flex-1 sm:flex-initial min-w-[140px]">
+          <!-- Current KM Input -->
+          <div class="flex items-center bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/15 rounded-xl px-3 py-1.5 transition-all duration-200 flex-1 sm:flex-initial min-w-[145px] shadow-sm">
             <span class="text-[10px] font-bold font-mono text-emerald-600 dark:text-emerald-400 mr-1.5 shrink-0">KM</span>
-            <input type="number" id="current-km" oninput="runRouting()" placeholder="Cth. 57" class="w-full sm:w-24 bg-transparent text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none font-mono">
-            <button type="button" onclick="clearKm()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs ml-1" title="Clear">✕</button>
+            <input type="number" id="current-km" oninput="animatedRouting(false)" placeholder="Cth. 57" class="w-full sm:w-24 bg-transparent text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none font-mono">
+            <button type="button" onclick="clearKm()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs ml-1 transition-colors" title="Clear">✕</button>
           </div>
 
           <!-- Battery Range Input -->
-          <div class="flex items-center bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl px-2.5 py-1.5 focus-within:border-emerald-500 transition-all flex-1 sm:flex-initial min-w-[140px]">
+          <div class="flex items-center bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/15 rounded-xl px-3 py-1.5 transition-all duration-200 flex-1 sm:flex-initial min-w-[145px] shadow-sm">
             <span class="text-xs mr-1.5 shrink-0">🔋</span>
-            <input type="number" id="battery-range" oninput="runRouting()" placeholder="Cth. 150" class="w-full sm:w-24 bg-transparent text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none font-mono">
+            <input type="number" id="battery-range" oninput="animatedRouting(false)" placeholder="Cth. 150" class="w-full sm:w-24 bg-transparent text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none font-mono">
             <span class="text-[10px] text-slate-400 font-mono ml-1 shrink-0">km</span>
           </div>
 
           <!-- Toggle Within Battery Range Only -->
-          <label class="flex items-center gap-1.5 cursor-pointer select-none bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 rounded-xl px-2.5 py-1.5 transition-all text-[11px] text-slate-600 dark:text-slate-300 font-medium">
-            <input type="checkbox" id="filter-within-range" onchange="runRouting()" class="rounded border-slate-300 dark:border-slate-700 text-emerald-500 focus:ring-0 cursor-pointer">
+          <label class="flex items-center gap-1.5 cursor-pointer select-none bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 rounded-xl px-3 py-1.5 transition-all duration-200 text-[11px] text-slate-600 dark:text-slate-300 font-medium active:scale-95 shadow-sm">
+            <input type="checkbox" id="filter-within-range" onchange="animatedRouting(false)" class="ios-checkbox rounded border-slate-300 dark:border-slate-700 text-emerald-500 focus:ring-0 cursor-pointer transition-colors">
             <span data-i18n="within_range_only" class="whitespace-nowrap">Dalam jangkauan saja</span>
           </label>
         </div>
@@ -156,13 +184,13 @@
     </div>
 
     <!-- Live Stats Bar -->
-    <div id="stats-banner" class="flex items-center justify-between px-1 mb-2.5 text-xs text-slate-500 dark:text-slate-400 font-medium">
+    <div id="stats-banner" class="flex items-center justify-between px-1 mb-2.5 text-xs text-slate-500 dark:text-slate-400 font-medium transition-opacity duration-200">
       <span id="match-counter" data-i18n="loading">Mengecek tempat cas di sepanjang jalurmu...</span>
       <span data-i18n="sort_info" class="text-slate-400 dark:text-slate-500 text-[11px] hidden sm:block">Urut sesuai arah jalanmu</span>
     </div>
 
     <!-- SPKLU Clean Compact Cards Container -->
-    <div id="results-list" class="space-y-2">
+    <div id="results-list" class="space-y-2.5">
       <div class="p-8 text-center text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-800/60 rounded-2xl bg-white dark:bg-slate-900/20" data-i18n="loading">
         Mengecek tempat cas di sepanjang jalurmu...
       </div>
@@ -170,7 +198,7 @@
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-200 dark:border-slate-800/60 py-4 text-center text-xs text-slate-500 dark:text-slate-400 space-y-1.5">
+  <footer class="border-t border-slate-200/80 dark:border-slate-800/60 py-4 text-center text-xs text-slate-500 dark:text-slate-400 space-y-1.5 transition-colors">
     <p data-i18n="footer">Panduan Nyaman SPKLU Tol Trans-Jawa • Dibuat untuk sesama pengendara EV</p>
     <div class="flex items-center justify-center gap-1.5 text-[11px]">
       <a href="https://github.com/baratimur/transjava-ev" target="_blank" rel="noopener" 
@@ -194,6 +222,19 @@
 
     let selectedSegmentFilter = null;
     let selectedSpeedFilter = 'all';
+
+    // --- FLUID ROUTING WRAPPER (iOS View Transitions) ---
+    function animatedRouting(resetSegment = false) {
+      if (resetSegment) selectedSegmentFilter = null;
+
+      if (document.startViewTransition) {
+        document.startViewTransition(() => {
+          runRouting();
+        });
+      } else {
+        runRouting();
+      }
+    }
 
     // --- THEME ENGINE ---
     function initTheme() {
@@ -233,8 +274,8 @@
       localStorage.setItem('lang', lang);
       document.documentElement.lang = lang;
 
-      document.getElementById('btn-id').className = `px-2.5 py-1 font-bold rounded-md transition-all duration-200 ${lang === 'id' ? 'bg-emerald-500 text-slate-950 shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`;
-      document.getElementById('btn-en').className = `px-2.5 py-1 font-bold rounded-md transition-all duration-200 ${lang === 'en' ? 'bg-emerald-500 text-slate-950 shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`;
+      document.getElementById('btn-id').className = `px-2.5 py-1 font-bold rounded-lg transition-all duration-200 ${lang === 'id' ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'} active:scale-95`;
+      document.getElementById('btn-en').className = `px-2.5 py-1 font-bold rounded-lg transition-all duration-200 ${lang === 'en' ? 'bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'} active:scale-95`;
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -254,7 +295,7 @@
       const batteryInput = document.getElementById("battery-range");
       if (batteryInput) batteryInput.placeholder = t('battery_ph');
 
-      runRouting();
+      animatedRouting(false);
     }
 
     function populateDropdowns(cities) {
@@ -268,31 +309,26 @@
     }
 
     function swapLocations() {
-      resetSegmentFilter();
+      const swapBtn = document.getElementById("btn-swap");
+      swapBtn.classList.toggle("swap-active");
+
       const originEl = document.getElementById("origin");
       const destEl = document.getElementById("destination");
       const temp = originEl.value;
       originEl.value = destEl.value;
       destEl.value = temp;
-      runRouting();
+
+      animatedRouting(true);
     }
 
     function clearKm() {
       document.getElementById("current-km").value = "";
-      runRouting();
-    }
-
-    function resetSegmentFilter() {
-      selectedSegmentFilter = null;
+      animatedRouting(false);
     }
 
     function toggleSegmentFilter(segKey) {
-      if (selectedSegmentFilter === segKey) {
-        selectedSegmentFilter = null;
-      } else {
-        selectedSegmentFilter = segKey;
-      }
-      runRouting();
+      selectedSegmentFilter = (selectedSegmentFilter === segKey) ? null : segKey;
+      animatedRouting(false);
     }
 
     function setSpeedFilter(minPower) {
@@ -301,13 +337,13 @@
       ['all', '50', '100', '200'].forEach(val => {
         const btn = document.getElementById(`btn-speed-${val}`);
         if (val === minPower) {
-          btn.className = "px-2.5 py-1 rounded-lg font-semibold transition-all duration-150 bg-emerald-500 text-slate-950 shadow-sm";
+          btn.className = "px-2.5 py-1 rounded-lg font-semibold transition-all duration-200 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm active:scale-95";
         } else {
-          btn.className = "px-2.5 py-1 rounded-lg font-semibold transition-all duration-150 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
+          btn.className = "px-2.5 py-1 rounded-lg font-semibold transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white active:scale-95";
         }
       });
 
-      runRouting();
+      animatedRouting(false);
     }
 
     function formatSegment(segment, side) {
@@ -368,8 +404,8 @@
         corridorSummary.innerHTML = "";
         matchCounter.textContent = `0 ${t('spots_ahead')}`;
         resultsContainer.innerHTML = `
-          <div class="text-center py-10 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl bg-slate-50 dark:bg-slate-900/10 animate-card">
-            <p class="text-slate-500 dark:text-slate-400 text-sm">${t('err_same_city')}</p>
+          <div class="text-center py-10 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl bg-white/60 dark:bg-slate-900/10 animate-ios-card">
+            <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">${t('err_same_city')}</p>
           </div>
         `;
         return;
@@ -378,16 +414,16 @@
       const legs = findRoute(origin, destination);
       if (!legs) {
         resultsContainer.innerHTML = `
-          <div class="p-6 text-center text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900/20 animate-card">
+          <div class="p-6 text-center text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-800 rounded-2xl bg-white/60 dark:bg-slate-900/20 animate-ios-card">
             ${t('err_no_route')}
           </div>
         `;
         return;
       }
 
-      // Render Segment Filter Chips
+      // Clickable Corridor Segment Chips
       let chipsMarkup = `
-        <button type="button" onclick="resetSegmentFilter(); runRouting()" class="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all duration-150 ${selectedSegmentFilter === null ? 'bg-slate-800 dark:bg-slate-700 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-950/70 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-800'}">
+        <button type="button" onclick="selectedSegmentFilter = null; animatedRouting(false)" class="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all duration-200 ${selectedSegmentFilter === null ? 'bg-slate-800 dark:bg-slate-700 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-950/70 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200/80 dark:border-slate-800'} active:scale-95">
           ${t('all_segments')}
         </button>
       `;
@@ -395,8 +431,8 @@
       chipsMarkup += legs.map(leg => {
         const isSelected = selectedSegmentFilter === leg.segment;
         return `
-          <button type="button" onclick="toggleSegmentFilter('${leg.segment}')" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all duration-150 ${isSelected ? 'bg-emerald-500 text-slate-950 font-bold shadow-sm' : 'bg-slate-100 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700'}">
-            <span class="${isSelected ? 'text-slate-950' : 'text-emerald-600 dark:text-emerald-400'} font-bold">Jalur ${leg.side}</span>
+          <button type="button" onclick="toggleSegmentFilter('${leg.segment}')" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all duration-200 ${isSelected ? 'bg-emerald-500 text-slate-950 font-bold shadow-md scale-[1.02]' : 'bg-slate-100 dark:bg-slate-950/70 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700'} active:scale-95">
+            <span class="${isSelected ? 'text-slate-950 font-extrabold' : 'text-emerald-600 dark:text-emerald-400 font-bold'}">Jalur ${leg.side}</span>
             <span>${formatSegment(leg.segment, leg.side)}</span>
           </button>
         `;
@@ -404,7 +440,7 @@
 
       corridorSummary.innerHTML = chipsMarkup;
 
-      // Filter and Order Stations
+      // Filter and Chronologically Sequence Stations
       let matchedStations = [];
       legs.forEach(leg => {
         let stationsOnLeg = SPKLU_NETWORK.filter(s => s.segment === leg.segment && s.side === leg.side);
@@ -469,14 +505,14 @@
 
       if (matchedStations.length === 0) {
         resultsContainer.innerHTML = `
-          <div class="text-center py-10 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/30 rounded-2xl animate-card">
-            <p class="text-slate-500 dark:text-slate-400 text-sm">${t('err_no_match')}</p>
+          <div class="text-center py-10 border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/30 rounded-2xl animate-ios-card">
+            <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">${t('err_no_match')}</p>
           </div>
         `;
         return;
       }
 
-      // Compact, Clean Card Renderer
+      // Compact iOS-Styled Cards
       resultsContainer.innerHTML = matchedStations.map((s, idx) => {
         let powerLabel = t('speed_fast');
         if (s.highest_power >= 200) powerLabel = t('speed_ultra');
@@ -492,8 +528,8 @@
           `;
         } else {
           distanceBadge = idx === 0 
-            ? `<span class="inline-flex items-center font-mono text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700/60">${t('first_stop')}</span>`
-            : `<span class="inline-flex items-center font-mono text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700/60">🚗 +${s.distFromPrev} ${t('from_prev_stop')}</span>`;
+            ? `<span class="inline-flex items-center font-mono text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200/80 dark:border-slate-700/60">${t('first_stop')}</span>`
+            : `<span class="inline-flex items-center font-mono text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700/60">🚗 +${s.distFromPrev} ${t('from_prev_stop')}</span>`;
         }
 
         // Battery Status Indicator
@@ -504,9 +540,8 @@
             : `<span class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20">⚠️ ${t('outside_battery')}</span>`;
         }
 
-        // Clean Dispenser Breakdown: Compact Grouping
+        // Consolidated, Calm Dispenser Chips
         const dispenserList = (s.chargers || []).map(c => {
-          // Group identical ports on this dispenser (e.g. 2x CCS2 200 kW)
           const portCountMap = {};
           (c.ports || []).forEach(p => {
             const key = `${p.type} ${p.power}`;
@@ -518,25 +553,27 @@
           }).join(" • ");
 
           return `
-            <div class="inline-flex items-center gap-1.5 bg-slate-100 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800/80 rounded-lg px-2.5 py-1 text-xs">
+            <div class="inline-flex items-center gap-1.5 bg-slate-100/80 dark:bg-slate-950/70 border border-slate-200/70 dark:border-slate-800/80 rounded-lg px-2.5 py-1 text-xs">
               <span class="w-1.5 h-1.5 rounded-full ${getBrandDot(c.brand)} shrink-0"></span>
               <span class="font-semibold text-slate-700 dark:text-slate-300 text-[11px]">${c.brand}</span>
-              <span class="text-slate-400 dark:text-slate-600 text-[10px]">|</span>
+              <span class="text-slate-300 dark:text-slate-700 text-[10px]">|</span>
               <span class="font-mono text-slate-800 dark:text-slate-200 text-[11px] font-medium">${portSummaries}</span>
             </div>
           `;
         }).join("");
 
+        const staggerDelay = Math.min(idx * 28, 250);
+
         return `
-        <div class="animate-card group bg-white dark:bg-slate-900/40 hover:bg-slate-50 dark:hover:bg-slate-900/75 border border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700/80 rounded-xl p-3.5 transition-all duration-150 shadow-sm">
+        <div style="animation-delay: ${staggerDelay}ms" class="animate-ios-card group bg-white/90 dark:bg-slate-900/40 hover:bg-white dark:hover:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700 rounded-2xl p-3.5 transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.995]">
           
           <!-- Top Row: Location Meta, Distance, and Power Rating -->
           <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-100 dark:border-slate-800/60">
             <div class="flex items-center gap-1.5 flex-wrap">
-              <span class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+              <span class="font-mono text-xs font-bold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                 KM ${s.km}
               </span>
-              <span class="text-[11px] font-bold px-1.5 py-0.5 rounded ${s.side === 'A' ? 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20' : 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20'}">
+              <span class="text-[11px] font-bold px-1.5 py-0.5 rounded-md ${s.side === 'A' ? 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20' : 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20'}">
                 Jalur ${s.side}
               </span>
               ${distanceBadge}
@@ -563,21 +600,22 @@
               </span>
             </div>
 
+            <!-- Tactile Navigation Buttons -->
             <div class="flex items-center gap-1.5 shrink-0">
               <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" target="_blank" rel="noopener" 
-                 class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700/60 transition-all text-xs font-medium">
+                 class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700/60 transition-all text-xs font-medium shadow-sm active:scale-95">
                 <svg class="w-3 h-3 text-emerald-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                 <span>${t('btn_maps')}</span>
               </a>
               <a href="https://waze.com/ul?ll=${s.lat},${s.lng}&navigate=yes" target="_blank" rel="noopener" 
-                 class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700/60 transition-all text-xs font-medium">
+                 class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700/60 transition-all text-xs font-medium shadow-sm active:scale-95">
                 <svg class="w-3 h-3 text-sky-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20.5 12c0-4.69-3.81-8.5-8.5-8.5S3.5 7.31 3.5 12c0 2.21.84 4.22 2.22 5.73l-1.16 3.48c-.14.42.24.83.67.72l3.65-.91c1.37.63 2.91.98 4.54.98 4.69 0 8.5-3.81 8.5-8.5zm-11 1.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
                 <span>${t('btn_waze')}</span>
               </a>
             </div>
           </div>
 
-          <!-- Bottom: Clean Grouped Hardware Dispensers -->
+          <!-- Bottom: Clean Hardware Grouping -->
           <div class="mt-2.5 flex flex-wrap gap-1.5">
             ${dispenserList}
           </div>
@@ -615,7 +653,7 @@
       } catch (err) {
         console.error("Initialization Failed:", err);
         list.innerHTML = `
-          <div class="p-6 text-center text-rose-500 border border-rose-200 dark:border-rose-800/40 rounded-2xl text-sm animate-card">
+          <div class="p-6 text-center text-rose-500 border border-rose-200 dark:border-rose-800/40 rounded-2xl text-sm animate-ios-card">
             Gagal memuat data SPKLU. Pastikan semua file JSON berada di folder yang sama ya.
           </div>
         `;
