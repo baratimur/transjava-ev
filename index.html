@@ -309,57 +309,91 @@
         return;
       }
 
-      resultsContainer.innerHTML = matchedStations.map(s => {
-        let powerLabel = t('fast_charger');
-        if (s.power >= 200) powerLabel = t('ultra_fast');
-        else if (s.power >= 100) powerLabel = t('rapid');
+      // Filter logic updated to check highest_power
+if (powerLimit !== "all") {
+  const minKW = parseInt(powerLimit, 10);
+  matchedStations = matchedStations.filter(s => s.highest_power >= minKW);
+}
 
-        return `
-        <div class="bg-slate-900/90 border border-slate-800/90 hover:border-slate-700 rounded-xl p-4 sm:p-5 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div class="space-y-1.5 flex-grow">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                KM ${s.km}
-              </span>
-              <span class="text-[11px] font-bold px-2 py-0.5 rounded ${s.side === 'A' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20'}">
-                Jalur ${s.side}
-              </span>
-              <span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700/60">
-                ${s.brand}
-              </span>
-              <span class="text-[11px] font-medium text-slate-400">
-                ${formatSegment(s.segment, s.side)}
-              </span>
+// Card Renderer
+resultsContainer.innerHTML = matchedStations.map(s => {
+  let powerLabel = t('fast_charger');
+  if (s.highest_power >= 200) powerLabel = t('ultra_fast');
+  else if (s.highest_power >= 100) powerLabel = t('rapid');
+
+  // Generate connector type tags
+  const typePills = (s.types || []).map(tp => `
+    <span class="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+      ${tp}
+    </span>
+  `).join("");
+
+  // Generate detailed list of chargers & ports
+  const chargerRows = (s.chargers || []).map(c => `
+    <div class="flex items-center justify-between text-xs py-1 border-b border-slate-800/40 last:border-0">
+      <div class="flex items-center gap-1.5">
+        <span class="font-bold text-slate-300">${c.brand}</span>
+        <span class="text-slate-500">•</span>
+        <span class="text-emerald-400 font-mono font-medium">${c.type}</span>
+        <span class="text-[10px] text-slate-400">(${c.ports} ${c.ports > 1 ? 'ports' : 'port'}${c.shared ? ' shared' : ''})</span>
+      </div>
+      <div class="font-mono font-bold text-slate-200">
+        ${c.power}
+      </div>
+    </div>
+  `).join("");
+
+  return `
+    <div class="bg-slate-900/90 border border-slate-800 hover:border-slate-700 rounded-xl p-4 sm:p-5 transition">
+      <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-3 border-b border-slate-800/80">
+        <div class="space-y-1">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              KM ${s.km}
+            </span>
+            <span class="text-[11px] font-bold px-2 py-0.5 rounded ${s.side === 'A' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20'}">
+              Jalur ${s.side}
+            </span>
+            <div class="flex items-center gap-1">
+              ${typePills}
             </div>
-            
-            <h3 class="font-bold text-white text-base leading-snug">${s.name}</h3>
-            <p class="text-xs text-slate-400">${s.type}</p>
           </div>
+          <h3 class="font-bold text-white text-base tracking-tight">${s.name}</h3>
+        </div>
 
-          <div class="flex items-center justify-between sm:flex-col sm:items-end gap-3 pt-3 sm:pt-0 border-t border-slate-800/60 sm:border-t-0">
-            <div class="text-left sm:text-right">
-              <span class="text-xl sm:text-2xl font-black font-mono tracking-tight ${s.power >= 200 ? 'text-amber-400' : s.power >= 100 ? 'text-emerald-400' : 'text-slate-200'}">
-                ${s.power} <span class="text-xs font-sans font-bold text-slate-400">kW</span>
-              </span>
-              <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400">
-                ${powerLabel}
-              </div>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" target="_blank" rel="noopener" 
-                 class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-emerald-400 hover:text-emerald-300 font-semibold text-xs rounded-lg border border-slate-700 transition flex items-center gap-1">
-                ${t('btn_maps')}
-              </a>
-              <a href="https://waze.com/ul?ll=${s.lat},${s.lng}&navigate=yes" target="_blank" rel="noopener" 
-                 class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-sky-300 font-semibold text-xs rounded-lg border border-slate-700 transition flex items-center gap-1">
-                ${t('btn_waze')}
-              </a>
-            </div>
+        <div class="flex items-center justify-between sm:flex-col sm:items-end gap-1">
+          <div class="text-xl sm:text-2xl font-black font-mono tracking-tight ${s.highest_power >= 200 ? 'text-amber-400' : s.highest_power >= 100 ? 'text-emerald-400' : 'text-slate-200'}">
+            ${s.lowest_power !== s.highest_power ? `${s.lowest_power}~${s.highest_power}` : s.highest_power} <span class="text-xs font-sans font-bold text-slate-400">kW</span>
+          </div>
+          <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400">
+            ${powerLabel}
           </div>
         </div>
-      `;
-      }).join("");
+      </div>
+
+      <!-- Charger Units Detail Box -->
+      <div class="mt-3 bg-slate-950/60 rounded-lg p-2.5 border border-slate-800/60 space-y-1">
+        ${chargerRows}
+      </div>
+
+      <div class="mt-3 flex items-center justify-between">
+        <span class="text-[11px] font-medium text-slate-500">
+          ${formatSegment(s.segment, s.side)}
+        </span>
+        <div class="flex items-center gap-2">
+          <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" target="_blank" rel="noopener" 
+             class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-emerald-400 hover:text-emerald-300 font-semibold text-xs rounded-lg border border-slate-700 transition">
+            ${t('btn_maps')}
+          </a>
+          <a href="https://waze.com/ul?ll=${s.lat},${s.lng}&navigate=yes" target="_blank" rel="noopener" 
+             class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-sky-300 font-semibold text-xs rounded-lg border border-slate-700 transition">
+            ${t('btn_waze')}
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+}).join("");
     }
 
     async function initApp() {
