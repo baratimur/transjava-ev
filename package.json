@@ -1,0 +1,17 @@
+{
+  "name": "transjava-ev",
+  "version": "1.0.0",
+  "description": "A lightweight, serverless single-page application (SPA) designed to help electric vehicle drivers find rest area charging stations (SPKLU) across the Trans-Java toll corridor.",
+  "main": "sw.js",
+  "scripts": {
+    "build": "tailwindcss -i ./input.css -o ./style.css --minify",
+    "watch": "tailwindcss -i ./input.css -o ./style.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}
