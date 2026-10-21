@@ -32,7 +32,8 @@
     "from_prev_stop": "km from previous stop",
     "first_stop": "First stop on route",
     "within_battery": "Reachable with current battery",
-    "outside_battery": "Beyond current battery range"
+    "outside_battery": "Beyond current battery range",
+    "contrib_hint": "Open for PRs & contributions"
   },
   "id": {
     "title": "SPKLU Trans Jawa",
@@ -67,6 +68,7 @@
     "from_prev_stop": "km dari stop sebelumnya",
     "first_stop": "Stop pertama rute",
     "within_battery": "Aman dijangkau baterai",
-    "outside_battery": "Di luar jangkauan baterai"
+    "outside_battery": "Di luar jangkauan baterai",
+    "contrib_hint": "Terbuka untuk kontribusi data & PR"
   }
 }
