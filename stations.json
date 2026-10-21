@@ -5,14 +5,30 @@
     "km": 13,
     "name": "KM 13 A (Jkt-Tgr)",
     "lowest_power": 22,
-    "highest_power": 60,
+    "highest_power": 200,
     "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "60 kW", "power_max": 60, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "AC", "power": "22 kW", "power_max": 22, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": false,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
+      }
     ],
-    "lat": -6.2163,
-    "lng": 106.6974
+    "lat": -6.214085,
+    "lng": 106.682688
   },
   {
     "segment": "merak-jakarta",
@@ -20,88 +36,215 @@
     "km": 14,
     "name": "KM 14 B (Jkt-Tgr)",
     "lowest_power": 22,
-    "highest_power": 82,
+    "highest_power": 200,
     "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "82.5 kW", "power_max": 82, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "AC", "power": "22 kW", "power_max": 22, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": false,
+        "ports": [
+          { "type": "CCS2", "power": "82.5 kW", "power_max": 82 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
+      }
     ],
-    "lat": -6.2148,
-    "lng": 106.7032
+    "lat": -6.214084,
+    "lng": 106.678556
   },
   {
     "segment": "merak-jakarta",
     "side": "A",
     "km": 43,
-    "name": "KM 43 A (Merak)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2", "Chademo"],
+    "name": "KM 43 A (Tgr-Merak)",
+    "lowest_power": 22,
+    "highest_power": 100,
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.2162,
-    "lng": 106.3770
+    "lat": -6.193875,
+    "lng": 106.425466
   },
   {
     "segment": "merak-jakarta",
     "side": "B",
     "km": 45,
-    "name": "KM 45 B (Merak)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2", "Chademo"],
+    "name": "KM 45 B (Tgr-Merak)",
+    "lowest_power": 22,
+    "highest_power": 120,
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.2173,
-    "lng": 106.3804
+    "lat": -6.186547,
+    "lng": 106.408348
   },
   {
     "segment": "merak-jakarta",
     "side": "A",
     "km": 68,
-    "name": "KM 68 A (Merak)",
-    "lowest_power": 50,
+    "name": "KM 68 A (Tgr-Merak)",
+    "lowest_power": 22,
     "highest_power": 200,
-    "types": ["CCS2", "Chademo"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "100~200 kW", "power_max": 200, "ports": 2, "shared": true },
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "30 kW", "power_max": 30 },
+          { "type": "Chademo", "power": "30 kW", "power_max": 30 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.1601,
-    "lng": 106.1952
+    "lat": -6.133278,
+    "lng": 106.204925
   },
   {
     "segment": "merak-jakarta",
     "side": "B",
     "km": 68,
-    "name": "KM 68 B (Merak)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "name": "KM 68 B (Tgr-Merak)",
+    "lowest_power": 22,
+    "highest_power": 120,
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.1610,
-    "lng": 106.1965
+    "lat": -6.131316,
+    "lng": 106.204289
   },
   {
     "segment": "jakarta-bogor",
     "side": "A",
     "km": 10,
     "name": "KM 10 A (Jagorawi)",
-    "lowest_power": 60,
-    "highest_power": 60,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 200,
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "60 kW", "power_max": 60, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.3682,
-    "lng": 106.8973
+    "lat": -6.340924,
+    "lng": 106.889679
   },
   {
     "segment": "jakarta-bogor",
@@ -112,25 +255,46 @@
     "highest_power": 50,
     "types": ["CCS2", "Chademo"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      }
     ],
-    "lat": -6.4402,
-    "lng": 106.8845
+    "lat": -6.43465,
+    "lng": 106.893591
   },
   {
     "segment": "jakarta-bogor",
     "side": "B",
     "km": 38,
     "name": "KM 38 B (Jagorawi)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 120,
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.5670,
-    "lng": 106.8521
+    "lat": -6.575414,
+    "lng": 106.838552
   },
   {
     "segment": "jakarta-bogor",
@@ -138,13 +302,30 @@
     "km": 45,
     "name": "KM 45 A (Jagorawi)",
     "lowest_power": 60,
-    "highest_power": 60,
+    "highest_power": 200,
     "types": ["CCS2"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "60 kW", "power_max": 60, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+        ]
+      }
     ],
-    "lat": -6.6542,
-    "lng": 106.8540
+    "lat": -6.637049,
+    "lng": 106.843805
   },
   {
     "segment": "jakarta-cikampek",
@@ -153,13 +334,29 @@
     "name": "KM 6 B (Japek)",
     "lowest_power": 22,
     "highest_power": 200,
-    "types": ["CCS2", "AC"],
+    "types": ["CCS2", "AC", "Chademo"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "100~200 kW", "power_max": 200, "ports": 2, "shared": true },
-      { "brand": "PLN", "type": "AC", "power": "22 kW", "power_max": 22, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "Chademo", "power": "25 kW", "power_max": 25 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
+      }
     ],
-    "lat": -6.2570,
-    "lng": 106.9420
+    "lat": -6.25883,
+    "lng": 106.928302
   },
   {
     "segment": "jakarta-cikampek",
@@ -167,57 +364,117 @@
     "km": 19,
     "name": "KM 19 A (Japek)",
     "lowest_power": 50,
-    "highest_power": 50,
+    "highest_power": 200,
     "types": ["CCS2", "Chademo"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      }
     ],
-    "lat": -6.2731,
-    "lng": 107.0543
+    "lat": -6.269119,
+    "lng": 107.036143
   },
   {
     "segment": "jakarta-cikampek",
     "side": "B",
     "km": 19,
     "name": "KM 19 B (Japek)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2", "Chademo"],
+    "lowest_power": 22,
+    "highest_power": 180,
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.2742,
-    "lng": 107.0560
+    "lat": -6.271226,
+    "lng": 107.039215
   },
   {
     "segment": "jakarta-cikampek",
     "side": "A",
     "km": 39,
     "name": "KM 39 A (Japek)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 50,
-    "types": ["CCS2"],
+    "types": ["CCS2", "Chademo"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      }
     ],
-    "lat": -6.3475,
-    "lng": 107.1892
+    "lat": -6.348156,
+    "lng": 107.204818
   },
   {
     "segment": "jakarta-cikampek",
     "side": "B",
     "km": 42,
     "name": "KM 42 B (Japek)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 60,
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "Chademo", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.3530,
-    "lng": 107.2185
+    "lat": -6.355358,
+    "lng": 107.230366
   },
   {
     "segment": "jakarta-cikampek",
@@ -228,89 +485,223 @@
     "highest_power": 200,
     "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "100~200 kW", "power_max": 200, "ports": 2, "shared": true },
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "AC", "power": "22 kW", "power_max": 22, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "iGreen+",
+        "total_ports": 4,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.3644,
-    "lng": 107.2913
+    "lat": -6.367231,
+    "lng": 107.360798
   },
   {
     "segment": "jakarta-cikampek",
     "side": "B",
     "km": 62,
     "name": "KM 62 B (Japek)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 200,
-    "types": ["CCS2", "Chademo"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "100~200 kW", "power_max": 200, "ports": 2, "shared": true },
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.3772,
-    "lng": 107.3321
+    "lat": -6.388793,
+    "lng": 107.394909
   },
   {
     "segment": "cikampek-bandung",
     "side": "A",
     "km": 72,
     "name": "KM 72 A (Cipularang)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 50,
-    "types": ["CCS2"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.4715,
-    "lng": 107.4475
+    "lat": -6.466525,
+    "lng": 107.444435
   },
   {
     "segment": "cikampek-bandung",
     "side": "B",
     "km": 72,
     "name": "KM 72 B (Cipularang)",
-    "lowest_power": 50,
+    "lowest_power": 25,
     "highest_power": 50,
     "types": ["CCS2"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "47 kW", "power_max": 47 },
+          { "type": "CCS2", "power": "47 kW", "power_max": 47 }
+        ]
+      }
     ],
-    "lat": -6.4718,
-    "lng": 107.4485
+    "lat": -6.467912,
+    "lng": 107.444498
   },
   {
     "segment": "cikampek-bandung",
     "side": "A",
     "km": 88,
     "name": "KM 88 A (Cipularang)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 200,
-    "types": ["CCS2", "Chademo"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "100~200 kW", "power_max": 200, "ports": 2, "shared": true },
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.6181,
-    "lng": 107.4372
+    "lat": -6.601723,
+    "lng": 107.427234
   },
   {
     "segment": "cikampek-bandung",
     "side": "B",
     "km": 88,
     "name": "KM 88 B (Cipularang)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 200,
-    "types": ["CCS2", "Chademo"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "100~200 kW", "power_max": 200, "ports": 2, "shared": true },
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.6183,
-    "lng": 107.4391
+    "lat": -6.603034,
+    "lng": 107.423904
   },
   {
     "segment": "cikampek-bandung",
@@ -321,10 +712,18 @@
     "highest_power": 60,
     "types": ["CCS2"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "60 kW", "power_max": 60, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      }
     ],
-    "lat": -6.6892,
-    "lng": 107.4312
+    "lat": -6.674333,
+    "lng": 107.4391
   },
   {
     "segment": "cikampek-bandung",
@@ -335,24 +734,46 @@
     "highest_power": 120,
     "types": ["CCS2"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "60~120 kW", "power_max": 120, "ports": 2, "shared": true }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+        ]
+      }
     ],
-    "lat": -6.8920,
-    "lng": 107.5410
+    "lat": -6.885796,
+    "lng": 107.520259
   },
   {
     "segment": "cikampek-bandung",
     "side": "A",
     "km": 147,
     "name": "KM 147 A (Padaleunyi)",
-    "lowest_power": 100,
+    "lowest_power": 50,
     "highest_power": 200,
     "types": ["CCS2"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "100~200 kW", "power_max": 200, "ports": 2, "shared": true }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "CCS2", "power": "50 kW", "power_max": 50 }]
+      }
     ],
-    "lat": -6.9535,
-    "lng": 107.6974
+    "lat": -6.967814,
+    "lng": 107.681211
   },
   {
     "segment": "cikampek-bandung",
@@ -360,55 +781,80 @@
     "km": 149,
     "name": "KM 149 B (Padaleunyi)",
     "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "highest_power": 120,
+    "types": ["CCS2", "Chademo"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      }
     ],
-    "lat": -6.9560,
-    "lng": 107.7010
+    "lat": -6.969083,
+    "lng": 107.703258
   },
   {
     "segment": "bandung-dawuan",
     "side": "A",
-    "km": 205,
-    "name": "KM 205 A (Cisumdawu)",
-    "lowest_power": 50,
-    "highest_power": 50,
+    "km": 203,
+    "name": "KM 203 A (Cisumdawu)",
+    "lowest_power": 200,
+    "highest_power": 200,
     "types": ["CCS2"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      }
     ],
-    "lat": -6.7450,
-    "lng": 108.0120
-  },
-  {
-    "segment": "bandung-dawuan",
-    "side": "B",
-    "km": 205,
-    "name": "KM 205 B (Cisumdawu)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
-    "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
-    ],
-    "lat": -6.7460,
-    "lng": 108.0130
+    "lat": -6.733079,
+    "lng": 108.021467
   },
   {
     "segment": "cikampek-dawuan",
     "side": "A",
     "km": 86,
     "name": "KM 86 A (Cipali)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 50,
-    "types": ["CCS2"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.4520,
-    "lng": 107.6180
+    "lat": -6.471999,
+    "lng": 107.585904
   },
   {
     "segment": "cikampek-dawuan",
@@ -419,7 +865,12 @@
     "highest_power": 50,
     "types": ["CCS2"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "CCS2", "power": "50 kW", "power_max": 50 }]
+      }
     ],
     "lat": -6.4525,
     "lng": 107.6190
@@ -429,161 +880,752 @@
     "side": "B",
     "km": 101,
     "name": "KM 101 B (Cipali)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 200,
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.5372,
-    "lng": 107.7451
+    "lat": -6.509309,
+    "lng": 107.718032
   },
   {
     "segment": "cikampek-dawuan",
     "side": "A",
     "km": 102,
     "name": "KM 102 A (Cipali)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2", "Chademo"],
+    "lowest_power": 22,
+    "highest_power": 200,
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.5365,
-    "lng": 107.7470
+    "lat": -6.508196,
+    "lng": 107.721111
   },
   {
     "segment": "cikampek-dawuan",
     "side": "A",
     "km": 130,
     "name": "KM 130 A (Cipali)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 200,
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "80 kW", "power_max": 80 },
+          { "type": "CCS2", "power": "80 kW", "power_max": 80 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.6341,
-    "lng": 107.9622
+    "lat": -6.575958,
+    "lng": 107.960434
   },
   {
     "segment": "cikampek-dawuan",
     "side": "B",
     "km": 130,
     "name": "KM 130 B (Cipali)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 60,
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "Chademo", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.6345,
-    "lng": 107.9635
+    "lat": -6.576976,
+    "lng": 107.960551
   },
   {
     "segment": "dawuan-semarang",
     "side": "B",
     "km": 164,
     "name": "KM 164 B (Cipali)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 200,
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "Chademo", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.7120,
-    "lng": 108.2310
+    "lat": -6.707137,
+    "lng": 108.226028
   },
   {
     "segment": "dawuan-semarang",
     "side": "A",
     "km": 166,
     "name": "KM 166 A (Cipali)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 200,
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.7115,
-    "lng": 108.2350
+    "lat": -6.714021,
+    "lng": 108.242426
   },
   {
     "segment": "dawuan-semarang",
     "side": "A",
     "km": 207,
     "name": "KM 207 A (Palikanci)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 200,
-    "types": ["CCS2", "Chademo"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "100~200 kW", "power_max": 200, "ports": 2, "shared": true },
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "Wuling", "type": "CCS2", "power": "60 kW", "power_max": 60, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "Wuling",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.7792,
-    "lng": 108.5392
+    "lat": -6.775502,
+    "lng": 108.562256
   },
   {
     "segment": "dawuan-semarang",
     "side": "B",
     "km": 208,
     "name": "KM 208 B (Palikanci)",
-    "lowest_power": 50,
-    "highest_power": 60,
+    "lowest_power": 25,
+    "highest_power": 200,
     "types": ["CCS2", "Chademo"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "Wuling", "type": "CCS2", "power": "60 kW", "power_max": 60, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "Wuling",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      }
     ],
-    "lat": -6.7801,
-    "lng": 108.5412
+    "lat": -6.778025,
+    "lng": 108.567185
   },
   {
     "segment": "dawuan-semarang",
     "side": "A",
     "km": 228,
     "name": "KM 228 A (Kanci-Pejagan)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 200,
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.8450,
-    "lng": 108.7020
+    "lat": -6.881293,
+    "lng": 108.702962
   },
   {
     "segment": "dawuan-semarang",
     "side": "B",
     "km": 229,
     "name": "KM 229 B (Kanci-Pejagan)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 200,
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.8465,
-    "lng": 108.7050
+    "lat": -6.88443,
+    "lng": 108.707666
+  },
+  {
+    "segment": "dawuan-semarang",
+    "side": "A",
+    "km": 252,
+    "name": "KM 252 A (Pejagan-Pml)",
+    "lowest_power": 22,
+    "highest_power": 50,
+    "types": ["CCS2", "Chademo", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -6.906006,
+    "lng": 108.91516
   },
   {
     "segment": "dawuan-semarang",
     "side": "B",
     "km": 260,
-    "name": "KM 260 B (Pejagan-Pemalang)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2", "Chademo"],
+    "name": "KM 260 B (Pejagan-Pml)",
+    "lowest_power": 11,
+    "highest_power": 120,
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "Astra Otopower",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "Astra Otopower",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "11 kW", "power_max": 11 }]
+      }
     ],
-    "lat": -6.8992,
-    "lng": 108.9712
+    "lat": -6.906416,
+    "lng": 108.983196
+  },
+  {
+    "segment": "dawuan-semarang",
+    "side": "A",
+    "km": 275,
+    "name": "KM 275 A (Pejagan-Pml)",
+    "lowest_power": 22,
+    "highest_power": 100,
+    "types": ["CCS2", "Chademo", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -6.932295,
+    "lng": 109.108382
+  },
+  {
+    "segment": "dawuan-semarang",
+    "side": "B",
+    "km": 282,
+    "name": "KM 282 B (Pejagan-Pml)",
+    "lowest_power": 22,
+    "highest_power": 180,
+    "types": ["CCS2", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -6.943099,
+    "lng": 109.17311
+  },
+  {
+    "segment": "dawuan-semarang",
+    "side": "A",
+    "km": 287,
+    "name": "KM 287 A (Pejagan-Pml)",
+    "lowest_power": 22,
+    "highest_power": 180,
+    "types": ["CCS2", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -6.933295,
+    "lng": 109.214973
+  },
+  {
+    "segment": "dawuan-semarang",
+    "side": "B",
+    "km": 294,
+    "name": "KM 294 B (Pejagan-Pml)",
+    "lowest_power": 22,
+    "highest_power": 50,
+    "types": ["CCS2", "Chademo", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -6.937192,
+    "lng": 109.272954
+  },
+  {
+    "segment": "dawuan-semarang",
+    "side": "B",
+    "km": 319,
+    "name": "KM 319 B (Pml-Batang)",
+    "lowest_power": 22,
+    "highest_power": 100,
+    "types": ["CCS2", "Chademo", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -6.924835,
+    "lng": 109.495854
+  },
+  {
+    "segment": "dawuan-semarang",
+    "side": "A",
+    "km": 338,
+    "name": "KM 338 A (Pml-Batang)",
+    "lowest_power": 22,
+    "highest_power": 100,
+    "types": ["CCS2", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -6.947948,
+    "lng": 109.67
+  },
+  {
+    "segment": "dawuan-semarang",
+    "side": "A",
+    "km": 343,
+    "name": "KM 343 A (Batang-Smg)",
+    "lowest_power": 22,
+    "highest_power": 200,
+    "types": ["CCS2", "Chademo", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -6.945286,
+    "lng": 109.714598
+  },
+  {
+    "segment": "dawuan-semarang",
+    "side": "B",
+    "km": 360,
+    "name": "KM 360 B (Batang-Smg)",
+    "lowest_power": 22,
+    "highest_power": 80,
+    "types": ["CCS2", "Chademo", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "80 kW", "power_max": 80 },
+          { "type": "CCS2", "power": "80 kW", "power_max": 80 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "48 kW", "power_max": 48 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -6.921258,
+    "lng": 109.86356
   },
   {
     "segment": "dawuan-semarang",
@@ -592,143 +1634,382 @@
     "name": "KM 379 A (Batang-Smg)",
     "lowest_power": 50,
     "highest_power": 200,
-    "types": ["CCS2"],
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "100~200 kW", "power_max": 200, "ports": 2, "shared": true },
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "Wuling", "type": "CCS2", "power": "60 kW", "power_max": 60, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "Wuling",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.9931,
-    "lng": 110.0191
+    "lat": -6.957891,
+    "lng": 110.014619
   },
   {
     "segment": "dawuan-semarang",
     "side": "B",
     "km": 389,
     "name": "KM 389 B (Batang-Smg)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 100,
-    "types": ["CCS2"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50~100 kW", "power_max": 100, "ports": 2, "shared": true },
-      { "brand": "Wuling", "type": "CCS2", "power": "60 kW", "power_max": 60, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "Wuling",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -6.9950,
-    "lng": 110.0984
+    "lat": -6.985372,
+    "lng": 110.104466
   },
   {
     "segment": "dawuan-semarang",
     "side": "A",
     "km": 391,
     "name": "KM 391 A (Batang-Smg)",
+    "lowest_power": 22,
+    "highest_power": 120,
+    "types": ["CCS2", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -6.98644,
+    "lng": 110.123187
+  },
+  {
+    "segment": "semarang-solo",
+    "side": "B",
+    "km": 424,
+    "name": "KM 424 B (Smg-Solo)",
     "lowest_power": 50,
     "highest_power": 50,
-    "types": ["CCS2"],
+    "types": ["CCS2", "Chademo"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      }
     ],
-    "lat": -6.9942,
-    "lng": 110.1240
+    "lat": -7.017727,
+    "lng": 110.396246
   },
   {
     "segment": "semarang-solo",
     "side": "A",
     "km": 429,
     "name": "KM 429 A (Smg-Solo)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 50,
-    "types": ["CCS2", "Chademo"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false },
-      { "brand": "PLN", "type": "Chademo", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.1432,
-    "lng": 110.4285
+    "lat": -7.129667,
+    "lng": 110.423945
   },
   {
     "segment": "semarang-solo",
     "side": "A",
     "km": 439,
     "name": "KM 439 A (Smg-Solo)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 180,
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "Chademo", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.2150,
-    "lng": 110.4780
+    "lat": -7.210529,
+    "lng": 110.44981
   },
   {
     "segment": "semarang-solo",
     "side": "B",
     "km": 444,
     "name": "KM 444 B (Smg-Solo)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 200,
-    "types": ["CCS2"],
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "100~200 kW", "power_max": 200, "ports": 2, "shared": true },
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.2410,
-    "lng": 110.5120
+    "lat": -7.258668,
+    "lng": 110.462728
+  },
+  {
+    "segment": "semarang-solo",
+    "side": "A",
+    "km": 456,
+    "name": "KM 456 A (Smg-Solo)",
+    "lowest_power": 22,
+    "highest_power": 120,
+    "types": ["CCS2", "Chademo", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "Chademo", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -7.3271,
+    "lng": 110.532194
   },
   {
     "segment": "semarang-solo",
     "side": "B",
     "km": 456,
     "name": "KM 456 B (Smg-Solo)",
-    "lowest_power": 22,
-    "highest_power": 22,
-    "types": ["AC"],
+    "lowest_power": 7,
+    "highest_power": 150,
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "AC", "power": "22 kW", "power_max": 22, "ports": 1, "shared": false }
+      {
+        "brand": "Astra Otopower",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "150 kW", "power_max": 150 },
+          { "type": "Chademo", "power": "150 kW", "power_max": 150 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.3120,
-    "lng": 110.5340
+    "lat": -7.326975,
+    "lng": 110.531352
   },
   {
     "segment": "semarang-solo",
     "side": "A",
     "km": 487,
     "name": "KM 487 A (Smg-Solo)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 180,
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.5140,
-    "lng": 110.6650
+    "lat": -7.523059,
+    "lng": 110.667103
   },
   {
     "segment": "semarang-solo",
     "side": "B",
     "km": 487,
     "name": "KM 487 B (Smg-Solo)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 180,
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.5150,
-    "lng": 110.6660
+    "lat": -7.523591,
+    "lng": 110.668025
   },
   {
     "segment": "solo-yogyakarta",
     "side": "A",
     "km": 19,
     "name": "KM 19 A (Solo-Yogya)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 60,
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "Chademo", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.6320,
-    "lng": 110.6210
+    "lat": -7.66205,
+    "lng": 110.613568
   },
   {
     "segment": "solo-yogyakarta",
@@ -739,7 +2020,12 @@
     "highest_power": 50,
     "types": ["CCS2"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "CCS2", "power": "50 kW", "power_max": 50 }]
+      }
     ],
     "lat": -7.6330,
     "lng": 110.6220
@@ -750,197 +2036,476 @@
     "km": 519,
     "name": "KM 519 A (Solo-Ngawi)",
     "lowest_power": 50,
-    "highest_power": 50,
+    "highest_power": 100,
     "types": ["CCS2"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "CCS2", "power": "50 kW", "power_max": 50 }]
+      }
     ],
-    "lat": -7.4241,
-    "lng": 110.9852
+    "lat": -7.480904,
+    "lng": 110.918983
   },
   {
     "segment": "solo-surabaya",
     "side": "B",
     "km": 519,
     "name": "KM 519 B (Solo-Ngawi)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 50,
-    "types": ["CCS2"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.4250,
-    "lng": 110.9861
+    "lat": -7.480416,
+    "lng": 110.920521
   },
   {
     "segment": "solo-surabaya",
     "side": "A",
     "km": 538,
     "name": "KM 538 A (Solo-Ngawi)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 50,
-    "types": ["CCS2"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.4210,
-    "lng": 111.1320
+    "lat": -7.393221,
+    "lng": 111.051127
   },
   {
     "segment": "solo-surabaya",
     "side": "B",
     "km": 538,
     "name": "KM 538 B (Solo-Ngawi)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 50,
-    "types": ["CCS2"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.4215,
-    "lng": 111.1340
+    "lat": -7.394085,
+    "lng": 111.051726
   },
   {
     "segment": "solo-surabaya",
     "side": "A",
     "km": 575,
     "name": "KM 575 A (Solo-Ngawi)",
-    "lowest_power": 50,
-    "highest_power": 100,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 180,
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50~100 kW", "power_max": 100, "ports": 2, "shared": true }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50~100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "50~100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.4320,
-    "lng": 111.3910
+    "lat": -7.408684,
+    "lng": 111.381868
   },
   {
     "segment": "solo-surabaya",
     "side": "B",
     "km": 575,
     "name": "KM 575 B (Solo-Ngawi)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 180,
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50~100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "50~100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.4330,
-    "lng": 111.3930
+    "lat": -7.410205,
+    "lng": 111.381747
   },
   {
     "segment": "solo-surabaya",
     "side": "A",
     "km": 597,
     "name": "KM 597 A (Ngawi-Kertosono)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 180,
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.5020,
-    "lng": 111.5540
+    "lat": -7.543402,
+    "lng": 111.506373
   },
   {
     "segment": "solo-surabaya",
     "side": "B",
     "km": 597,
     "name": "KM 597 B (Ngawi-Kertosono)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 180,
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.5030,
-    "lng": 111.5560
+    "lat": -7.545729,
+    "lng": 111.508243
   },
   {
     "segment": "solo-surabaya",
     "side": "A",
     "km": 626,
     "name": "KM 626 A (Ngawi-Kertosono)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 200,
-    "types": ["CCS2"],
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "100~200 kW", "power_max": 200, "ports": 2, "shared": true },
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.5361,
-    "lng": 111.7582
+    "lat": -7.54784,
+    "lng": 111.758084
   },
   {
     "segment": "solo-surabaya",
     "side": "B",
     "km": 626,
     "name": "KM 626 B (Ngawi-Kertosono)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 200,
-    "types": ["CCS2"],
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "100~200 kW", "power_max": 200, "ports": 2, "shared": true },
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.5372,
-    "lng": 111.7591
+    "lat": -7.549063,
+    "lng": 111.757173
   },
   {
     "segment": "solo-surabaya",
     "side": "A",
     "km": 678,
     "name": "KM 678 A (Kertosono-Mjk)",
-    "lowest_power": 50,
+    "lowest_power": 7,
     "highest_power": 50,
-    "types": ["CCS2"],
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "CCS2", "power": "50 kW", "power_max": 50 }]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "7 kW", "power_max": 7 }]
+      }
     ],
-    "lat": -7.5310,
-    "lng": 112.2150
+    "lat": -7.535146,
+    "lng": 112.175233
   },
   {
     "segment": "solo-surabaya",
     "side": "B",
     "km": 678,
     "name": "KM 678 B (Kertosono-Mjk)",
-    "lowest_power": 50,
+    "lowest_power": 7,
     "highest_power": 50,
-    "types": ["CCS2"],
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "CCS2", "power": "50 kW", "power_max": 50 }]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "7 kW", "power_max": 7 }]
+      }
     ],
-    "lat": -7.5320,
-    "lng": 112.2170
+    "lat": -7.536055,
+    "lng": 112.175679
+  },
+  {
+    "segment": "solo-surabaya",
+    "side": "A",
+    "km": 695,
+    "name": "KM 695 A (Kertosono-Mjk)",
+    "lowest_power": 22,
+    "highest_power": 120,
+    "types": ["CCS2", "Chademo", "AC"],
+    "chargers": [
+      {
+        "brand": "Astra Otopower",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "Chademo", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "Astra Otopower",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -7.48515,
+    "lng": 112.311234
   },
   {
     "segment": "solo-surabaya",
     "side": "A",
     "km": 725,
     "name": "KM 725 A (Sumo)",
-    "lowest_power": 50,
-    "highest_power": 100,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 180,
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50~100 kW", "power_max": 100, "ports": 2, "shared": true }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50~100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "50~100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.3820,
-    "lng": 112.5410
+    "lat": -7.378487,
+    "lng": 112.54568
   },
   {
     "segment": "solo-surabaya",
     "side": "B",
     "km": 726,
     "name": "KM 726 B (Sumo)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 100,
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.3830,
-    "lng": 112.5430
+    "lat": -7.375425,
+    "lng": 112.553327
   },
   {
     "segment": "surabaya-gempol",
@@ -948,110 +2513,372 @@
     "km": 754,
     "name": "KM 754 A (Sby-Gempol)",
     "lowest_power": 50,
-    "highest_power": 50,
+    "highest_power": 60,
     "types": ["CCS2"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "CCS2", "power": "50 kW", "power_max": 50 }]
+      }
     ],
-    "lat": -7.4421,
-    "lng": 112.7051
+    "lat": -7.425764,
+    "lng": 112.693728
   },
   {
     "segment": "surabaya-gempol",
     "side": "B",
     "km": 754,
     "name": "KM 754 B (Sby-Gempol)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 50,
-    "types": ["CCS2"],
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "47 kW", "power_max": 47 },
+          { "type": "CCS2", "power": "47 kW", "power_max": 47 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.4430,
-    "lng": 112.7065
+    "lat": -7.417816,
+    "lng": 112.693708
   },
   {
     "segment": "gempol-malang",
     "side": "A",
     "km": 66,
     "name": "KM 66 A (Pandaan-Malang)",
-    "lowest_power": 50,
-    "highest_power": 50,
-    "types": ["CCS2"],
+    "lowest_power": 22,
+    "highest_power": 60,
+    "types": ["CCS2", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.7801,
-    "lng": 112.6952
+    "lat": -7.743708,
+    "lng": 112.718344
   },
   {
     "segment": "gempol-malang",
     "side": "B",
     "km": 66,
     "name": "KM 66 B (Pandaan-Malang)",
+    "lowest_power": 22,
+    "highest_power": 60,
+    "types": ["CCS2", "Chademo", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "Chademo", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -7.743934,
+    "lng": 112.71674
+  },
+  {
+    "segment": "gempol-malang",
+    "side": "A",
+    "km": 84,
+    "name": "KM 84 A (Pandaan-Malang)",
+    "lowest_power": 22,
+    "highest_power": 60,
+    "types": ["CCS2", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -7.897223,
+    "lng": 112.698133
+  },
+  {
+    "segment": "gempol-malang",
+    "side": "B",
+    "km": 84,
+    "name": "KM 84 B (Pandaan-Malang)",
     "lowest_power": 50,
     "highest_power": 50,
     "types": ["CCS2"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      }
     ],
-    "lat": -7.7812,
-    "lng": 112.6963
+    "lat": -7.896521,
+    "lng": 112.696935
   },
   {
     "segment": "gempol-banyuwangi",
     "side": "A",
     "km": 792,
     "name": "KM 792 A (Gempas)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 50,
-    "types": ["CCS2"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.6321,
-    "lng": 112.8712
+    "lat": -7.652943,
+    "lng": 112.854084
   },
   {
     "segment": "gempol-banyuwangi",
     "side": "B",
     "km": 792,
     "name": "KM 792 B (Gempas)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 50,
-    "types": ["CCS2"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.6335,
-    "lng": 112.8725
+    "lat": -7.655518,
+    "lng": 112.854714
   },
   {
     "segment": "gempol-banyuwangi",
     "side": "A",
     "km": 819,
     "name": "KM 819 A (Paspro)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 50,
-    "types": ["CCS2"],
+    "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
     ],
-    "lat": -7.7251,
-    "lng": 113.1256
+    "lat": -7.747684,
+    "lng": 113.070856
   },
   {
     "segment": "gempol-banyuwangi",
     "side": "B",
     "km": 819,
     "name": "KM 819 B (Paspro)",
-    "lowest_power": 50,
+    "lowest_power": 22,
     "highest_power": 50,
+    "types": ["CCS2", "Chademo", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -7.748942,
+    "lng": 113.070602
+  },
+  {
+    "segment": "gempol-banyuwangi",
+    "side": "A",
+    "km": 833,
+    "name": "KM 833 A (Paspro)",
+    "lowest_power": 22,
+    "highest_power": 50,
+    "types": ["CCS2", "Chademo", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -7.808051,
+    "lng": 113.171447
+  },
+  {
+    "segment": "gempol-banyuwangi",
+    "side": "B",
+    "km": 833,
+    "name": "KM 833 B (Paspro)",
+    "lowest_power": 22,
+    "highest_power": 50,
+    "types": ["CCS2", "Chademo", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+      }
+    ],
+    "lat": -7.809063,
+    "lng": 113.171535
+  },
+  {
+    "segment": "gempol-banyuwangi",
+    "side": "A",
+    "km": 844,
+    "name": "KM 844 A (Paspro)",
+    "lowest_power": 180,
+    "highest_power": 180,
     "types": ["CCS2"],
     "chargers": [
-      { "brand": "PLN", "type": "CCS2", "power": "50 kW", "power_max": 50, "ports": 1, "shared": false }
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      }
     ],
-    "lat": -7.7262,
-    "lng": 113.1265
+    "lat": -7.828494,
+    "lng": 113.271756
+  },
+  {
+    "segment": "gempol-banyuwangi",
+    "side": "B",
+    "km": 844,
+    "name": "KM 844 B (Paspro)",
+    "lowest_power": 180,
+    "highest_power": 180,
+    "types": ["CCS2"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      }
+    ],
+    "lat": -7.829065,
+    "lng": 113.274134
   }
 ]
