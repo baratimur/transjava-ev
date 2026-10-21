@@ -20,9 +20,53 @@
       {
         "brand": "PLN",
         "total_ports": 2,
-        "shared": false,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
         "ports": [
           { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [
           { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       }
@@ -81,18 +125,29 @@
       },
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.193875,
@@ -112,8 +167,17 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
         ]
       },
       {
@@ -129,7 +193,9 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.186547,
@@ -140,8 +206,8 @@
     "side": "A",
     "km": 68,
     "name": "KM 68 A (Tgr-Merak)",
-    "lowest_power": 22,
-    "highest_power": 200,
+    "lowest_power": 7,
+    "highest_power": 120,
     "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
       {
@@ -149,8 +215,8 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 },
-          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 }
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
         ]
       },
       {
@@ -158,8 +224,8 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
         ]
       },
       {
@@ -175,7 +241,9 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "7 kW", "power_max": 7 }
+        ]
       }
     ],
     "lat": -6.133278,
@@ -195,15 +263,26 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.131316,
@@ -232,15 +311,61 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.340924,
@@ -263,6 +388,14 @@
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
           { "type": "Chademo", "power": "50 kW", "power_max": 50 }
         ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
       }
     ],
     "lat": -6.43465,
@@ -282,15 +415,44 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.575414,
@@ -319,8 +481,17 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
         ]
       }
     ],
@@ -341,8 +512,17 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 },
-          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 }
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
         ]
       },
       {
@@ -396,7 +576,7 @@
     "name": "KM 19 B (Japek)",
     "lowest_power": 22,
     "highest_power": 180,
-    "types": ["CCS2", "Chademo", "AC"],
+    "types": ["CCS2", "AC"],
     "chargers": [
       {
         "brand": "PLN",
@@ -412,15 +592,17 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.271226,
@@ -442,6 +624,15 @@
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
           { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "22 kW", "power_max": 22 },
+          { "type": "CCS2", "power": "22 kW", "power_max": 22 }
         ]
       }
     ],
@@ -468,9 +659,21 @@
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.355358,
@@ -486,6 +689,33 @@
     "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
       {
+        "brand": "iGreen+",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "iGreen+",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "iGreen+",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
         "brand": "PLN",
         "total_ports": 2,
         "shared": true,
@@ -495,14 +725,12 @@
         ]
       },
       {
-        "brand": "iGreen+",
-        "total_ports": 4,
+        "brand": "PLN",
+        "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
-          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
-          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
-          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
         ]
       },
       {
@@ -518,7 +746,9 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.367231,
@@ -547,24 +777,27 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
         ]
       },
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.388793,
@@ -581,18 +814,31 @@
     "chargers": [
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "25 kW", "power_max": 25 },
+          { "type": "CCS2", "power": "25 kW", "power_max": 25 }
+        ]
       }
     ],
     "lat": -6.466525,
@@ -604,7 +850,7 @@
     "km": 72,
     "name": "KM 72 B (Cipularang)",
     "lowest_power": 25,
-    "highest_power": 50,
+    "highest_power": 47,
     "types": ["CCS2"],
     "chargers": [
       {
@@ -614,6 +860,14 @@
         "ports": [
           { "type": "CCS2", "power": "47 kW", "power_max": 47 },
           { "type": "CCS2", "power": "47 kW", "power_max": 47 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [
+          { "type": "CCS2", "power": "25 kW", "power_max": 25 }
         ]
       }
     ],
@@ -643,6 +897,15 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
           { "type": "CCS2", "power": "180 kW", "power_max": 180 },
           { "type": "CCS2", "power": "180 kW", "power_max": 180 }
         ]
@@ -652,15 +915,19 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
         ]
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 3,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.601723,
@@ -690,6 +957,15 @@
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
           { "type": "Chademo", "power": "50 kW", "power_max": 50 }
         ]
       },
@@ -697,7 +973,18 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.603034,
@@ -730,7 +1017,7 @@
     "side": "B",
     "km": 125,
     "name": "KM 125 B (Padaleunyi)",
-    "lowest_power": 60,
+    "lowest_power": 120,
     "highest_power": 120,
     "types": ["CCS2"],
     "chargers": [
@@ -739,8 +1026,8 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
         ]
       }
     ],
@@ -767,9 +1054,12 @@
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "CCS2", "power": "50 kW", "power_max": 50 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
       }
     ],
     "lat": -6.967814,
@@ -789,8 +1079,8 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
         ]
       },
       {
@@ -839,18 +1129,13 @@
     "chargers": [
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
-      },
-      {
-        "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
       }
     ],
     "lat": -6.471999,
@@ -869,7 +1154,9 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "CCS2", "power": "50 kW", "power_max": 50 }]
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
       }
     ],
     "lat": -6.4525,
@@ -897,7 +1184,9 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.509309,
@@ -923,18 +1212,22 @@
       },
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
       }
     ],
     "lat": -6.508196,
@@ -971,7 +1264,17 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "CCS2", "power": "25 kW", "power_max": 25 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.575958,
@@ -992,14 +1295,25 @@
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "60 kW", "power_max": 60 },
-          { "type": "Chademo", "power": "60 kW", "power_max": 60 }
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "Chademo", "power": "60 kW", "power_max": 60 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "CCS2", "power": "25 kW", "power_max": 25 }
+        ]
       }
     ],
     "lat": -6.576976,
@@ -1037,15 +1351,45 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 3,
+        "shared": true,
+        "ports": [
           { "type": "CCS2", "power": "60 kW", "power_max": 60 },
-          { "type": "Chademo", "power": "60 kW", "power_max": 60 }
+          { "type": "Chademo", "power": "60 kW", "power_max": 60 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "CCS2", "power": "25 kW", "power_max": 25 }
+        ]
       }
     ],
     "lat": -6.707137,
@@ -1080,9 +1424,47 @@
       },
       {
         "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.714021,
@@ -1098,24 +1480,6 @@
     "types": ["CCS2", "Chademo", "AC"],
     "chargers": [
       {
-        "brand": "PLN",
-        "total_ports": 2,
-        "shared": true,
-        "ports": [
-          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 },
-          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 }
-        ]
-      },
-      {
-        "brand": "PLN",
-        "total_ports": 2,
-        "shared": true,
-        "ports": [
-          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
-          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
-        ]
-      },
-      {
         "brand": "Wuling",
         "total_ports": 2,
         "shared": true,
@@ -1129,15 +1493,37 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
         ]
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 3,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
       }
     ],
     "lat": -6.775502,
@@ -1153,15 +1539,6 @@
     "types": ["CCS2", "Chademo"],
     "chargers": [
       {
-        "brand": "PLN",
-        "total_ports": 2,
-        "shared": true,
-        "ports": [
-          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
-          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
-        ]
-      },
-      {
         "brand": "Wuling",
         "total_ports": 2,
         "shared": true,
@@ -1175,8 +1552,34 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 },
+          { "type": "CCS2", "power": "200 kW", "power_max": 200 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
           { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [
+          { "type": "CCS2", "power": "25 kW", "power_max": 25 }
         ]
       }
     ],
@@ -1215,8 +1618,26 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
           { "type": "CCS2", "power": "120 kW", "power_max": 120 },
           { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
         ]
       },
       {
@@ -1232,7 +1653,26 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "CCS2", "power": "25 kW", "power_max": 25 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.881293,
@@ -1270,6 +1710,15 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
           { "type": "CCS2", "power": "120 kW", "power_max": 120 },
           { "type": "CCS2", "power": "120 kW", "power_max": 120 }
         ]
@@ -1279,15 +1728,63 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 3,
+        "shared": true,
+        "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "CCS2", "power": "25 kW", "power_max": 25 }
+        ]
       }
     ],
     "lat": -6.88443,
@@ -1304,18 +1801,13 @@
     "chargers": [
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
-      },
-      {
-        "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
       }
     ],
     "lat": -6.906006,
@@ -1328,7 +1820,7 @@
     "name": "KM 260 B (Pejagan-Pml)",
     "lowest_power": 11,
     "highest_power": 120,
-    "types": ["CCS2", "Chademo", "AC"],
+    "types": ["CCS2", "AC"],
     "chargers": [
       {
         "brand": "Astra Otopower",
@@ -1340,19 +1832,21 @@
         ]
       },
       {
-        "brand": "PLN",
+        "brand": "Astra Otopower",
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "AC", "power": "11 kW", "power_max": 11 },
+          { "type": "AC", "power": "11 kW", "power_max": 11 }
         ]
       },
       {
         "brand": "Astra Otopower",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "11 kW", "power_max": 11 }]
+        "ports": [
+          { "type": "AC", "power": "11 kW", "power_max": 11 }
+        ]
       }
     ],
     "lat": -6.906416,
@@ -1382,14 +1876,35 @@
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 3,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.932295,
@@ -1415,9 +1930,20 @@
       },
       {
         "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.943099,
@@ -1445,7 +1971,9 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.933295,
@@ -1466,14 +1994,18 @@
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
         ]
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 3,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.937192,
@@ -1502,15 +2034,46 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
         ]
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 3,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.924835,
@@ -1536,9 +2099,20 @@
       },
       {
         "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.947948,
@@ -1577,14 +2151,26 @@
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "60 kW", "power_max": 60 }
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 3,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "87.5 kW", "power_max": 87.5 },
+          { "type": "Chademo", "power": "60 kW", "power_max": 60 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.945286,
@@ -1614,14 +2200,27 @@
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "48 kW", "power_max": 48 }
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
         ]
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 3,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "48 kW", "power_max": 48 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.921258,
@@ -1632,17 +2231,17 @@
     "side": "A",
     "km": 379,
     "name": "KM 379 A (Batang-Smg)",
-    "lowest_power": 50,
-    "highest_power": 200,
+    "lowest_power": 22,
+    "highest_power": 180,
     "types": ["CCS2", "AC"],
     "chargers": [
       {
-        "brand": "PLN",
+        "brand": "Wuling",
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 },
-          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 }
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
         ]
       },
       {
@@ -1655,33 +2254,14 @@
         ]
       },
       {
-        "brand": "Wuling",
+        "brand": "PLN",
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
-          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
         ]
       },
-      {
-        "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
-      }
-    ],
-    "lat": -6.957891,
-    "lng": 110.014619
-  },
-  {
-    "segment": "dawuan-semarang",
-    "side": "B",
-    "km": 389,
-    "name": "KM 389 B (Batang-Smg)",
-    "lowest_power": 22,
-    "highest_power": 100,
-    "types": ["CCS2", "Chademo", "AC"],
-    "chargers": [
       {
         "brand": "PLN",
         "total_ports": 2,
@@ -1692,6 +2272,36 @@
         ]
       },
       {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
+      }
+    ],
+    "lat": -6.957891,
+    "lng": 110.014619
+  },
+  {
+    "segment": "dawuan-semarang",
+    "side": "B",
+    "km": 389,
+    "name": "KM 389 B (Batang-Smg)",
+    "lowest_power": 7,
+    "highest_power": 100,
+    "types": ["CCS2", "Chademo", "AC"],
+    "chargers": [
+      {
         "brand": "Wuling",
         "total_ports": 2,
         "shared": true,
@@ -1705,19 +2315,41 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
         ]
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 3,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "AC", "power": "7 kW", "power_max": 7 },
+          { "type": "AC", "power": "7 kW", "power_max": 7 }
+        ]
       }
     ],
-    "lat": -6.985372,
-    "lng": 110.104466
+    "lat": -6.984765,
+    "lng": 110.10456
   },
   {
     "segment": "dawuan-semarang",
@@ -1733,15 +2365,17 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 },
-          { "type": "CCS2", "power": "60~120 kW", "power_max": 120 }
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 },
+          { "type": "CCS2", "power": "120 kW", "power_max": 120 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -6.98644,
@@ -1780,18 +2414,22 @@
     "chargers": [
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
       }
     ],
     "lat": -7.129667,
@@ -1820,15 +2458,62 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "160 kW", "power_max": 160 },
+          { "type": "CCS2", "power": "160 kW", "power_max": 160 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "160 kW", "power_max": 160 },
+          { "type": "CCS2", "power": "160 kW", "power_max": 160 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
           { "type": "CCS2", "power": "60 kW", "power_max": 60 },
           { "type": "Chademo", "power": "60 kW", "power_max": 60 }
         ]
       },
       {
         "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
+      },
+      {
+        "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.210529,
@@ -1865,7 +2550,9 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.258668,
@@ -1882,18 +2569,21 @@
     "chargers": [
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "120 kW", "power_max": 120 },
-          { "type": "Chademo", "power": "120 kW", "power_max": 120 }
+          { "type": "Chademo", "power": "120 kW", "power_max": 120 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "CCS2", "power": "30 kW", "power_max": 30 }
+        ]
       }
     ],
     "lat": -7.3271,
@@ -1918,10 +2608,13 @@
         ]
       },
       {
-        "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "brand": "Astra Otopower",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "AC", "power": "7 kW", "power_max": 7 },
+          { "type": "AC", "power": "7 kW", "power_max": 7 }
+        ]
       }
     ],
     "lat": -7.326975,
@@ -1949,7 +2642,9 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.523059,
@@ -1977,7 +2672,9 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.523591,
@@ -1994,18 +2691,22 @@
     "chargers": [
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "60 kW", "power_max": 60 },
-          { "type": "Chademo", "power": "60 kW", "power_max": 60 }
+          { "type": "Chademo", "power": "60 kW", "power_max": 60 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "47 kW", "power_max": 47 },
+          { "type": "CCS2", "power": "47 kW", "power_max": 47 }
+        ]
       }
     ],
     "lat": -7.66205,
@@ -2024,7 +2725,9 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "CCS2", "power": "50 kW", "power_max": 50 }]
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
       }
     ],
     "lat": -7.6330,
@@ -2050,9 +2753,21 @@
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "CCS2", "power": "50 kW", "power_max": 50 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
       }
     ],
     "lat": -7.480904,
@@ -2073,6 +2788,24 @@
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
           { "type": "Chademo", "power": "50 kW", "power_max": 50 }
         ]
       },
@@ -2080,7 +2813,17 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "CCS2", "power": "25 kW", "power_max": 25 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.480416,
@@ -2097,18 +2840,13 @@
     "chargers": [
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
-      },
-      {
-        "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
       }
     ],
     "lat": -7.393221,
@@ -2125,18 +2863,13 @@
     "chargers": [
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
-      },
-      {
-        "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
       }
     ],
     "lat": -7.394085,
@@ -2165,15 +2898,72 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "50~100 kW", "power_max": 100 },
-          { "type": "CCS2", "power": "50~100 kW", "power_max": 100 }
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
         ]
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "47 kW", "power_max": 47 },
+          { "type": "CCS2", "power": "47 kW", "power_max": 47 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.408684,
@@ -2202,15 +2992,62 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "50~100 kW", "power_max": 100 },
-          { "type": "CCS2", "power": "50~100 kW", "power_max": 100 }
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "47 kW", "power_max": 47 },
+          { "type": "CCS2", "power": "47 kW", "power_max": 47 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.410205,
@@ -2245,9 +3082,12 @@
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.543402,
@@ -2275,7 +3115,9 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.545729,
@@ -2287,18 +3129,9 @@
     "km": 626,
     "name": "KM 626 A (Ngawi-Kertosono)",
     "lowest_power": 22,
-    "highest_power": 200,
+    "highest_power": 180,
     "types": ["CCS2", "AC"],
     "chargers": [
-      {
-        "brand": "PLN",
-        "total_ports": 2,
-        "shared": true,
-        "ports": [
-          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 },
-          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 }
-        ]
-      },
       {
         "brand": "PLN",
         "total_ports": 2,
@@ -2310,9 +3143,20 @@
       },
       {
         "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.54784,
@@ -2324,18 +3168,9 @@
     "km": 626,
     "name": "KM 626 B (Ngawi-Kertosono)",
     "lowest_power": 22,
-    "highest_power": 200,
+    "highest_power": 180,
     "types": ["CCS2", "AC"],
     "chargers": [
-      {
-        "brand": "PLN",
-        "total_ports": 2,
-        "shared": true,
-        "ports": [
-          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 },
-          { "type": "CCS2", "power": "100~200 kW", "power_max": 200 }
-        ]
-      },
       {
         "brand": "PLN",
         "total_ports": 2,
@@ -2347,9 +3182,29 @@
       },
       {
         "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.549063,
@@ -2368,13 +3223,17 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "CCS2", "power": "50 kW", "power_max": 50 }]
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "7 kW", "power_max": 7 }]
+        "ports": [
+          { "type": "AC", "power": "7 kW", "power_max": 7 }
+        ]
       }
     ],
     "lat": -7.535146,
@@ -2393,13 +3252,17 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "CCS2", "power": "50 kW", "power_max": 50 }]
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "7 kW", "power_max": 7 }]
+        "ports": [
+          { "type": "AC", "power": "7 kW", "power_max": 7 }
+        ]
       }
     ],
     "lat": -7.536055,
@@ -2427,7 +3290,9 @@
         "brand": "Astra Otopower",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.48515,
@@ -2456,8 +3321,8 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "50~100 kW", "power_max": 100 },
-          { "type": "CCS2", "power": "50~100 kW", "power_max": 100 }
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 },
+          { "type": "CCS2", "power": "180 kW", "power_max": 180 }
         ]
       },
       {
@@ -2465,15 +3330,35 @@
         "total_ports": 2,
         "shared": true,
         "ports": [
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 },
+          { "type": "CCS2", "power": "100 kW", "power_max": 100 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 3,
+        "shared": true,
+        "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.378487,
@@ -2501,11 +3386,43 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.375425,
     "lng": 112.553327
+  },
+  {
+    "segment": "surabaya-gempol",
+    "side": "B",
+    "km": 753,
+    "name": "KM 753 B (Sby-Gempol)",
+    "lowest_power": 22,
+    "highest_power": 47,
+    "types": ["CCS2", "AC"],
+    "chargers": [
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "47 kW", "power_max": 47 },
+          { "type": "CCS2", "power": "47 kW", "power_max": 47 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 1,
+        "shared": false,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
+      }
+    ],
+    "lat": -7.417816,
+    "lng": 112.693708
   },
   {
     "segment": "surabaya-gempol",
@@ -2527,41 +3444,24 @@
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "CCS2", "power": "50 kW", "power_max": 50 }]
-      }
-    ],
-    "lat": -7.425764,
-    "lng": 112.693728
-  },
-  {
-    "segment": "surabaya-gempol",
-    "side": "B",
-    "km": 754,
-    "name": "KM 754 B (Sby-Gempol)",
-    "lowest_power": 22,
-    "highest_power": 50,
-    "types": ["CCS2", "AC"],
-    "chargers": [
-      {
-        "brand": "PLN",
         "total_ports": 2,
         "shared": true,
         "ports": [
-          { "type": "CCS2", "power": "47 kW", "power_max": 47 },
-          { "type": "CCS2", "power": "47 kW", "power_max": 47 }
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
       }
     ],
-    "lat": -7.417816,
-    "lng": 112.693708
+    "lat": -7.425764,
+    "lng": 112.693728
   },
   {
     "segment": "gempol-malang",
@@ -2583,9 +3483,30 @@
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.743708,
@@ -2606,14 +3527,43 @@
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "60 kW", "power_max": 60 },
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "60 kW", "power_max": 60 },
           { "type": "Chademo", "power": "60 kW", "power_max": 60 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
       },
       {
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.743934,
@@ -2641,7 +3591,9 @@
         "brand": "PLN",
         "total_ports": 1,
         "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "ports": [
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.897223,
@@ -2684,14 +3636,35 @@
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
           { "type": "Chademo", "power": "50 kW", "power_max": 50 }
         ]
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.652943,
@@ -2712,14 +3685,35 @@
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
           { "type": "Chademo", "power": "50 kW", "power_max": 50 }
         ]
       },
       {
         "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
+      },
+      {
+        "brand": "PLN",
+        "total_ports": 2,
+        "shared": true,
+        "ports": [
+          { "type": "CCS2", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
+        ]
       }
     ],
     "lat": -7.655518,
@@ -2736,18 +3730,13 @@
     "chargers": [
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
-      },
-      {
-        "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
       }
     ],
     "lat": -7.747684,
@@ -2764,18 +3753,13 @@
     "chargers": [
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
-      },
-      {
-        "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
       }
     ],
     "lat": -7.748942,
@@ -2792,18 +3776,13 @@
     "chargers": [
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
-      },
-      {
-        "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
       }
     ],
     "lat": -7.808051,
@@ -2820,18 +3799,13 @@
     "chargers": [
       {
         "brand": "PLN",
-        "total_ports": 2,
+        "total_ports": 3,
         "shared": true,
         "ports": [
           { "type": "CCS2", "power": "50 kW", "power_max": 50 },
-          { "type": "Chademo", "power": "50 kW", "power_max": 50 }
+          { "type": "Chademo", "power": "50 kW", "power_max": 50 },
+          { "type": "AC", "power": "22 kW", "power_max": 22 }
         ]
-      },
-      {
-        "brand": "PLN",
-        "total_ports": 1,
-        "shared": false,
-        "ports": [{ "type": "AC", "power": "22 kW", "power_max": 22 }]
       }
     ],
     "lat": -7.809063,
