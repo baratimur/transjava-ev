@@ -1,5 +1,5 @@
 // SPKLU Trans Jawa - Core Application Logic
-const APP_VERSION = '1.0.4';
+const APP_VERSION = '1.0.5';
 
 let i18nDictionary = {};
 let SPKLU_NETWORK = [];
@@ -271,15 +271,52 @@ function setLang(lang) {
   currentLang = lang;
   localStorage.setItem('lang', lang);
   document.documentElement.lang = lang;
+
   document.title = t('seo_title');
-  document.getElementById('btn-id').className = `px-2 h-6 text-[10px] font-bold rounded transition-all ${lang === 'id' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300'}`;
-  document.getElementById('btn-en').className = `px-2 h-6 text-[10px] font-bold rounded transition-all ${lang === 'en' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300'}`;
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.setAttribute('content', t('seo_desc'));
+
+  const btnId = document.getElementById('btn-id');
+  const btnEn = document.getElementById('btn-en');
+  if (btnId) btnId.className = `px-2 h-6 text-[10px] font-bold rounded transition-all ${lang === 'id' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300'}`;
+  if (btnEn) btnEn.className = `px-2 h-6 text-[10px] font-bold rounded transition-all ${lang === 'en' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300'}`;
+
+  const swapBtn = document.getElementById('btn-swap');
+  if (swapBtn) {
+    swapBtn.title = t('swap_tooltip');
+    swapBtn.setAttribute('aria-label', t('swap_tooltip'));
+  }
+
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (el.tagName === 'OPTION') el.textContent = t(key);
-    else if (el.tagName === 'INPUT' && el.type === 'text') el.placeholder = t(key);
-    else el.textContent = t(key);
+    
+    // Khusus untuk elemen Input, update placeholder-nya
+    if (el.tagName === 'INPUT') {
+      el.placeholder = t(key);
+    } 
+    // Khusus untuk Dropdown Options
+    else if (el.tagName === 'OPTION') {
+      el.textContent = t(key);
+    } 
+    // Jika ada elemen yang memiliki icon SVG/elemen turunan lain di dalamnya
+    else if (el.children.length > 0 && !el.hasAttribute('data-i18n-replace')) {
+      // Coba ubah node teks pertama saja tanpa merusak elemen HTML di dalamnya
+      Array.from(el.childNodes).forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim() !== '') {
+          node.nodeValue = t(key) + ' '; // Tambah spasi jika perlu
+        }
+      });
+      // Atau sekedar set title/aria-label jika teks tidak kelihatan
+      el.title = t(key);
+      el.setAttribute('aria-label', t(key));
+    } 
+    // Default text replacement
+    else {
+      el.textContent = t(key);
+    }
   });
+
+  renderFavorites();
   animatedRouting(false);
 }
 
@@ -629,6 +666,44 @@ function setupCorridorDesktopScroll() {
 }
 
 // ==========================================
+// PERSISTENT FILTERS (BATERAI & WITHIN RANGE)
+// ==========================================
+
+// Memuat nilai yang tersimpan di localStorage saat web dibuka
+function loadPersistentFilters() {
+  const batteryInput = document.getElementById("battery-range");
+  const rangeCheckbox = document.getElementById("filter-within-range");
+
+  const savedBattery = localStorage.getItem("spklu_battery_range");
+  if (savedBattery !== null && batteryInput) {
+    batteryInput.value = savedBattery;
+  }
+
+  const savedRangeFilter = localStorage.getItem("spklu_filter_within_range");
+  if (savedRangeFilter !== null && rangeCheckbox) {
+    rangeCheckbox.checked = savedRangeFilter === "true";
+  }
+}
+
+// Handler simpan baterai saat input/change
+function onBatteryChange() {
+  const batteryInput = document.getElementById("battery-range");
+  if (batteryInput) {
+    localStorage.setItem("spklu_battery_range", batteryInput.value.trim());
+  }
+  animatedRouting(false);
+}
+
+// Handler simpan filter range saat checkbox di-toggle
+function onRangeFilterChange() {
+  const rangeCheckbox = document.getElementById("filter-within-range");
+  if (rangeCheckbox) {
+    localStorage.setItem("spklu_filter_within_range", rangeCheckbox.checked);
+  }
+  animatedRouting(false);
+}
+
+// ==========================================
 // 6. INIT & EVENT LISTENERS
 // ==========================================
 
@@ -664,6 +739,7 @@ async function initApp() {
     populateDropdowns(CITIES);
     setLang(currentLang);
     renderFavorites(); // Render favorit saat start
+    loadPersistentFilters();
     
     setTimeout(() => {
       if (loader) { loader.style.opacity = '0'; loader.style.visibility = 'hidden'; }
