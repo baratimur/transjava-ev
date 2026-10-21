@@ -283,9 +283,15 @@
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-200/80 dark:border-slate-800/60 py-3.5 text-center text-xs text-slate-500 dark:text-slate-400 space-y-1 transition-colors">
+  <footer class="border-t border-slate-200/80 dark:border-slate-800/60 py-3.5 text-center text-xs text-slate-500 dark:text-slate-400 space-y-1.5 transition-colors">
     <p data-i18n="footer">Panduan Nyaman SPKLU Tol Trans-Jawa • Dibuat untuk sesama pengendara EV</p>
-    <div class="flex items-center justify-center gap-1.5 text-[11px]">
+    <div class="flex items-center justify-center gap-2 text-[11px] flex-wrap">
+      <a href="https://trakteer.id/bara.timur/tip" target="_blank" rel="noopener" 
+         class="inline-flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors group">
+        <span>☕</span>
+        <span class="underline underline-offset-2">Traktir Kopi</span>
+      </a>
+      <span class="text-slate-300 dark:text-slate-700">•</span>
       <a href="https://github.com/baratimur/transjava-ev" target="_blank" rel="noopener" 
          class="inline-flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors group">
         <svg class="w-3.5 h-3.5 fill-current text-slate-500 group-hover:text-emerald-600 transition-colors" viewBox="0 0 24 24">
@@ -297,7 +303,6 @@
       <span data-i18n="contrib_hint" class="text-slate-500">Terbuka untuk kontribusi data & PR</span>
     </div>
   </footer>
-
   <script>
     // --- LOGIKA PWA INSTALL PROMPT ---
     let deferredPrompt;
