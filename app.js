@@ -140,8 +140,38 @@ function openNativeNavigation(lat, lng, name) {
   }
 }
 
-function showNavChooser() { /* Same as previous bottom sheet logic */ }
-function closeNavChooser() { /* Same as previous bottom sheet logic */ }
+function showNavChooser() {
+  const modal = document.getElementById('nav-chooser');
+  const backdrop = document.getElementById('nav-chooser-backdrop');
+  const panel = document.getElementById('nav-chooser-panel');
+  if (!modal || !backdrop || !panel) return;
+  
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  void modal.offsetWidth;
+  backdrop.classList.remove('opacity-0');
+  backdrop.classList.add('opacity-100');
+  panel.classList.remove('translate-y-full');
+  panel.classList.add('translate-y-0');
+}
+
+function closeNavChooser() {
+  const modal = document.getElementById('nav-chooser');
+  const backdrop = document.getElementById('nav-chooser-backdrop');
+  const panel = document.getElementById('nav-chooser-panel');
+  if (!modal || !backdrop || !panel) return;
+
+  backdrop.classList.remove('opacity-100');
+  backdrop.classList.add('opacity-0');
+  panel.classList.remove('translate-y-0');
+  panel.classList.add('translate-y-full');
+  
+  setTimeout(() => {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }, 300);
+}
+
 function launchNavApp(appType) {
   const { lat, lng, name } = currentNavTarget;
   if (appType === 'gmaps') window.location.href = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
@@ -574,6 +604,28 @@ function runRouting() {
 
   // Gunakan generator HTML yang telah dipisah
   resultsContainer.innerHTML = matchedStations.map((s, idx) => generateStationCardHTML(s, idx)).join("");
+}
+
+function setupCorridorDesktopScroll() {
+  const el = document.getElementById("corridor-summary");
+  if (!el) return;
+  el.addEventListener("wheel", (e) => {
+    if (e.deltaY !== 0) {
+      e.preventDefault();
+      el.scrollLeft += e.deltaY * 0.9;
+    }
+  }, { passive: false });
+  let isDown = false, startX = 0, scrollLeft = 0;
+  el.addEventListener("mousedown", (e) => {
+    isDown = true; startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft;
+  });
+  el.addEventListener("mouseleave", () => { isDown = false; });
+  el.addEventListener("mouseup", () => { isDown = false; });
+  el.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    el.scrollLeft = scrollLeft - ((e.pageX - el.offsetLeft) - startX) * 1.5;
+  });
 }
 
 // ==========================================
