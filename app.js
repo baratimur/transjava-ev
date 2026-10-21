@@ -245,6 +245,11 @@ function setLang(lang) {
   animatedRouting(false);
 }
 
+function populateDropdowns(cities) {
+  renderDropdownItems('origin', cities, 'jakarta');
+  renderDropdownItems('destination', cities, 'surabaya');
+}
+
 function renderDropdownItems(type, cities, defaultVal) {
   const listContainer = document.getElementById(`${type}-list`);
   const label = document.getElementById(`${type}-label`);
