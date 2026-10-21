@@ -205,17 +205,17 @@
         <!-- Spacious Fitted Position & Battery Inputs -->
         <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           
-          <!-- Current KM Input (Fitted min-w to prevent placeholder truncation) -->
-          <div class="flex items-center bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/15 rounded-xl px-3 py-1.5 transition-all duration-200 flex-1 sm:flex-initial min-w-[150px] shadow-sm">
+          <!-- Current KM Input -->
+          <div class="flex items-center bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/15 rounded-xl px-3 py-1.5 transition-all duration-200 flex-1 sm:flex-initial min-w-[130px] shadow-sm">
             <span class="text-[10px] font-bold font-mono text-emerald-600 dark:text-emerald-400 mr-1.5 shrink-0">KM</span>
-            <input type="number" id="current-km" oninput="animatedRouting(false)" placeholder="KM saat ini (cth. 57)" class="w-full sm:w-32 bg-transparent text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none font-mono">
+            <input type="number" id="current-km" oninput="animatedRouting(false)" placeholder="Cth. 57" class="w-full sm:w-20 bg-transparent text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none font-mono">
             <button type="button" onclick="clearKm()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs ml-1" title="Clear">✕</button>
           </div>
-
-          <!-- Battery Range Input (Fitted min-w) -->
-          <div class="flex items-center bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/15 rounded-xl px-3 py-1.5 transition-all duration-200 flex-1 sm:flex-initial min-w-[140px] shadow-sm">
+          
+          <!-- Battery Range Input -->
+          <div class="flex items-center bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/15 rounded-xl px-3 py-1.5 transition-all duration-200 flex-1 sm:flex-initial min-w-[130px] shadow-sm">
             <span class="text-xs mr-1.5 shrink-0">🔋</span>
-            <input type="number" id="battery-range" oninput="animatedRouting(false)" placeholder="Jarak (km)" class="w-full sm:w-24 bg-transparent text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none font-mono">
+            <input type="number" id="battery-range" oninput="animatedRouting(false)" placeholder="Cth. 150" class="w-full sm:w-20 bg-transparent text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none font-mono">
             <span class="text-[10px] text-slate-400 font-mono ml-1 shrink-0">km</span>
           </div>
 
