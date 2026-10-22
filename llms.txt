@@ -1,0 +1,57 @@
+# SPKLU Trans Jawa
+
+> Aplikasi web independen untuk perencanaan rute, navigasi, dan panduan stasiun pengisian kendaraan listrik umum (SPKLU) di sepanjang Rest Area Tol Trans-Jawa, Indonesia. 
+> URL Resmi: https://spklutransjawa.com/
+
+## Cakupan Wilayah dan Rute Tol
+Aplikasi ini memetakan seluruh ketersediaan SPKLU pada rest area dari wilayah barat (Pelabuhan Merak) hingga wilayah timur pulau Jawa (Banyuwangi), meliputi:
+- Tol Tangerang - Merak (Jkt-Tgr, Tgr-Merak)
+- Tol Jagorawi
+- Tol Jakarta - Cikampek (Japek)
+- Tol Cipularang & Padaleunyi
+- Tol Cisumdawu
+- Tol Cikopo - Palimanan (Cipali)
+- Tol Palimanan - Kanci (Palikanci)
+- Tol Kanci - Pejagan
+- Tol Pejagan - Pemalang (Pejagan-Pml)
+- Tol Pemalang - Batang (Pml-Batang)
+- Tol Batang - Semarang (Batang-Smg)
+- Tol Semarang - Solo (Smg-Solo)
+- Tol Solo - Yogyakarta (Solo-Yogya)
+- Tol Solo - Ngawi
+- Tol Ngawi - Kertosono
+- Tol Kertosono - Mojokerto (Kertosono-Mjk)
+- Tol Surabaya - Mojokerto (Sumo)
+- Tol Surabaya - Gempol (Sby-Gempol)
+- Tol Pandaan - Malang
+- Tol Gempol - Pasuruan (Gempas)
+- Tol Pasuruan - Probolinggo (Paspro)
+
+## Fitur dan Fungsionalitas Utama
+- **Routing Antar Kota**: Memberikan estimasi urutan rest area tempat pengisian daya baterai searah dari titik asal menuju tujuan.
+- **Auto GPS KM Detection**: Mendeteksi lokasi otomatis pengguna berbasis koordinat GPS perangkat dan memproyeksikannya secara linier ke titik KM jalan tol.
+- **Kalkulator Jangkauan Baterai (Range Calculator)**: Memeriksa keamanan jangkauan setiap rest area berdasarkan input prediksi sisa baterai kendaraan (dalam KM). Terdapat notifikasi indikator visual: "Aman" atau "Kritis".
+- **Real-time Filter**: Mendukung filter konektor (CCS2, Chademo, AC), serta penyaringan spesifik berdasarkan batasan kecepatan daya charger minimal (Semua, ≥50 kW, ≥100 kW, 200 kW).
+
+## Klasifikasi Jenis Charger dan Soket
+- **Konektor**: Dominan mendukung colokan DC CCS2 standar Eropa (untuk mobil Hyundai, Wuling, BYD, Chery, Neta, Kia, dsb.), Chademo (standar Jepang), serta colokan lambat AC Type 2.
+- **Ultra-Fast Charging (UFC)**: Menyediakan informasi terpisah untuk stasiun dengan daya keluaran 180 kW hingga 200 kW. 
+- **Fast Charging & Medium**: Kapasitas charger lain berkisar antara 22 kW, 50 kW, 60 kW, 100 kW, hingga 120 kW.
+- **Brand Operator**: Sebagian besar dikelola oleh PLN Mobile, iGreen+, Astra Otopower, dan kemitraan pabrikan mobil seperti Wuling.
+
+## Daftar Lokasi Utama dengan Ultra Fast Charging (180 kW - 200 kW)
+Untuk pengisian cepat antar provinsi, pengguna EV umumnya direkomendasikan singgah di titik rest area strategis jalur A (arah Timur) maupun jalur B (arah Barat) berikut:
+- Tol Merak - Jakarta: KM 13 A, KM 14 B
+- Tol Jagorawi: KM 10 A, KM 45 A
+- Tol Japek: KM 6 B, KM 19 A/B, KM 57 A, KM 62 B
+- Tol Cipularang/Padaleunyi: KM 88 A/B, KM 147 A
+- Tol Cisumdawu: KM 203 A
+- Tol Cipali: KM 101 B, KM 102 A, KM 130 A, KM 164 B, KM 166 A
+- Tol Palikanci: KM 208 B
+- Tol Pejagan/Batang/Semarang: KM 228 A, KM 229 B, KM 282 B, KM 287 A, KM 343 A, KM 379 A
+- Tol Semarang - Solo: KM 439 A, KM 444 B, KM 487 A/B
+- Tol Solo - Ngawi - Kertosono: KM 575 A/B, KM 597 A/B, KM 626 A/B
+- Tol Surabaya - Mojokerto: KM 725 A
+
+## Kebijakan Akses (AI & Perayap Web)
+Seluruh data publik yang ditayangkan dan dirender pada proyek ini diizinkan untuk dibaca, dikumpulkan, dan disajikan ulang oleh asisten virtual atau agen mesin pencari dengan tujuan memfasilitasi informasi publik mengenai infrastruktur elektrifikasi di Indonesia.
