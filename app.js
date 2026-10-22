@@ -1,5 +1,5 @@
 // SPKLU Trans Jawa - Core Application Logic
-const APP_VERSION = '1.0.5';
+const APP_VERSION = '1.0.7';
 
 let i18nDictionary = {};
 let SPKLU_NETWORK = [];
@@ -107,8 +107,11 @@ function detectCurrentKm() {
       if (iconGps && iconLoading) { iconGps.classList.remove("hidden"); iconLoading.classList.add("hidden"); }
       const detectedKm = calculateKmFromCoords(pos.coords.latitude, pos.coords.longitude);
       if (detectedKm !== null) {
-        document.getElementById("current-km").value = detectedKm;
-        animatedRouting(false);
+        const kmInput = document.getElementById("current-km");
+        if (kmInput) {
+          kmInput.value = detectedKm;
+          onBatteryChange(); // Simpan otomatis ke persistensi
+        }
       } else alert("Gagal menentukan KM.");
     },
     (err) => {
@@ -145,14 +148,10 @@ function showNavChooser() {
   const backdrop = document.getElementById('nav-chooser-backdrop');
   const panel = document.getElementById('nav-chooser-panel');
   if (!modal || !backdrop || !panel) return;
-  
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
+  modal.classList.remove('hidden'); modal.classList.add('flex');
   void modal.offsetWidth;
-  backdrop.classList.remove('opacity-0');
-  backdrop.classList.add('opacity-100');
-  panel.classList.remove('translate-y-full');
-  panel.classList.add('translate-y-0');
+  backdrop.classList.remove('opacity-0'); backdrop.classList.add('opacity-100');
+  panel.classList.remove('translate-y-full'); panel.classList.add('translate-y-0');
 }
 
 function closeNavChooser() {
@@ -160,16 +159,9 @@ function closeNavChooser() {
   const backdrop = document.getElementById('nav-chooser-backdrop');
   const panel = document.getElementById('nav-chooser-panel');
   if (!modal || !backdrop || !panel) return;
-
-  backdrop.classList.remove('opacity-100');
-  backdrop.classList.add('opacity-0');
-  panel.classList.remove('translate-y-0');
-  panel.classList.add('translate-y-full');
-  
-  setTimeout(() => {
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-  }, 300);
+  backdrop.classList.remove('opacity-100'); backdrop.classList.add('opacity-0');
+  panel.classList.remove('translate-y-0'); panel.classList.add('translate-y-full');
+  setTimeout(() => { modal.classList.add('hidden'); modal.classList.remove('flex'); }, 300);
 }
 
 function launchNavApp(appType) {
@@ -177,22 +169,19 @@ function launchNavApp(appType) {
   if (appType === 'gmaps') window.location.href = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
   else if (appType === 'waze') window.location.href = `https://waze.com/ul?ll=${lat},${lng}&navigate=yes`;
   else if (appType === 'apple') window.location.href = `https://maps.apple.com/?daddr=${lat},${lng}&q=${name}`;
+  closeNavChooser();
 }
 
-// Sistem Favorit
 function toggleFavorite(sId) {
-  if (savedFavorites.includes(sId)) {
-    savedFavorites = savedFavorites.filter(id => id !== sId);
-  } else {
-    savedFavorites.push(sId);
-  }
+  if (savedFavorites.includes(sId)) savedFavorites = savedFavorites.filter(id => id !== sId);
+  else savedFavorites.push(sId);
   localStorage.setItem('spklu_favs', JSON.stringify(savedFavorites));
   renderFavorites();
-  animatedRouting(false); // Render ulang list utama agar icon heart terupdate
+  animatedRouting(false);
 }
 
 function clearFavorites(e) {
-  e.stopPropagation(); // Mencegah accordion collapse
+  e.stopPropagation();
   if (confirm('Hapus semua SPKLU tersimpan?')) {
     savedFavorites = [];
     localStorage.setItem('spklu_favs', JSON.stringify(savedFavorites));
@@ -205,11 +194,9 @@ function toggleFavorites() {
   const content = document.getElementById('favorites-content');
   const chevron = document.getElementById('fav-chevron');
   if (content.classList.contains('hidden')) {
-    content.classList.remove('hidden');
-    chevron.classList.remove('rotate-180');
+    content.classList.remove('hidden'); chevron.classList.remove('rotate-180');
   } else {
-    content.classList.add('hidden');
-    chevron.classList.add('rotate-180');
+    content.classList.add('hidden'); chevron.classList.add('rotate-180');
   }
 }
 
@@ -219,24 +206,20 @@ function renderFavorites() {
   const countEl = document.getElementById('fav-count');
 
   if (savedFavorites.length === 0) {
-    section.classList.add('hidden');
-    return;
+    section.classList.add('hidden'); return;
   }
-
   section.classList.remove('hidden');
   countEl.textContent = savedFavorites.length;
 
   const favStations = SPKLU_NETWORK.filter(s => savedFavorites.includes(getStationId(s)));
-  
-  // Ambil state input KM jika ada, agar bisa hitung jarak di favorit
-  const currentKmVal = document.getElementById("current-km").value.trim();
+  const currentKmVal = document.getElementById("current-km")?.value.trim() || "";
   const hasCurrentKm = currentKmVal !== "" && !isNaN(parseFloat(currentKmVal));
   const curKm = hasCurrentKm ? parseFloat(currentKmVal) : null;
 
   const processedFavs = favStations.map((s, idx) => {
     let opData = evaluateStationOperationalData(s);
     let distAhead = null;
-    if (hasCurrentKm) distAhead = Math.abs(s.km - curKm); // Absolute dist
+    if (hasCurrentKm) distAhead = Math.abs(s.km - curKm);
     return { ...s, ...opData, distAhead, distFromPrev: 0, isWithinBattery: true, isFavList: true };
   });
 
@@ -244,8 +227,58 @@ function renderFavorites() {
 }
 
 // ==========================================
-// 4. UI COMPONENTS & INTERACTIONS
+// 4. PERSISTENT FILTERS
 // ==========================================
+
+function loadPersistentFilters() {
+  const batteryInput = document.getElementById("battery-range");
+  const rangeCheckbox = document.getElementById("filter-within-range");
+  const kmInput = document.getElementById("current-km");
+
+  const savedBattery = localStorage.getItem("spklu_battery_range");
+  if (savedBattery !== null && batteryInput) batteryInput.value = savedBattery;
+
+  const savedRangeFilter = localStorage.getItem("spklu_filter_within_range");
+  if (savedRangeFilter !== null && rangeCheckbox) rangeCheckbox.checked = savedRangeFilter === "true";
+  
+  const savedKm = localStorage.getItem("spklu_current_km");
+  if (savedKm !== null && kmInput) kmInput.value = savedKm;
+}
+
+function onBatteryChange() {
+  const batteryInput = document.getElementById("battery-range");
+  const kmInput = document.getElementById("current-km");
+  if (batteryInput) localStorage.setItem("spklu_battery_range", batteryInput.value.trim());
+  if (kmInput) localStorage.setItem("spklu_current_km", kmInput.value.trim());
+  animatedRouting(false);
+}
+
+function onRangeFilterChange() {
+  const rangeCheckbox = document.getElementById("filter-within-range");
+  if (rangeCheckbox) localStorage.setItem("spklu_filter_within_range", rangeCheckbox.checked);
+  animatedRouting(false);
+}
+
+// ==========================================
+// 5. UI COMPONENTS & SCROLL
+// ==========================================
+
+function setupCorridorDesktopScroll() {
+  const el = document.getElementById("corridor-summary");
+  if (!el) return;
+  el.addEventListener("wheel", (e) => {
+    if (e.deltaY !== 0) { e.preventDefault(); el.scrollLeft += e.deltaY * 0.9; }
+  }, { passive: false });
+  let isDown = false, startX = 0, scrollLeft = 0;
+  el.addEventListener("mousedown", (e) => { isDown = true; startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft; });
+  el.addEventListener("mouseleave", () => { isDown = false; });
+  el.addEventListener("mouseup", () => { isDown = false; });
+  el.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    el.scrollLeft = scrollLeft - ((e.pageX - el.offsetLeft) - startX) * 1.5;
+  });
+}
 
 function animatedRouting(resetSegment = false) {
   if (resetSegment) selectedSegmentFilter = null;
@@ -282,38 +315,18 @@ function setLang(lang) {
   if (btnEn) btnEn.className = `px-2 h-6 text-[10px] font-bold rounded transition-all ${lang === 'en' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-600 dark:text-slate-300'}`;
 
   const swapBtn = document.getElementById('btn-swap');
-  if (swapBtn) {
-    swapBtn.title = t('swap_tooltip');
-    swapBtn.setAttribute('aria-label', t('swap_tooltip'));
-  }
+  if (swapBtn) { swapBtn.title = t('swap_tooltip'); swapBtn.setAttribute('aria-label', t('swap_tooltip')); }
 
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    
-    // Khusus untuk elemen Input, update placeholder-nya
-    if (el.tagName === 'INPUT') {
-      el.placeholder = t(key);
-    } 
-    // Khusus untuk Dropdown Options
-    else if (el.tagName === 'OPTION') {
-      el.textContent = t(key);
-    } 
-    // Jika ada elemen yang memiliki icon SVG/elemen turunan lain di dalamnya
+    if (el.tagName === 'INPUT') el.placeholder = t(key);
+    else if (el.tagName === 'OPTION') el.textContent = t(key);
     else if (el.children.length > 0 && !el.hasAttribute('data-i18n-replace')) {
-      // Coba ubah node teks pertama saja tanpa merusak elemen HTML di dalamnya
       Array.from(el.childNodes).forEach(node => {
-        if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim() !== '') {
-          node.nodeValue = t(key) + ' '; // Tambah spasi jika perlu
-        }
+        if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim() !== '') node.nodeValue = t(key) + ' ';
       });
-      // Atau sekedar set title/aria-label jika teks tidak kelihatan
-      el.title = t(key);
-      el.setAttribute('aria-label', t(key));
-    } 
-    // Default text replacement
-    else {
-      el.textContent = t(key);
-    }
+      el.title = t(key); el.setAttribute('aria-label', t(key));
+    } else el.textContent = t(key);
   });
 
   renderFavorites();
@@ -388,7 +401,11 @@ function swapLocations() {
 }
 
 document.addEventListener('click', (e) => { if (!e.target.closest('#dropdown-origin-wrapper') && !e.target.closest('#dropdown-destination-wrapper')) closeAllDropdowns(); });
-function clearKm() { document.getElementById("current-km").value = ""; animatedRouting(false); }
+function clearKm() { 
+  document.getElementById("current-km").value = ""; 
+  localStorage.removeItem("spklu_current_km");
+  animatedRouting(false); 
+}
 function toggleSegmentFilter(segKey) { selectedSegmentFilter = (selectedSegmentFilter === segKey) ? null : segKey; animatedRouting(false); }
 function setSpeedFilter(minPower) {
   selectedSpeedFilter = minPower;
@@ -435,14 +452,13 @@ function getBrandDot(brand) {
 }
 
 // ==========================================
-// 5. RENDERING KARTU SPKLU (SHARED HTML)
+// 6. SHARED HTML CARD GENERATOR
 // ==========================================
 
 function generateStationCardHTML(s, idx, isFavList = false) {
   const sId = getStationId(s);
   const isOffline = s.isCompletelyOffline;
   const isFav = savedFavorites.includes(sId);
-
   const unitLabel = t('label_unit');
   const portLabel = t('label_port');
 
@@ -454,7 +470,7 @@ function generateStationCardHTML(s, idx, isFavList = false) {
 
   let distanceBadge = '';
   if (s.distAhead !== null && s.distAhead !== undefined) {
-    distanceBadge = `<span class="inline-flex items-center font-mono font-extrabold text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30">📍 ${Math.round(s.distAhead)} km</span>`;
+    distanceBadge = `<span class="inline-flex items-center font-mono font-extrabold text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30">📍 ${Math.round(s.distAhead)} ${t('km_ahead')}</span>`;
   } else if (!isFavList) {
     distanceBadge = idx === 0 
       ? `<span class="inline-flex items-center font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">${t('first_stop')}</span>`
@@ -516,7 +532,7 @@ function generateStationCardHTML(s, idx, isFavList = false) {
     <article style="animation-delay: ${staggerDelay}ms" class="animate-ios-card group border rounded-xl p-2.5 sm:p-3 transition-all ${cardContainerStyle}">
       <div class="flex items-center justify-between gap-1.5 pb-1.5 border-b border-slate-100 dark:border-slate-800/80">
         <div class="flex items-center gap-1 flex-wrap">
-          <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded ${s.side === 'A' ? 'bg-sky-100 text-sky-900 border border-sky-200 dark:bg-sky-500/20 dark:text-sky-400 dark:border-sky-500/30' : 'bg-purple-100 text-purple-900 border border-purple-200 dark:bg-purple-500/20 dark:text-purple-400 dark:border-purple-500/30'}">${s.side}</span>
+          <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded ${s.side === 'A' ? 'bg-sky-100 text-sky-900 border border-sky-200 dark:bg-sky-500/20 dark:text-sky-400 dark:border-sky-500/30' : 'bg-purple-100 text-purple-900 border border-purple-200 dark:bg-purple-500/20 dark:text-purple-400 dark:border-purple-500/30'}">Jalur ${s.side}</span>
           ${capacityBadge}
           ${distanceBadge}
           ${batteryBadge}
@@ -533,16 +549,13 @@ function generateStationCardHTML(s, idx, isFavList = false) {
           <span class="text-[10px] text-slate-400 font-medium">${formatSegment(s.segment, s.side)}</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <!-- Tombol Favorite (Love) -->
           <button type="button" onclick="toggleFavorite('${sId}')" aria-label="Simpan Favorit" title="Simpan" class="inline-flex items-center justify-center h-7 w-7 rounded-lg bg-slate-100 hover:bg-rose-50 dark:bg-slate-800 dark:hover:bg-slate-700 shadow-sm active:scale-90 transition-all">
             ${heartSVG}
           </button>
           
-          <!-- Tombol Navigasi Native Mobile -->
           <button type="button" onclick="openNativeNavigation(${s.lat}, ${s.lng}, '${s.name.replace(/'/g, "\\'")}')" aria-label="Navigasi ke ${s.name}" title="Navigasi" class="inline-flex sm:hidden items-center justify-center h-7 w-7 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm active:scale-95 transition-all">
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
           </button>
-          <!-- Tombol Navigasi Desktop -->
           <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" aria-label="Buka di Google Maps" title="Maps" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center justify-center h-7 w-7 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm active:scale-95 transition-all">
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
           </a>
@@ -556,18 +569,22 @@ function generateStationCardHTML(s, idx, isFavList = false) {
   `;
 }
 
+// ==========================================
+// 7. MAIN ROUTING & FILTERING ALGORITHM
+// ==========================================
+
 function runRouting() {
   if (SPKLU_NETWORK.length === 0 || Object.keys(HIGHWAY_GRAPH).length === 0) return;
 
   const origin = document.getElementById("origin").value;
   const destination = document.getElementById("destination").value;
-  const currentKmVal = document.getElementById("current-km").value.trim();
+  const currentKmVal = document.getElementById("current-km")?.value.trim() || "";
   const hasCurrentKm = currentKmVal !== "" && !isNaN(parseFloat(currentKmVal));
   const curKm = hasCurrentKm ? parseFloat(currentKmVal) : null;
-  const batteryRangeVal = document.getElementById("battery-range").value.trim();
+  const batteryRangeVal = document.getElementById("battery-range")?.value.trim() || "";
   const hasBatteryRange = batteryRangeVal !== "" && !isNaN(parseFloat(batteryRangeVal));
   const batteryRange = hasBatteryRange ? parseFloat(batteryRangeVal) : null;
-  const filterWithinRange = document.getElementById("filter-within-range").checked;
+  const filterWithinRange = document.getElementById("filter-within-range")?.checked || false;
 
   const resultsContainer = document.getElementById("results-list");
   const corridorSummary = document.getElementById("corridor-summary");
@@ -586,6 +603,7 @@ function runRouting() {
     return;
   }
 
+  // Render Horizontal Tabs untuk Segment (Ruas Jalan)
   let chipsMarkup = `<button type="button" aria-pressed="${selectedSegmentFilter === null}" onclick="selectedSegmentFilter = null; animatedRouting(false)" class="whitespace-nowrap shrink-0 h-7 px-2.5 rounded-md text-[11px] font-bold transition-all ${selectedSegmentFilter === null ? 'bg-slate-800 text-white dark:bg-slate-700 shadow-sm' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-800'} active:scale-95">${t('all_segments')}</button>`;
   chipsMarkup += legs.map(leg => {
     const isSelected = selectedSegmentFilter === leg.segment;
@@ -607,27 +625,100 @@ function runRouting() {
     matchedStations = matchedStations.filter(s => s.isCompletelyOffline ? (s.types || []).some(tp => selectedConnectors.has(tp)) : s.operationalTypes.some(tp => selectedConnectors.has(tp)));
   }
 
-  let passedCount = 0;
-  if (hasCurrentKm) {
-    const totalBefore = matchedStations.length;
-    matchedStations = matchedStations.filter(s => s.legOrder === 'asc' ? s.km >= curKm : s.km <= curKm);
-    passedCount = totalBefore - matchedStations.length;
-  }
-
   if (selectedSpeedFilter !== 'all') {
     const minKW = parseInt(selectedSpeedFilter, 10);
     matchedStations = matchedStations.filter(s => s.highestPower >= minKW);
   }
 
-  matchedStations = matchedStations.map((s, idx, arr) => {
-    let distAhead = null, distFromPrev = null;
-    if (hasCurrentKm) distAhead = Math.max(0, s.legOrder === 'asc' ? (s.km - curKm) : (curKm - s.km));
-    distFromPrev = idx === 0 ? 0 : Math.abs(s.km - arr[idx - 1].km);
-    const isWithinBattery = hasBatteryRange && distAhead !== null ? (distAhead <= batteryRange) : null;
-    return { ...s, distAhead, distFromPrev, isWithinBattery };
-  });
+  // --- CROSS-SEGMENT DISTANCE CALCULATION LOGIC ---
+  let userLegIndex = -1;
+  if (hasCurrentKm) {
+    let minDiff = Infinity;
+    matchedStations.forEach((s) => {
+      let diff = Math.abs(s.km - curKm);
+      if (diff < minDiff) {
+        minDiff = diff;
+        userLegIndex = legs.findIndex(l => l.segment === s.segment);
+      }
+    });
+    if (userLegIndex === -1) userLegIndex = 0;
+  }
 
-  if (filterWithinRange && hasBatteryRange && hasCurrentKm) matchedStations = matchedStations.filter(s => s.isWithinBattery);
+  let firstAheadIdx = -1;
+  if (hasCurrentKm) {
+    for (let i = 0; i < matchedStations.length; i++) {
+      const s = matchedStations[i];
+      const sLegIdx = legs.findIndex(l => l.segment === s.segment);
+      
+      if (sLegIdx > userLegIndex) {
+        firstAheadIdx = i;
+        break;
+      } else if (sLegIdx === userLegIndex) {
+        const isAhead = s.legOrder === 'asc' ? (s.km >= curKm) : (s.km <= curKm);
+        if (isAhead) {
+          firstAheadIdx = i;
+          break;
+        }
+      }
+    }
+  }
+
+  let passedCount = 0;
+  if (hasCurrentKm) {
+    if (firstAheadIdx === -1) {
+      passedCount = matchedStations.length;
+      matchedStations = [];
+    } else {
+      passedCount = firstAheadIdx;
+      let keptStations = matchedStations.slice(passedCount);
+      let accumulatedDistance = 0;
+
+      keptStations = keptStations.map((s, idx) => {
+        let distFromPrev = 0;
+        if (idx === 0) {
+          const sLegIdx = legs.findIndex(l => l.segment === s.segment);
+          if (sLegIdx === userLegIndex) {
+            accumulatedDistance = Math.abs(s.km - curKm);
+          } else {
+            if (passedCount > 0) {
+              const prev = matchedStations[passedCount - 1];
+              let distToNext = (s.segment === prev.segment) ? Math.abs(s.km - prev.km) : Math.round(getDistanceKm(s.lat, s.lng, prev.lat, prev.lng) * 1.15);
+              let userToPrev = 0;
+              const prevLegIdx = legs.findIndex(l => l.segment === prev.segment);
+              if (prevLegIdx === userLegIndex) userToPrev = Math.abs(curKm - prev.km);
+              accumulatedDistance = userToPrev + distToNext;
+            } else accumulatedDistance = Math.abs(s.km - curKm);
+          }
+        } else {
+          const prev = keptStations[idx - 1];
+          if (s.segment === prev.segment) distFromPrev = Math.abs(s.km - prev.km);
+          else distFromPrev = Math.round(getDistanceKm(s.lat, s.lng, prev.lat, prev.lng) * 1.15);
+          accumulatedDistance += distFromPrev;
+        }
+        
+        let distAhead = accumulatedDistance;
+        let isWithinBattery = hasBatteryRange ? (distAhead <= batteryRange) : null;
+        return { ...s, distFromPrev, distAhead, isWithinBattery };
+      });
+      matchedStations = keptStations;
+    }
+  } else {
+    // Normal Mapping (no GPS/curKm)
+    matchedStations = matchedStations.map((s, idx, arr) => {
+      let distFromPrev = 0;
+      if (idx > 0) {
+        const prev = arr[idx - 1];
+        if (s.segment === prev.segment) distFromPrev = Math.abs(s.km - prev.km);
+        else distFromPrev = Math.round(getDistanceKm(s.lat, s.lng, prev.lat, prev.lng) * 1.15);
+      }
+      return { ...s, distFromPrev, distAhead: null, isWithinBattery: null };
+    });
+  }
+
+  if (filterWithinRange && hasBatteryRange && hasCurrentKm) {
+    matchedStations = matchedStations.filter(s => s.isWithinBattery);
+  }
+  // --- END DISTANCE LOGIC ---
 
   const ultraCount = matchedStations.filter(s => s.highestPower >= 200 && !s.isCompletelyOffline).length;
   let counterText = `${matchedStations.length} ${t('spots_ahead')} (${ultraCount} ${t('speed_ultra')} 200 kW)`;
@@ -639,72 +730,11 @@ function runRouting() {
     return;
   }
 
-  // Gunakan generator HTML yang telah dipisah
   resultsContainer.innerHTML = matchedStations.map((s, idx) => generateStationCardHTML(s, idx)).join("");
 }
 
-function setupCorridorDesktopScroll() {
-  const el = document.getElementById("corridor-summary");
-  if (!el) return;
-  el.addEventListener("wheel", (e) => {
-    if (e.deltaY !== 0) {
-      e.preventDefault();
-      el.scrollLeft += e.deltaY * 0.9;
-    }
-  }, { passive: false });
-  let isDown = false, startX = 0, scrollLeft = 0;
-  el.addEventListener("mousedown", (e) => {
-    isDown = true; startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft;
-  });
-  el.addEventListener("mouseleave", () => { isDown = false; });
-  el.addEventListener("mouseup", () => { isDown = false; });
-  el.addEventListener("mousemove", (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    el.scrollLeft = scrollLeft - ((e.pageX - el.offsetLeft) - startX) * 1.5;
-  });
-}
-
 // ==========================================
-// PERSISTENT FILTERS (BATERAI & WITHIN RANGE)
-// ==========================================
-
-// Memuat nilai yang tersimpan di localStorage saat web dibuka
-function loadPersistentFilters() {
-  const batteryInput = document.getElementById("battery-range");
-  const rangeCheckbox = document.getElementById("filter-within-range");
-
-  const savedBattery = localStorage.getItem("spklu_battery_range");
-  if (savedBattery !== null && batteryInput) {
-    batteryInput.value = savedBattery;
-  }
-
-  const savedRangeFilter = localStorage.getItem("spklu_filter_within_range");
-  if (savedRangeFilter !== null && rangeCheckbox) {
-    rangeCheckbox.checked = savedRangeFilter === "true";
-  }
-}
-
-// Handler simpan baterai saat input/change
-function onBatteryChange() {
-  const batteryInput = document.getElementById("battery-range");
-  if (batteryInput) {
-    localStorage.setItem("spklu_battery_range", batteryInput.value.trim());
-  }
-  animatedRouting(false);
-}
-
-// Handler simpan filter range saat checkbox di-toggle
-function onRangeFilterChange() {
-  const rangeCheckbox = document.getElementById("filter-within-range");
-  if (rangeCheckbox) {
-    localStorage.setItem("spklu_filter_within_range", rangeCheckbox.checked);
-  }
-  animatedRouting(false);
-}
-
-// ==========================================
-// 6. INIT & EVENT LISTENERS
+// 8. APP INITIALIZATION
 // ==========================================
 
 async function initApp() {
@@ -738,8 +768,8 @@ async function initApp() {
 
     populateDropdowns(CITIES);
     setLang(currentLang);
-    renderFavorites(); // Render favorit saat start
     loadPersistentFilters();
+    renderFavorites();
     
     setTimeout(() => {
       if (loader) { loader.style.opacity = '0'; loader.style.visibility = 'hidden'; }
