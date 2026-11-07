@@ -97,7 +97,7 @@ function calculateKmFromCoords(userLat, userLng) {
 }
 
 function detectCurrentKm() {
-  if (!navigator.geolocation) return alert("Browser tidak mendukung GPS.");
+  if (!navigator.geolocation) return alert(t('err_gps_unsupported'));
   const iconGps = document.getElementById("icon-gps");
   const iconLoading = document.getElementById("icon-gps-loading");
   if (iconGps && iconLoading) { iconGps.classList.add("hidden"); iconLoading.classList.remove("hidden"); }
@@ -112,11 +112,11 @@ function detectCurrentKm() {
           kmInput.value = detectedKm;
           onBatteryChange(); // Simpan otomatis ke persistensi
         }
-      } else alert("Gagal menentukan KM.");
+      } else alert(t('err_km_failed'));
     },
     (err) => {
       if (iconGps && iconLoading) { iconGps.classList.remove("hidden"); iconLoading.classList.add("hidden"); }
-      alert("Akses lokasi ditolak atau sinyal lemah.");
+      alert(t('err_gps_denied'));
     },
     { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
   );
@@ -182,7 +182,7 @@ function toggleFavorite(sId) {
 
 function clearFavorites(e) {
   e.stopPropagation();
-  if (confirm('Hapus semua SPKLU tersimpan?')) {
+  if (confirm(t('confirm_clear_fav'))) {
     savedFavorites = [];
     localStorage.setItem('spklu_favs', JSON.stringify(savedFavorites));
     renderFavorites();
@@ -348,7 +348,7 @@ function renderDropdownItems(type, cities, defaultVal) {
   }
   const currentSelected = input.value;
   if (!cities || cities.length === 0) {
-    listContainer.innerHTML = `<div class="px-2 py-3 text-center text-xs text-slate-500">Kota tidak ditemukan</div>`;
+    listContainer.innerHTML = `<div class="px-2 py-3 text-center text-xs text-slate-500">${t('err_city_not_found')}</div>`;
     return;
   }
   listContainer.innerHTML = cities.map(city => {
@@ -500,7 +500,7 @@ function generateStationCardHTML(s, idx, isFavList = false) {
       const countPrefix = pg.count > 1 ? `${pg.count}× ` : '';
       return pg.isOp 
         ? `<span>${countPrefix}${pg.type} ${pg.power}</span>` 
-        : `<span class="line-through decoration-rose-500 text-slate-400 dark:text-slate-500" title="Port Mati">${countPrefix}${pg.type} ${pg.power}</span>`;
+        : `<span class="line-through decoration-rose-500 text-slate-400 dark:text-slate-500" title="${t('port_dead')}">${countPrefix}${pg.type} ${pg.power}</span>`;
     }).join('<span class="text-slate-300 dark:text-slate-700 mx-1">•</span>');
 
     const signature = `${charger.brand}___${portSummaries}`;
@@ -553,7 +553,7 @@ function generateStationCardHTML(s, idx, isFavList = false) {
             ${heartSVG}
           </button>
           
-          <button type="button" onclick="openNativeNavigation(${s.lat}, ${s.lng}, '${s.name.replace(/'/g, "\\'")}')" aria-label="Navigasi ke ${s.name}" title="Navigasi" class="inline-flex sm:hidden items-center justify-center h-7 w-7 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm active:scale-95 transition-all">
+          <button type="button" onclick="openNativeNavigation(${s.lat}, ${s.lng}, '${s.name.replace(/'/g, "\\'")}')" aria-label="${t('nav_btn')} ${s.name}" title="${t('nav_btn')}" class="inline-flex sm:hidden items-center justify-center h-7 w-7 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm active:scale-95 transition-all">
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
           </button>
           <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}" aria-label="Buka di Google Maps" title="Maps" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center justify-center h-7 w-7 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm active:scale-95 transition-all">
@@ -778,7 +778,7 @@ async function initApp() {
   } catch (err) {
     if (loader) { loader.style.opacity = '0'; loader.style.visibility = 'hidden'; }
     if (appContent) appContent.style.opacity = '1';
-    document.getElementById("results-list").innerHTML = `<div class="p-5 text-center text-rose-700 bg-rose-50 border border-rose-300 dark:text-rose-400 dark:bg-rose-900/20 dark:border-rose-800/60 rounded-xl text-xs font-bold animate-ios-card">Gagal memuat data SPKLU. Pastikan koneksi internet aktif.</div>`;
+    document.getElementById("results-list").innerHTML = `<div class="p-5 text-center text-rose-700 bg-rose-50 border border-rose-300 dark:text-rose-400 dark:bg-rose-900/20 dark:border-rose-800/60 rounded-xl text-xs font-bold animate-ios-card">${t('err_fetch_failed')}</div>`;
   }
 }
 
@@ -803,7 +803,7 @@ window.addEventListener('load', () => {
         if ((await deferredPrompt.userChoice).outcome === 'accepted') installBtn.classList.add('hidden');
         deferredPrompt = null;
       } else if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-        alert('Untuk memasang di iPhone/iPad: Tekan ikon "Share" di Safari, lalu "Add to Home Screen".');
+        alert(t('ios_install_hint'));
       }
     });
   }
