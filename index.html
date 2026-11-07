@@ -319,7 +319,7 @@
           <div class="flex items-center gap-1.5">
             <!-- Box KM -->
             <div class="flex-1 min-w-0 h-8 flex items-center bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-lg px-1.5 focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all">
-              <label for="current-km" class="sr-only">KM Sekarang</label>
+              <label for="current-km" class="sr-only" data-i18n="km_label">Posisi KM</label>
               <span class="text-[10px] font-bold font-mono text-emerald-700 dark:text-emerald-400 mr-1 shrink-0">KM</span>
               <input type="number" id="current-km" oninput="onBatteryChange()" data-i18n="km_ph" placeholder="Posisi" class="w-full min-w-0 bg-transparent text-slate-900 dark:text-white placeholder-slate-400 text-xs font-mono focus:outline-none p-0">
               
@@ -342,7 +342,7 @@
 
             <!-- Box Baterai -->
             <div class="flex-1 min-w-0 h-8 flex items-center bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-lg px-1.5 focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all">
-              <label for="battery-range" class="sr-only">Jangkauan Baterai (km)</label>
+              <label for="battery-range" class="sr-only" data-i18n="battery_label">Sisa baterai</label>
               <span class="text-xs mr-1 shrink-0" aria-hidden="true">🔋</span>
               <input type="number" id="battery-range" oninput="onBatteryChange()" data-i18n="battery_ph" placeholder="Baterai" class="w-full min-w-0 bg-transparent text-slate-900 dark:text-white placeholder-slate-400 text-xs font-mono focus:outline-none p-0">
               <span class="text-[10px] font-bold text-slate-400 font-mono shrink-0 ml-0.5">km</span>
@@ -371,33 +371,34 @@
         </div>
       </section>
       <!-- Konten Semantik SEO (Terbaca Google & AI Tanpa Mengganggu Tampilan Aplikasi) -->
+      <!-- Konten Semantik SEO (Terbaca Google & AI Tanpa Mengganggu Tampilan Aplikasi) -->
       <section class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs space-y-4">
         <div>
-          <h2 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">Panduan Stasiun Pengisian Kendaraan Listrik (SPKLU) Tol Trans-Jawa</h2>
-          <p class="leading-relaxed">
+          <h2 data-i18n="seo_guide_title" class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">Panduan Stasiun Pengisian Kendaraan Listrik (SPKLU) Tol Trans-Jawa</h2>
+          <p data-i18n="seo_guide_desc" class="leading-relaxed">
             Aplikasi web <strong>SPKLU Trans Jawa</strong> dirancang untuk mempermudah pengguna mobil listrik (Electric Vehicle / EV) merencanakan perjalanan jarak jauh, liburan, dan mudik di sepanjang jalur Tol Trans-Jawa dari Pelabuhan Merak, Banten hingga Banyuwangi, Jawa Timur. Temukan lokasi pengisian daya di Rest Area Jalur A (arah timur) maupun Jalur B (arah barat/Jakarta).
           </p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="bg-slate-50 dark:bg-slate-900/40 p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-800">
-            <h3 class="font-bold text-slate-700 dark:text-slate-300 mb-1">Konektor & Kecepatan Pengisian</h3>
-            <p class="leading-relaxed">
+            <h3 data-i18n="seo_conn_title" class="font-bold text-slate-700 dark:text-slate-300 mb-1">Konektor & Kecepatan Pengisian</h3>
+            <p data-i18n="seo_conn_desc" class="leading-relaxed">
               Tersedia informasi soket <strong>DC Ultra Fast Charging 200 kW & 180 kW</strong>, <strong>DC Fast Charging 50 kW, 60 kW & 100 kW</strong>, soket <strong>Chademo</strong>, serta colokan lambat <strong>AC Type 2 (7 kW - 22 kW)</strong> dari berbagai operator charging station seperti PLN Mobile, Astra Otopower, dan Wuling.
             </p>
           </div>
 
           <div class="bg-slate-50 dark:bg-slate-900/40 p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-800">
-            <h3 class="font-bold text-slate-700 dark:text-slate-300 mb-1">Kompatibilitas Mobil Listrik</h3>
-            <p class="leading-relaxed">
+            <h3 data-i18n="seo_compat_title" class="font-bold text-slate-700 dark:text-slate-300 mb-1">Kompatibilitas Mobil Listrik</h3>
+            <p data-i18n="seo_compat_desc" class="leading-relaxed">
               Dapat digunakan untuk semua merek kendaraan listrik di Indonesia: <em>Hyundai Ioniq 5, Ioniq 6, Kona EV; Wuling Air EV, Binguo EV, Cloud EV; BYD Seal, Atto 3, Dolphin, M6; Chery Omoda E5; MG 4 EV, ZS EV; Neta V; Citroen ë-C3; Kia EV6, EV9</em>, hingga armada taksi listrik.
             </p>
           </div>
         </div>
 
         <div>
-          <h3 class="font-bold text-slate-700 dark:text-slate-300 mb-1">Cakupan Ruas Tol Trans-Jawa</h3>
-          <p class="leading-relaxed text-[11px] text-slate-500 dark:text-slate-400">
+          <h3 data-i18n="seo_coverage_title" class="font-bold text-slate-700 dark:text-slate-300 mb-1">Cakupan Ruas Tol Trans-Jawa</h3>
+          <p data-i18n="seo_coverage_desc" class="leading-relaxed text-[11px] text-slate-500 dark:text-slate-400">
             Tol Tangerang-Merak • Tol Jakarta-Tangerang • Tol Jagorawi • Tol Jakarta-Cikampek (Japek) • Tol Cipularang & Padaleunyi • Tol Cisumdawu • Tol Cikopo-Palimanan (Cipali) • Tol Palimanan-Kanci (Palikanci) • Tol Kanci-Pejagan • Tol Pejagan-Pemalang • Tol Pemalang-Batang • Tol Batang-Semarang • Tol Semarang-Solo • Tol Solo-Ngawi • Tol Ngawi-Kertosono • Tol Kertosono-Mojokerto • Tol Surabaya-Mojokerto (Sumo) • Tol Surabaya-Gempol • Tol Gempol-Pasuruan • Tol Pasuruan-Probolinggo (Paspro).
           </p>
         </div>
