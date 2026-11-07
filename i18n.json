@@ -46,7 +46,15 @@
     "label_chargers": "Chargers",
     "label_plugs": "Plugs",
     "label_unit": "Machines",
-    "label_port": "Port"
+    "label_port": "Port",
+    "seo_guide_title": "Trans-Java Toll Road EV Charging Guide",
+    "seo_guide_desc": "The SPKLU Trans Jawa web app is designed to help Electric Vehicle (EV) drivers plan long-distance trips, holidays, and homecomings along the Trans-Java Toll Road from Merak to Banyuwangi. Find charging stations in both Route A (Eastbound) and Route B (Westbound).",
+    "seo_conn_title": "Connectors & Charging Speeds",
+    "seo_conn_desc": "Features information on Ultra Fast Charging (180-200 kW), Fast Charging (50-100 kW), Chademo, and AC Type 2 (7-22 kW) sockets operated by PLN Mobile, Astra Otopower, Wuling, and more.",
+    "seo_compat_title": "EV Compatibility",
+    "seo_compat_desc": "Compatible with all EV brands in Indonesia including Hyundai Ioniq 5/6, Wuling Air/Binguo/Cloud EV, BYD Seal/Atto 3/Dolphin, Chery Omoda E5, MG 4 EV, Neta V, Kia EV6/EV9, and EV taxi fleets.",
+    "seo_coverage_title": "Trans-Java Toll Coverage",
+    "seo_coverage_desc": "Tangerang-Merak • Jakarta-Tangerang • Jagorawi • Jakarta-Cikampek (Japek) • Cipularang & Padaleunyi • Cisumdawu • Cikopo-Palimanan (Cipali) • Palimanan-Kanci (Palikanci) • Kanci-Pejagan • Pejagan-Pemalang • Pemalang-Batang • Batang-Semarang • Semarang-Solo • Solo-Ngawi • Ngawi-Kertosono • Kertosono-Mojokerto • Surabaya-Mojokerto (Sumo) • Surabaya-Gempol • Gempol-Pasuruan • Pasuruan-Probolinggo (Paspro)."
   },
   "id": {
     "title": "SPKLU Trans Jawa",
@@ -95,6 +103,14 @@
     "label_chargers": "Charger",
     "label_plugs": "Colokan",
     "label_unit": "Mesin",
-    "label_port": "Port"
+    "label_port": "Port",
+    "seo_guide_title": "Panduan Stasiun Pengisian Kendaraan Listrik (SPKLU) Tol Trans-Jawa",
+    "seo_guide_desc": "Aplikasi web SPKLU Trans Jawa dirancang untuk mempermudah pengguna mobil listrik (Electric Vehicle / EV) merencanakan perjalanan jarak jauh, liburan, dan mudik di sepanjang jalur Tol Trans-Jawa dari Pelabuhan Merak, Banten hingga Banyuwangi, Jawa Timur. Temukan lokasi pengisian daya di Rest Area Jalur A (arah timur) maupun Jalur B (arah barat/Jakarta).",
+    "seo_conn_title": "Konektor & Kecepatan Pengisian",
+    "seo_conn_desc": "Tersedia informasi soket DC Ultra Fast Charging 200 kW & 180 kW, DC Fast Charging 50 kW, 60 kW & 100 kW, soket Chademo, serta colokan lambat AC Type 2 (7 kW - 22 kW) dari berbagai operator charging station seperti PLN Mobile, Astra Otopower, dan Wuling.",
+    "seo_compat_title": "Kompatibilitas Mobil Listrik",
+    "seo_compat_desc": "Dapat digunakan untuk semua merek kendaraan listrik di Indonesia: Hyundai Ioniq 5, Ioniq 6, Kona EV; Wuling Air EV, Binguo EV, Cloud EV; BYD Seal, Atto 3, Dolphin, M6; Chery Omoda E5; MG 4 EV, ZS EV; Neta V; Citroen ë-C3; Kia EV6, EV9, hingga armada taksi listrik.",
+    "seo_coverage_title": "Cakupan Ruas Tol Trans-Jawa",
+    "seo_coverage_desc": "Tol Tangerang-Merak • Tol Jakarta-Tangerang • Tol Jagorawi • Tol Jakarta-Cikampek (Japek) • Tol Cipularang & Padaleunyi • Tol Cisumdawu • Tol Cikopo-Palimanan (Cipali) • Tol Palimanan-Kanci (Palikanci) • Tol Kanci-Pejagan • Tol Pejagan-Pemalang • Tol Pemalang-Batang • Tol Batang-Semarang • Tol Semarang-Solo • Tol Solo-Ngawi • Tol Ngawi-Kertosono • Tol Kertosono-Mojokerto • Tol Surabaya-Mojokerto (Sumo) • Tol Surabaya-Gempol • Tol Gempol-Pasuruan • Tol Pasuruan-Probolinggo (Paspro)."
   }
 }
